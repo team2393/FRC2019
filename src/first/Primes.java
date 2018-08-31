@@ -57,9 +57,11 @@ public class Primes
         // Since we know that even numbers can't be prime,
         // we only check odd numbers by starting at 3 and
         // then stepping by 2: 3, 5, 7, 9, 11, ...
-
+        // Since we omit even numbers, we also omit 2,
+        // the very first prime, so mention that:
+        System.out.println("Prime number # 1 is 2");
         long start_milli = System.currentTimeMillis();
-        int count = 0;
+        int count = 1;
         for (int number = 3; number < 100000; number += 2)
             if (isPrime(number))
             {
