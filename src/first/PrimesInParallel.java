@@ -49,22 +49,24 @@ public class PrimesInParallel
     public static void main(String[] args) throws Exception
     {
         System.out.println("Prime number # 1 is 2");
-        long start_milli = System.currentTimeMillis();
         
         // Assume you have 4 CPU cores.
         // Chop the range of 3 .. 100000 into subranges,
         // always starting with an odd number.
         // Start 3 subrange checks each in their own thread
         ExecutorService pool = Executors.newFixedThreadPool(3);
+
+        long start_milli = System.currentTimeMillis();
         Future<Integer> thread1 = pool.submit(() -> checkNumberRange(3, 25001));
         Future<Integer> thread2 = pool.submit(() -> checkNumberRange(25001, 50001));
         Future<Integer> thread3 = pool.submit(() -> checkNumberRange(50001, 75001));
         // Handle the 4th subrange ourselve...
         int count4 = checkNumberRange(75001, 100000);
-        // Then wait for the other 3 to finish..
+        // Then wait for the other 3 to finish, ask them how many primes they found
         int count3 = thread3.get();
         int count2 = thread2.get();
         int count1 = thread1.get();
+        // Total number of primes found
         int count = 1 + count1 + count2 + count3 + count4;
         
         long end_milli = System.currentTimeMillis();
@@ -80,6 +82,8 @@ public class PrimesInParallel
         // lower number ranges, so simply dividing the ranges as we did 
         // leaves the main thread with much more work in the end, while thread1 is long finished.
         // Balancing the load would require more thought.
+        // Finally, most of what this program does is actually _printing_ the numbers out.
+        // If you comment the line that prints the prime number, it's faster...
         // ==> Parallel programming is where you get the most performance gain,
         //     but it can be hard to write a decent parallel program.
         
