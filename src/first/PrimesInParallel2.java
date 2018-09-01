@@ -87,6 +87,17 @@ public class PrimesInParallel2
         int count = 1 + count1 + count2 + count3 + count4;
         
         long end_milli = System.currentTimeMillis();
+        
+        // Show how many CPUs we actually have.
+        // If it's more than 4, you might want to update the code
+        // to use them all.
+        int cpu_count = Runtime.getRuntime().availableProcessors();
+        System.out.println("I have " + cpu_count + " CPUs");
+        if (cpu_count > 4)
+            System.out.println("That means " + (cpu_count - 4) + " CPUs " +
+                               "were twiddling their thumbs instead of " +
+                               "contributing to this effort.");
+        
         double elapsed_seconds = (end_milli - start_milli) / 1000.0;
         System.out.println("I found " + count + " prime numbers in " + elapsed_seconds + " seconds");
         System.out.println("That's " + count / elapsed_seconds + " PRIMe numbers Per Seconds.");
