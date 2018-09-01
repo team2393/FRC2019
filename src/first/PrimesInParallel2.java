@@ -74,6 +74,7 @@ public class PrimesInParallel2
         ExecutorService pool = Executors.newFixedThreadPool(3);
 
         long start_milli = System.currentTimeMillis();
+        
         Future<Integer> thread1 = pool.submit(() -> checkNumbers());
         Future<Integer> thread2 = pool.submit(() -> checkNumbers());
         Future<Integer> thread3 = pool.submit(() -> checkNumbers());
@@ -110,7 +111,8 @@ public class PrimesInParallel2
         // When we find that 3 is prime, we could skip multiples of 3.
         // When we find the next prime P, we could skip all multiples of P. 
         // This quickly reduces the list of numbers that you have to check.
-        // If then working on the list of numbers-still-to-test in
-        // multiple threads, you'd have a really fast algorithm.
+        // On the downside, it means we need to keep track of those
+        // multiples of primes already found, which itself uses memory and some CPU.
+        // From here on it's not trivial to gain more speed...
     }
 }

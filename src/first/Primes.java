@@ -61,6 +61,7 @@ public class Primes
         // the very first prime, so mention that:
         System.out.println("Prime number # 1 is 2");
         long start_milli = System.currentTimeMillis();
+        
         int count = 1;
         for (int number = 3; number < 100000; number += 2)
             if (isPrime(number))
@@ -69,6 +70,7 @@ public class Primes
                 ++count;
                 System.out.println("Prime number # " + count + " is " + number);
             }
+        
         long end_milli = System.currentTimeMillis();
         double elapsed_seconds = (end_milli - start_milli) / 1000.0;
         System.out.println("I found " + count + " prime numbers in " + elapsed_seconds + " seconds");

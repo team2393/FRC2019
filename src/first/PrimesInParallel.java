@@ -57,6 +57,7 @@ public class PrimesInParallel
         ExecutorService pool = Executors.newFixedThreadPool(3);
 
         long start_milli = System.currentTimeMillis();
+        
         Future<Integer> thread1 = pool.submit(() -> checkNumberRange(3, 25001));
         Future<Integer> thread2 = pool.submit(() -> checkNumberRange(25001, 50001));
         Future<Integer> thread3 = pool.submit(() -> checkNumberRange(50001, 75001));
