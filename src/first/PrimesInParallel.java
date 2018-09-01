@@ -4,8 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-/** Find a bunch of prime numbers in multiple threads
- *  */
+/** Find a bunch of prime numbers in multiple threads */
 public class PrimesInParallel
 {
     /** @param number Number to test for being prime
@@ -61,7 +60,7 @@ public class PrimesInParallel
         Future<Integer> thread1 = pool.submit(() -> checkNumberRange(3, 25001));
         Future<Integer> thread2 = pool.submit(() -> checkNumberRange(25001, 50001));
         Future<Integer> thread3 = pool.submit(() -> checkNumberRange(50001, 75001));
-        // Handle the 4th subrange ourselve...
+        // Handle the 4th subrange ourselves...
         int count4 = checkNumberRange(75001, 100000);
         // Then wait for the other 3 to finish, ask them how many primes they found
         int count3 = thread3.get();
@@ -87,7 +86,7 @@ public class PrimesInParallel
         // leaves the main thread (testing 75001 to 100000) with much more work in the end,
         // while thread1 (testing 3, 25001) has long finished.
         //
-        // Balancing the load so that all 4 threads keep working would require more thought.
+        // Balancing the load so that all 4 threads keep working would be better.
         //
         // Finally, most of what this program does is actually _printing_ the numbers out.
         // If you comment the line that prints the prime number, it's faster...
