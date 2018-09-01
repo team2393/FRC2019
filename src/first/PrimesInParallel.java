@@ -4,7 +4,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-/** Find a bunch of prime numbers in multiple threads */
+/** Find a bunch of prime numbers in multiple threads
+ *  */
 public class PrimesInParallel
 {
     /** @param number Number to test for being prime
@@ -78,15 +79,24 @@ public class PrimesInParallel
         // It's not perfect, though:
         // We're not sorting the result into one nice list of prime numbers,
         // the output of the different threads is simply dumped together.
-        // Checking the higher number range is much slower than checking the
-        // lower number ranges, so simply dividing the ranges as we did 
-        // leaves the main thread with much more work in the end, while thread1 is long finished.
-        // Balancing the load would require more thought.
+        //
+        // Checking if 11 is prime means testing with 2, 3, 4, 5.
+        // Checking if 101 is prime means testing with 2, 3, 4, 5, 6, 7, 8, 9, 10... 50.
+        // Checking the higher number ranges is thus slower than checking the
+        // lower number ranges. Simply dividing the ranges as we did by equal size 
+        // leaves the main thread (testing 75001 to 100000) with much more work in the end,
+        // while thread1 (testing 3, 25001) has long finished.
+        //
+        // Balancing the load so that all 4 threads keep working would require more thought.
+        //
         // Finally, most of what this program does is actually _printing_ the numbers out.
         // If you comment the line that prints the prime number, it's faster...
         // ==> Parallel programming is where you get the most performance gain,
         //     but it can be hard to write a decent parallel program.
         
         pool.shutdown();
+        
+        // Typical results are ~18000 PRIMPS
+
     }
 }

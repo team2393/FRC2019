@@ -74,5 +74,6 @@ public class Primes
         System.out.println("I found " + count + " prime numbers in " + elapsed_seconds + " seconds");
         System.out.println("That's " + count / elapsed_seconds + " PRIMe numbers Per Seconds.");
         System.out.println("How many 'PRIMPS' do you get on your computer?");
+        // Typical results are ~14000 PRIMPS
     }
 }
