@@ -8,7 +8,7 @@ import java.util.concurrent.Future;
 public class PrimesInParallel
 {
     /** @param number Number to test for being prime
-     *  @return true if it's a prime number, otherwise false
+     *  @return <code>true</code> if it's a prime number, otherwise <code>false</code>
      */
     public static boolean isPrime(int number)
     {

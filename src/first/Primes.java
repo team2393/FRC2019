@@ -10,6 +10,9 @@ package first;
  */
 public class Primes
 {
+    /** @param number Number to test for being prime
+     *  @return <code>true</code> if it's a prime number, otherwise <code>false</code>
+     */
     public static boolean isPrime(int number)
     {
         // test if number is divisible by 2, 3, 4, 5, ... up to and including number/2.
