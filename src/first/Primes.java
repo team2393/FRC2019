@@ -63,6 +63,8 @@ public class Primes
         // Since we omit even numbers, we also omit 2,
         // the very first prime, so mention that:
         System.out.println("Prime number # 1 is 2");
+        
+        // Remember when we start looking for prime numbers
         long start_milli = System.currentTimeMillis();
         
         int count = 1;
@@ -74,7 +76,11 @@ public class Primes
                 System.out.println("Prime number # " + count + " is " + number);
             }
         
+        // Track when we are done looking for prime numbers
         long end_milli = System.currentTimeMillis();
+        
+        // Compute how much time we spent in seconds.
+        // NOTE: 1000.0 (double) to get fractional seconds.
         double elapsed_seconds = (end_milli - start_milli) / 1000.0;
         System.out.println("I found " + count + " prime numbers in " + elapsed_seconds + " seconds");
         System.out.println("That's " + count / elapsed_seconds + " PRIMe numbers Per Seconds.");
