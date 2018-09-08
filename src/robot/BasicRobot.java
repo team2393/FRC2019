@@ -1,7 +1,6 @@
 package robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.hal.HALUtil;
 
 /** Starting point for Team 2393 robots
  *  
