@@ -41,8 +41,8 @@ public class PrimesInParallelPrintedLater
         return true;
     }
     
-    /** All threads add the prime numbers that they find to this queue */
-    static ConcurrentLinkedQueue<Integer> primes = new ConcurrentLinkedQueue<>();
+    /** All threads add the prime numbers that they find to this list */
+    static List<Integer> primes = Collections.synchronizedList(new ArrayList<>());
  
     /** Next number to check.
      *  Threads get this number & increment.
@@ -97,9 +97,6 @@ public class PrimesInParallelPrintedLater
 
         long end_milli = System.currentTimeMillis();
         
-        // Show how many CPUs we actually have.
-        // If it's more than 4, you might want to update the code
-        // to use them all.
         System.out.println("I have " + cpu_count + " CPUs");
         
         double elapsed_seconds = (end_milli - start_milli) / 1000.0;
@@ -116,10 +113,9 @@ public class PrimesInParallelPrintedLater
 
         TimeUnit.SECONDS.sleep(2);
         System.out.println("Here they are:");
-        List<Integer> sorted = new ArrayList<>(primes);
-        Collections.sort(sorted);
+        Collections.sort(primes);
         int i = 0;
-        for (int prime : sorted)
+        for (int prime : primes)
             System.out.println("#" + ++i + " is " + prime);
     }
 }
