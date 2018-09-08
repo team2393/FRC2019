@@ -1,7 +1,7 @@
 package robot.demos;
 
-import edu.wpi.first.wpilibj.hal.HALUtil;
 import robot.BasicRobot;
+import robot.USERButton;
 
 /** Robot that displays the cycle time when pushing USER button */
 public class MeasurePeriodRobot extends BasicRobot
@@ -32,7 +32,7 @@ public class MeasurePeriodRobot extends BasicRobot
 	    avg_ms = (diff + avg_ms) / 2.0;
 	    
 	    // If USER button is pressed, display the info
-	    if (HALUtil.getFPGAButton())
+	    if (USERButton.isPressed())
 	        System.out.println("Period: " + avg_ms + " ms");
 	    
 	    // Update 'last' ms for the next period

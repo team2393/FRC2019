@@ -2,8 +2,8 @@ package robot.demos;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
-import edu.wpi.first.wpilibj.hal.HALUtil;
 import robot.BasicRobot;
+import robot.USERButton;
 
 /** Read a Light Sensor
  *  
@@ -45,7 +45,7 @@ public class LightSensorRobot extends BasicRobot
         // When it's dark, turn the LED on
         led.set(voltage < 3.0);
 
-        if (HALUtil.getFPGAButton())
+        if (USERButton.isPressed())
             System.out.println("Sensor Voltage: " + voltage);
     }    
 }

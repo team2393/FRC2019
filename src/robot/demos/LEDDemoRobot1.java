@@ -1,8 +1,8 @@
 package robot.demos;
 
 import edu.wpi.first.wpilibj.DigitalOutput;
-import edu.wpi.first.wpilibj.hal.HALUtil;
 import robot.BasicRobot;
+import robot.USERButton;
 
 /** Start of every hardware demo: LED
  * 
@@ -18,7 +18,7 @@ public class LEDDemoRobot1 extends BasicRobot
     public void robotInit()
     {
         super.robotInit();
-        System.out.println("LED on DIO " + led.getChannel() + " in TELEOP and AUTONOMOUS mode.");
+        System.out.println("LED on DIO " + led.getChannel());
         System.out.println("Push USER button.");
     }
 
@@ -26,7 +26,6 @@ public class LEDDemoRobot1 extends BasicRobot
     public void robotPeriodic()
     {
         // Turn 'on' when USER button is pressed
-        boolean on = HALUtil.getFPGAButton();
-        led.set(on);
+        led.set(USERButton.isPressed());
     }    
 }
