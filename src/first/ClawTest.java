@@ -1,13 +1,10 @@
 package first;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
+import static first.Testing.assertEquals;
 
 public class ClawTest
 {
-    @Test
-    public void testClaw()
+    public static void main(String[] args)
     {
         Claw claw = new Claw();
         
