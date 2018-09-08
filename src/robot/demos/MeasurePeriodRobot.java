@@ -3,6 +3,7 @@ package robot.demos;
 import edu.wpi.first.wpilibj.hal.HALUtil;
 import robot.BasicRobot;
 
+/** Robot that displays the cycle time when pushing USER button */
 public class MeasurePeriodRobot extends BasicRobot
 {
     /** Last time we were called */
