@@ -6,10 +6,9 @@ import robot.BasicRobot;
 
 /** Start of every hardware demo: LED
  * 
- *  Blink LED in AUTONOMOUS mode,
- *  control is based on USER button press in TELEOP
+ *  Turn LED on when USER button is pressed
  */
-public class LEDDemoRobot extends BasicRobot
+public class LEDDemoRobot1 extends BasicRobot
 {
     /** LED on DIO channel 9 */
     // Using 9 because that's right next to the "Ground 5V S" label on the roboRIO
@@ -20,24 +19,11 @@ public class LEDDemoRobot extends BasicRobot
     {
         super.robotInit();
         System.out.println("LED on DIO " + led.getChannel() + " in TELEOP and AUTONOMOUS mode.");
-        System.out.println("Push USER button in TELEOP.");
+        System.out.println("Push USER button.");
     }
 
     @Override
-    public void autonomousPeriodic()
-    {
-        long now = System.currentTimeMillis();
-        
-        // Change LED every 500ms, i.e. every half second
-        long period = now / 500;
-        
-        // Turn 'on' for every even multiple of period, then 'off' for every odd period
-        boolean on = period % 2  == 0;
-        led.set(on);
-    }
-
-    @Override
-    public void teleopPeriodic()
+    public void robotPeriodic()
     {
         // Turn 'on' when USER button is pressed
         boolean on = HALUtil.getFPGAButton();
