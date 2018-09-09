@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.PrintCommand;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 import edu.wpi.first.wpilibj.command.WaitForChildren;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
 import robot.USERButton;
 
@@ -28,16 +29,20 @@ import robot.USERButton;
  *  The GroupCommand example below shows how simple commands
  *  can be combined into larger commands.
  *  
- *  The ActivityIndicator and Scheduler appear in the Shuffleboard (LiveWindow section)
- *  so we can see when commands are executed.
+ *  The commands appear in the SmartDashboard or Shuffleboard
+ *  so we can see when commands are executed,
+ *  even start them from those tools or cancel them while running.
  */
 public class LEDRobot extends BasicRobot
 {
     // Subsystems of this robot
     public static ActivityIndicator activity_indicator = new ActivityIndicator();
-    
-    // Command that we start when the USER button is pressed
-    private Command do_something;
+
+    // Commands of this robot
+    private Command say_hello, look_busy;
+
+    // This one will be started via the USER button
+    private CommandGroup do_something;
     
     @Override
     public void robotInit()
@@ -45,34 +50,47 @@ public class LEDRobot extends BasicRobot
         super.robotInit();
         System.out.println("LED on DIO " + RobotMap.DIO_LED);
         System.out.println("Push USER button.");
-        
-        // do_something could just be a plain LookBusy(1 second):
-//        do_something = new LookBusy(1.0);
+
+        // PrintCommand is a built-in type that prints text
+        say_hello = new PrintCommand("Hello!");
+        // For this demo, we want all commands to also work when disabled
+        say_hello.setRunWhenDisabled(true);
+
+        // Our LookBusy command
+        look_busy = new LookBusy(0.5); 
+        look_busy.setRunWhenDisabled(true);
         
         // The beauty of commands is that we can combine them:
-        CommandGroup recipe = new CommandGroup("Be Really Busy");
+        do_something = new CommandGroup("Be Really Busy");
         
         // In parallel, 1) print something and 2) look busy for one sec
-        recipe.addParallel(new PrintCommand("Starting to be real busy..."));
-        recipe.addParallel(new LookBusy(1.0));
+        do_something.addParallel(new PrintCommand("Starting to be real busy..."));
+        do_something.addParallel(new LookBusy(1.0));
         // Wait until those two complete
-        recipe.addSequential(new WaitForChildren());
+        do_something.addSequential(new WaitForChildren());
         // Add 3 shorter blips
         for (int i=0; i<3; ++i)
         {
-            recipe.addSequential(new WaitCommand(0.2));
-            recipe.addSequential(new LookBusy(0.2));
+            do_something.addSequential(new WaitCommand(0.2));
+            do_something.addSequential(new LookBusy(0.2));
         }
-        recipe.addSequential(new PrintCommand("Done."));
-        do_something = recipe;
-        
-        // It's OK to run this command even when the robot is disabled
+        do_something.addSequential(new PrintCommand("Done."));
         do_something.setRunWhenDisabled(true);
+
+        // Publish the subsystem to dashboard, so it will show when it's used by a command
+        SmartDashboard.putData(activity_indicator);
+        
+        // Publish commands to dashboard: Allows starting/stopping them from there
+        SmartDashboard.putData("Hello", say_hello);
+        SmartDashboard.putData("Look Busy", look_busy);
+        SmartDashboard.putData("Do Something", do_something);
     }
     
     @Override
 	public void robotPeriodic()
 	{
+        // When USER button is pressed and command not already running,
+        // start it.
         if (USERButton.isPressed()  &&   !do_something.isRunning())
             do_something.start();
         
