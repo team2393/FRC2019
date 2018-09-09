@@ -14,11 +14,19 @@ public class LookBusy extends TimedCommand
         requires(LEDRobot.activity_indicator);
     }
     
+    // Called once when the command starts
+    @Override
+    protected void initialize()
+    {
+        LEDRobot.activity_indicator.setActive(true);
+    }
+
     // Called repeatedly while this Command is running, until duration passes
     @Override
     protected void execute()
     {
-        LEDRobot.activity_indicator.setActive(true);
+        // Could keep calling LEDRobot.activity_indicator.setActive(true), but not necessary
+
     }
     
     // Called once when we stop running (isFinished, cancelled)
