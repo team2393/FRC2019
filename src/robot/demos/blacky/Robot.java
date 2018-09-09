@@ -1,7 +1,5 @@
 package robot.demos.blacky;
 
-import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
-
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -14,7 +12,8 @@ public class Robot extends BasicRobot
 
     public static Wheels wheels = new Wheels();
     
-    private Command move = new Move(max_speed, -1);
+    private Command forward = new Move(max_speed, -1);
+    private Command left = new Turn(-max_speed/2, -1);
     private Command rock = new RocknRoll(max_speed, -1);
     private Command wiggle = new Wiggle(max_speed, -1);
     
@@ -23,9 +22,11 @@ public class Robot extends BasicRobot
     {
         super.robotInit();
         
+        System.out.println("Left and right wheels connected to PWM " + RobotMap.PWM_LEFT + " resp. " + RobotMap.PWM_RIGHT);
+        
         // Publish commands to allow control from dashboard
-        SmartDashboard.putData(Scheduler.getInstance());
-        SmartDashboard.putData("Move", move);
+        SmartDashboard.putData("Forward", forward);
+        SmartDashboard.putData("Left", left);
         SmartDashboard.putData("Rock'n'Roll", rock);
         SmartDashboard.putData("Wiggle", wiggle);
     }
@@ -40,10 +41,10 @@ public class Robot extends BasicRobot
     public void autonomousInit()
     {
         CommandGroup moves = new CommandGroup();
-        moves.addSequential(new Move(0.3, 1.0));
-        moves.addSequential(new Wiggle(0.3, 1.0));
-        moves.addSequential(new Move(0.3, 1.0));
-        moves.addSequential(new RocknRoll(0.3, 1.0));
+        moves.addSequential(new Move(max_speed, 2.0));
+        moves.addSequential(new Wiggle(0.3, 2.0));
+        moves.addSequential(new Move(-max_speed/2, 1.0));
+        moves.addSequential(new RocknRoll(0.3, 3.0));
         moves.start();
     }
 
