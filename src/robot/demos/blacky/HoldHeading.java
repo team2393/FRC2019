@@ -42,16 +42,17 @@ public class HoldHeading extends Command
         double error = desired_heading - heading;
         Robot.wheels.turn(P * error);
     }
+    
+    @Override
+    protected boolean isFinished()
+    {
+        // Don't finish (but may be cancelled or interrupted)
+        return false;
+    }
 
     @Override
     protected void end()
     {
         Robot.wheels.turn(0.0);
-    }
-
-    @Override
-    protected boolean isFinished()
-    {
-        return false;
     }
 }

@@ -21,7 +21,7 @@ public class Move extends Command
     @Override
     protected void execute()
     {
-        Robot.wheels.drive(speed, 0.0);
+        Robot.wheels.move(speed);
     }
 
     @Override

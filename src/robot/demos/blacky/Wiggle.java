@@ -30,7 +30,7 @@ public class Wiggle extends Command
     @Override
     protected void execute()
     {
-        Robot.wheels.drive(0.0, turn);
+        Robot.wheels.turn(turn);
         if (left)
         {
             turn += 0.01;

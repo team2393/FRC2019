@@ -30,7 +30,7 @@ public class RocknRoll extends Command
     @Override
     protected void execute()
     {
-        Robot.wheels.drive(speed, 0.0);
+        Robot.wheels.move(speed);
         if (forward)
         {
             speed += 0.01;

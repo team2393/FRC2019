@@ -21,7 +21,7 @@ public class Turn extends Command
     @Override
     protected void execute()
     {
-        Robot.wheels.drive(0.0, turn);
+        Robot.wheels.turn(turn);
     }
 
     @Override

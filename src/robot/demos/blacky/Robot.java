@@ -14,7 +14,6 @@ public class Robot extends BasicRobot
 
     // Subsystems, Components
     public static Wheels wheels = new Wheels();
-    
     public static Gyro gyro = new ADXRS450_Gyro();
     
     // Commands
@@ -29,7 +28,6 @@ public class Robot extends BasicRobot
     public void robotInit ()
     {
         super.robotInit();
-        
         System.out.println("Left and right wheels connected to PWM " + RobotMap.PWM_LEFT + " resp. " + RobotMap.PWM_RIGHT);
         
         // Publish commands to allow control from dashboard
@@ -60,11 +58,6 @@ public class Robot extends BasicRobot
         moves.addSequential(new RocknRoll(0.3, 3.0));
         moves.start();
     }
-
-    @Override
-    public void teleopInit()
-    {
-        super.teleopInit();
-        wiggle.start();
-    }
+    
+    // In teleop, use dashboard to trigger commands
 }
