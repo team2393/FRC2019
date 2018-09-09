@@ -12,8 +12,6 @@ public class LookBusy extends TimedCommand
         super(duration);
         // This command needs the robot's activity indicator.
         requires(LEDRobot.activity_indicator);
-        // It's OK to run this command even when the robot is disabled
-        setRunWhenDisabled(true);
     }
     
     // Called repeatedly while this Command is running, until duration passes
