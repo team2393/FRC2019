@@ -1,8 +1,10 @@
 package robot.demos.blacky;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
 
@@ -10,12 +12,17 @@ public class Robot extends BasicRobot
 {
     private final static double max_speed = 0.2;
 
+    // Subsystems, Components
     public static Wheels wheels = new Wheels();
     
+    public static Gyro gyro = new ADXRS450_Gyro();
+    
+    // Commands
     private Command forward = new Move(max_speed, -1);
     private Command left = new Turn(-max_speed/2, -1);
     private Command rock = new RocknRoll(max_speed, -1);
     private Command wiggle = new Wiggle(max_speed, -1);
+    private Command hold = new HoldHeading();
     
     @Override
     public void robotInit ()
@@ -29,6 +36,7 @@ public class Robot extends BasicRobot
         SmartDashboard.putData("Left", left);
         SmartDashboard.putData("Rock'n'Roll", rock);
         SmartDashboard.putData("Wiggle", wiggle);
+        SmartDashboard.putData("Hold Heading", hold);
     }
 
     @Override

@@ -28,14 +28,26 @@ public class Wheels extends Subsystem
     {
     }
 
+    // Update the speed & rotation which periodic() will then send to drive
+    /** @param speed Forward (0..1) or backward (-1..0) speed */
+    public void move(final double speed)
+    {
+        this.speed = speed;
+    }
+
+    /** @param rotation Rotation, -1 (left) .. 1 (right)  */
+    public void turn(final double rotation)
+    {
+        this.rotation = rotation;
+    }
+    
     /** @param speed Forward (0..1) or backward (-1..0) speed
      *  @param rotation Rotation, -1 (left) .. 1 (right)
      */
     public void drive(final double speed, final double rotation)
     {
-        // Update the speed & rotation which periodic() will then send to drive
-        this.speed = speed;
-        this.rotation = rotation;
+        move(speed);
+        turn(rotation);
     }
     
     // Called by Scheduler all the time
