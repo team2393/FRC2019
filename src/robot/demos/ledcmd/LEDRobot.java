@@ -1,8 +1,10 @@
 package robot.demos.ledcmd;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.PrintCommand;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 import robot.BasicRobot;
 import robot.USERButton;
 
@@ -22,15 +24,19 @@ import robot.USERButton;
  *
  *  That's overkill for a single LED, but will make it easier
  *  to keep track as more hardware is added.
+ *  The GroupCommand example below shows how simple commands
+ *  can be combined into larger commands.
  *  
  *  The ActivityIndicator and Scheduler appear in the Shuffleboard (LiveWindow section)
  *  so we can see when commands are executed.
  */
 public class LEDRobot extends BasicRobot
 {
+    // Subsystems of this robot
     public static ActivityIndicator activity_indicator = new ActivityIndicator();
     
-    private Command be_active = new LookBusy(1.0);
+    // Command that we start when the USER button is pressed
+    private Command do_something;
     
     @Override
     public void robotInit()
@@ -38,13 +44,32 @@ public class LEDRobot extends BasicRobot
         super.robotInit();
         System.out.println("LED on DIO " + RobotMap.DIO_LED);
         System.out.println("Push USER button.");
+        
+        // do_something could just be a plain LookBusy(1 second):
+        // do_something = new LookBusy(1.0);
+        
+        // The beauty of commands is that we can combine them:
+        CommandGroup recipe = new CommandGroup("Be Really Busy");
+        recipe.addSequential(new PrintCommand("Starting to be real busy..."));
+        recipe.addSequential(new LookBusy(1.0));
+        recipe.addSequential(new WaitCommand(0.2));
+        recipe.addSequential(new LookBusy(0.2));
+        recipe.addSequential(new WaitCommand(0.2));
+        recipe.addSequential(new LookBusy(0.2));
+        recipe.addSequential(new WaitCommand(0.2));
+        recipe.addSequential(new LookBusy(0.2));
+        recipe.addSequential(new PrintCommand("Done."));
+        recipe.setRunWhenDisabled(true);
+        do_something = recipe;
     }
     
     @Override
 	public void robotPeriodic()
 	{
-        if (USERButton.isPressed()  &&   !be_active.isRunning())
-            be_active.start();
+        if (USERButton.isPressed()  &&   !do_something.isRunning())
+            do_something.start();
+        
+        // Run Scheduler which takes care of commands
         Scheduler.getInstance().run();
 	}
 }
