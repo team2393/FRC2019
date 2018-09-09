@@ -25,7 +25,12 @@ public class LEDDemoRobot1 extends BasicRobot
     @Override
     public void robotPeriodic()
     {
-        // Turn 'on' when USER button is pressed
+        // No matter which mode, turn LED 'on' when USER button is pressed
         led.set(USERButton.isPressed());
+        
+        // To only do this in tele-op mode,
+        // replace robotPeriodic() with teleopPeriodic()
+        // To only do this in autonomous mode,
+        // replace robotPeriodic() with autonomousPeriodic().
     }    
 }
