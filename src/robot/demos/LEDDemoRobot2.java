@@ -2,7 +2,7 @@ package robot.demos;
 
 import edu.wpi.first.wpilibj.DigitalOutput;
 import robot.BasicRobot;
-import robot.USERButton;
+import robot.parts.USERButton;
 
 /** Blink LED in AUTONOMOUS mode,
  *  turn on when USER button pressed in TELEOP

@@ -1,4 +1,4 @@
-package robot;
+package robot.parts;
 
 import edu.wpi.first.wpilibj.hal.HALUtil;
 

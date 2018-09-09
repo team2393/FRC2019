@@ -3,7 +3,7 @@ package robot.demos;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import robot.BasicRobot;
-import robot.USERButton;
+import robot.parts.USERButton;
 
 /** Read a Light Sensor
  *  

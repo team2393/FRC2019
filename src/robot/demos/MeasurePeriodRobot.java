@@ -1,7 +1,7 @@
 package robot.demos;
 
 import robot.BasicRobot;
-import robot.USERButton;
+import robot.parts.USERButton;
 
 /** Robot that displays the cycle time when pushing USER button */
 public class MeasurePeriodRobot extends BasicRobot

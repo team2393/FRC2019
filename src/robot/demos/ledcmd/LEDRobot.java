@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 import edu.wpi.first.wpilibj.command.WaitForChildren;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
-import robot.USERButton;
+import robot.parts.USERButton;
 
 /** Robot that uses Commands
  * 

@@ -2,7 +2,7 @@ package robot.demos;
 
 import edu.wpi.first.wpilibj.Servo;
 import robot.BasicRobot;
-import robot.USERButton;
+import robot.parts.USERButton;
 
 /** Robot that moves a servo */
 public class ServoDemoRobot extends BasicRobot

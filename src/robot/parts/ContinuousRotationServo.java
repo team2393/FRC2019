@@ -1,4 +1,4 @@
-package robot.demos.blacky;
+package robot.parts;
 
 import edu.wpi.first.wpilibj.PWMSpeedController;
 
@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.PWMSpeedController;
  */
 public class ContinuousRotationServo extends PWMSpeedController
 {
-    public ContinuousRotationServo(int channel)
+    public ContinuousRotationServo(final int channel)
     {
         super(channel);
         
