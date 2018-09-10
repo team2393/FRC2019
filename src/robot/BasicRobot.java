@@ -5,13 +5,14 @@ import edu.wpi.first.wpilibj.TimedRobot;
 /** Starting point for Team 2393 robots
  *  
  *  A 'timed' robot that displays the actual class name on startup,
- *  then does nothing in the various modes.
+ *  then does nothing in the various modes beyond just printing
+ *  which mode it enters.
  *  
  *  To implement a functional robot,
  *  derive from this class and override the desired methods.
  *  
  *  To select which code to actually run on the roboRIO,
- *  set the `package` and `robot.class` in build.properties
+ *  set the `robot.class` in build.properties
  */
 public class BasicRobot extends TimedRobot
 {
