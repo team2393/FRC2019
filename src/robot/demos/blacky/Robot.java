@@ -1,12 +1,14 @@
 package robot.demos.blacky;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
+import robot.parts.USERButton;
 
 public class Robot extends BasicRobot
 {
@@ -15,6 +17,7 @@ public class Robot extends BasicRobot
     // Subsystems, Components
     public static Wheels wheels = new Wheels();
     public static Gyro gyro = new ADXRS450_Gyro();
+    public static Button user = new USERButton();
     
     // Commands
     private Command jog = new SmoothMove(0.3, 0.6, 7.0);
@@ -23,12 +26,16 @@ public class Robot extends BasicRobot
     private Command rock = new RocknRoll(max_speed, -1);
     private Command wiggle = new Wiggle(max_speed, -1);
     private Command hold = new HoldHeading();
+    private Command blink = new Blink(RobotMap.DIO_LED, 0.3);
     
     @Override
     public void robotInit ()
     {
         super.robotInit();
         System.out.println("Left and right wheels connected to PWM " + RobotMap.PWM_LEFT + " resp. " + RobotMap.PWM_RIGHT);
+        System.out.println("LED on DIO " + RobotMap.DIO_LED);
+        
+        user.toggleWhenPressed(blink);
         
         // Publish commands to allow control from dashboard
         SmartDashboard.putData("Jog", jog);
