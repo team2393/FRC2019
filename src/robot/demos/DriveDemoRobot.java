@@ -1,9 +1,9 @@
 package robot.demos;
 
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import robot.BasicRobot;
 import robot.parts.ContinuousRotationServo;
-import robot.parts.USERButton;
 
 /** Robot that moves with left/right motor */
 public class DriveDemoRobot extends BasicRobot
@@ -43,7 +43,7 @@ public class DriveDemoRobot extends BasicRobot
     public void autonomousPeriodic()
     {
         // If USER button is pressed, move forward
-        if (USERButton.isPressed())
+        if (RobotController.getUserButton())
             speed = 0.3;
         else
             speed = 0.0;
@@ -53,7 +53,7 @@ public class DriveDemoRobot extends BasicRobot
     public void teleopPeriodic()
     {
         // If USER button is pressed, rotate right
-        if (USERButton.isPressed())
+        if (RobotController.getUserButton())
             turn = 0.3;
         else
             turn = 0.0;

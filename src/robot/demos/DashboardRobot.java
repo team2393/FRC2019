@@ -1,10 +1,10 @@
 package robot.demos;
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
-import robot.parts.USERButton;
 
 /** Robot that interacts with the Dashboard
  * 
@@ -39,7 +39,7 @@ public class DashboardRobot extends BasicRobot
 	public void robotPeriodic()
 	{
         // Publish the current value of the 'USER' button so we can show it on the Dashboard
-        SmartDashboard.putBoolean("USER Button", USERButton.isPressed());
+        SmartDashboard.putBoolean("USER Button", RobotController.getUserButton());
 
         // We can not only publish a value to the DB but also read a value:
         String name = SmartDashboard.getString("Name", "");

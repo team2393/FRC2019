@@ -1,5 +1,6 @@
 package robot.demos.ledcmd;
 
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.PrintCommand;
@@ -8,7 +9,6 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 import edu.wpi.first.wpilibj.command.WaitForChildren;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
-import robot.parts.USERButton;
 
 /** Robot that uses Commands
  * 
@@ -91,7 +91,7 @@ public class LEDRobot extends BasicRobot
 	{
         // When USER button is pressed and command not already running,
         // start it.
-        if (USERButton.isPressed()  &&   !do_something.isRunning())
+        if (RobotController.getUserButton()  &&   !do_something.isRunning())
             do_something.start();
         
         // Run Scheduler which takes care of commands

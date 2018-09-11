@@ -1,8 +1,8 @@
 package robot.demos;
 
 import edu.wpi.first.wpilibj.DigitalOutput;
+import edu.wpi.first.wpilibj.RobotController;
 import robot.BasicRobot;
-import robot.parts.USERButton;
 
 /** Blink LED in AUTONOMOUS mode,
  *  turn on when USER button pressed in TELEOP
@@ -38,6 +38,6 @@ public class LEDDemoRobot2 extends BasicRobot
     public void teleopPeriodic()
     {
         // Turn 'on' when USER button is pressed
-        led.set(USERButton.isPressed());
+        led.set(RobotController.getUserButton());
     }    
 }

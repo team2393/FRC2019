@@ -1,8 +1,8 @@
 package robot.demos;
 
 import edu.wpi.first.wpilibj.DigitalOutput;
+import edu.wpi.first.wpilibj.RobotController;
 import robot.BasicRobot;
-import robot.parts.USERButton;
 
 /** Start of every hardware demo: LED
  * 
@@ -26,7 +26,7 @@ public class LEDDemoRobot1 extends BasicRobot
     public void robotPeriodic()
     {
         // No matter which mode, turn LED 'on' when USER button is pressed
-        led.set(USERButton.isPressed());
+        led.set(RobotController.getUserButton());
         
         // To only do this in tele-op mode,
         // replace robotPeriodic() with teleopPeriodic()

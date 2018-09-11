@@ -1,8 +1,8 @@
 package robot.demos;
 
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Servo;
 import robot.BasicRobot;
-import robot.parts.USERButton;
 
 /** Robot that moves a servo */
 public class ServoDemoRobot extends BasicRobot
@@ -34,7 +34,7 @@ public class ServoDemoRobot extends BasicRobot
         servo.set(pos);
         
         // If USER button is pressed, display the current position
-        if (USERButton.isPressed())
+        if (RobotController.getUserButton())
             System.out.println("Servo at " + pos);
         
         // Prepare next servo position

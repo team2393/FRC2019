@@ -18,15 +18,9 @@ import edu.wpi.first.wpilibj.RobotController;
  */
 public class USERButton extends Button
 {
-    /** @return <code>true</code> when the 'USER' button is pressed, otherwise <code>false</code> */
-    public static boolean isPressed()
-    {
-        return RobotController.getUserButton();
-    }
-
     @Override
     public boolean get()
     {
-        return isPressed();
+        return RobotController.getUserButton();
     }
 }
