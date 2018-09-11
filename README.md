@@ -1,6 +1,8 @@
 2393 First Tutorial
 ===================
 
+![Simple Robot](blacky.jpg)
+
 Git Clone
 ---------
 
