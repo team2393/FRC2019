@@ -4,14 +4,18 @@ import edu.wpi.first.wpilibj.TimedRobot;
 
 /** Starting point for Team 2393 robots
  *  
- *  A 'timed' robot that displays the actual class name on startup,
- *  then does nothing in the various modes beyond just printing
+ *  <p>A 'timed' robot that displays the class name on startup,
+ *  so we can always see which code is running on the roboRIO.
+ *  
+ *  <p>It communicates with the FRC driver station,
+ *  understands the different modes (disabled, autonomous, teleop),
+ *  it just doesn't _do_ anything in the various modes beyond printing
  *  which mode it enters.
  *  
- *  To implement a functional robot,
+ *  <p>To implement a more functional robot,
  *  derive from this class and override the desired methods.
  *  
- *  To select which code to actually run on the roboRIO,
+ *  <p>To select which code to actually run on the roboRIO,
  *  set the `robot.class` in build.properties
  */
 public class BasicRobot extends TimedRobot
