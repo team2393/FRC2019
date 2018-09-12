@@ -17,10 +17,11 @@ Import into Eclipse:
  
 --> Now you have a "2393First" project in your Eclipse workspace.
 
+
 Git Update
 ----------
 
-To later get an update:
+To later get an update, i.e. to fetch the "latest":
  * Right-click on the "2393First" project
  * Team
  * "Pull" (not "Pull..")
