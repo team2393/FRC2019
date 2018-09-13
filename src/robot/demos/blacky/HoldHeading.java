@@ -1,15 +1,19 @@
 package robot.demos.blacky;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 /** Command to hold current heading
- * 
+ *
  *  On start, fetch current heading from gyro
  *  and use that as the desired heading.
  *  From then on, use proportional gain to hold heading.
  */
 public class HoldHeading extends Command
 {
+    private Wheels wheels;
+    private Gyro gyro;
+
     // Gain for correcting error.
     // Example:
     // desired heading is 10.0 degrees, but gyro tells us we're pointed to 8 degrees.
@@ -23,26 +27,28 @@ public class HoldHeading extends Command
     private double P = 0.01;
     private double desired_heading;
 
-    public HoldHeading()
+    public HoldHeading(Wheels wheels, Gyro gyro)
     {
-        doesRequire(Robot.wheels);
+        this.wheels = wheels;
+        this.gyro = gyro;
+        doesRequire(wheels);
     }
-    
+
     @Override
     protected void initialize()
     {
-        desired_heading = Robot.gyro.getAngle();
+        desired_heading = gyro.getAngle();
     }
 
     @Override
     protected void execute()
     {
-        double heading = Robot.gyro.getAngle();
-        
+        double heading = gyro.getAngle();
+
         double error = desired_heading - heading;
-        Robot.wheels.turn(P * error);
+        wheels.turn(P * error);
     }
-    
+
     @Override
     protected boolean isFinished()
     {
@@ -53,6 +59,6 @@ public class HoldHeading extends Command
     @Override
     protected void end()
     {
-        Robot.wheels.turn(0.0);
+        wheels.turn(0.0);
     }
 }

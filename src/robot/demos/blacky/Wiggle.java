@@ -5,21 +5,24 @@ import edu.wpi.first.wpilibj.command.Command;
 /** Command to wiggle the robot left/right */
 public class Wiggle extends Command
 {
+    private Wheels wheels;
     private double max;
     private double turn = 0.0;
     private boolean left = true;
-    
-    /** @param max How fast to wiggle
+
+    /** @param wheels {@link Wheels} that we use
+     *  @param max How fast to wiggle
      *  @param duration How long [seconds]. -1 to keep going until stopped
      */
-    public Wiggle(double max, double duration)
+    public Wiggle(Wheels wheels, double max, double duration)
     {
+        this.wheels = wheels;
         this.max = max;
         if (duration > 0)
             setTimeout(duration);
-        doesRequire(Robot.wheels);
+        doesRequire(wheels);
     }
-    
+
     @Override
     protected void initialize()
     {
@@ -30,7 +33,7 @@ public class Wiggle extends Command
     @Override
     protected void execute()
     {
-        Robot.wheels.turn(turn);
+        wheels.turn(turn);
         if (left)
         {
             turn += 0.01;
@@ -60,6 +63,6 @@ public class Wiggle extends Command
     @Override
     protected void end()
     {
-        Robot.wheels.stop();
+        wheels.stop();
     }
 }

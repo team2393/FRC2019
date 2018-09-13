@@ -5,23 +5,26 @@ import edu.wpi.first.wpilibj.command.Command;
 /** Command to move forward or back */
 public class Move extends Command
 {
+    private Wheels wheels;
     private double speed;
 
-    /** @param speed How fast to move forward or back, -1..1
+    /** @param wheels {@link Wheels} that we use
+     *  @param speed How fast to move forward or back, -1..1
      *  @param duration How long [seconds]. -1 to keep going until stopped
      */
-    public Move(double speed, double duration)
+    public Move(Wheels wheels, double speed, double duration)
     {
+        this.wheels = wheels;
         this.speed = speed;
         if (duration > 0)
             setTimeout(duration);
-        doesRequire(Robot.wheels);
+        doesRequire(wheels);
     }
-    
+
     @Override
     protected void execute()
     {
-        Robot.wheels.move(speed);
+        wheels.move(speed);
     }
 
     @Override
@@ -33,6 +36,6 @@ public class Move extends Command
     @Override
     protected void end()
     {
-        Robot.wheels.stop();
+        wheels.stop();
     }
 }
