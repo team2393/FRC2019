@@ -15,9 +15,7 @@ import robot.subsystems.DriveSubsystem;
 public class JoystickDemo4 extends BasicRobot
 {
     // Wrap the motors into a DriveSubsystem
-    private ContinuousRotationServo left = new ContinuousRotationServo(0);
-    private ContinuousRotationServo right = new ContinuousRotationServo(1);
-    final DifferentialDrive drive = new DifferentialDrive(left, right);
+    final DifferentialDrive drive = new DifferentialDrive(new ContinuousRotationServo(0), new ContinuousRotationServo(1));
     private DriveSubsystem drive_subsys = new DriveSubsystem(drive);
     
     // Use gryro

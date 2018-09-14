@@ -38,9 +38,19 @@ public class HoldHeading extends Command
     @Override
     protected void initialize()
     {
-        desired_heading = gyro.getAngle();
+        setDesiredHeading(gyro.getAngle());
     }
 
+    public void setDesiredHeading(double heading)
+    {
+        desired_heading = heading;
+    }
+    
+    public double getDesiredHeading()
+    {
+        return desired_heading;
+    }
+    
     @Override
     protected void execute()
     {
