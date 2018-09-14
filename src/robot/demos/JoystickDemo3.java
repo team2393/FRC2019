@@ -19,7 +19,6 @@ public class JoystickDemo3 extends BasicRobot
         super.robotInit();
         System.out.println("In teleop mode, move Joystick and watch on Dashboard");
     }
-
     
     @Override
     public void teleopPeriodic()
