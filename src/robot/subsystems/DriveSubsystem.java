@@ -55,7 +55,7 @@ public class DriveSubsystem extends Subsystem
     public void periodic()
     {
         // Update the drive (which will otherwise stop because of MotorSafety)
-        drive.arcadeDrive(speed, - rotation, false);
+        drive.arcadeDrive(speed, rotation, false);
         // Display speed and rotation
         SmartDashboard.putNumber("speed", speed);
         SmartDashboard.putNumber("rotation", rotation);

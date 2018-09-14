@@ -1,26 +1,27 @@
 package robot.demos.blacky;
 
 import edu.wpi.first.wpilibj.command.Command;
+import robot.subsystems.DriveSubsystem;
 
 /** Command to wiggle the robot left/right */
 public class Wiggle extends Command
 {
-    private Wheels wheels;
+    private DriveSubsystem drive_sub;
     private double max;
     private double turn = 0.0;
     private boolean left = true;
 
-    /** @param wheels {@link Wheels} that we use
+    /** @param drive_sub {@link DriveSubsystem} that we use
      *  @param max How fast to wiggle
      *  @param duration How long [seconds]. -1 to keep going until stopped
      */
-    public Wiggle(Wheels wheels, double max, double duration)
+    public Wiggle(DriveSubsystem drive_sub, double max, double duration)
     {
-        this.wheels = wheels;
+        this.drive_sub = drive_sub;
         this.max = max;
         if (duration > 0)
             setTimeout(duration);
-        doesRequire(wheels);
+        doesRequire(drive_sub);
     }
 
     @Override
@@ -33,7 +34,7 @@ public class Wiggle extends Command
     @Override
     protected void execute()
     {
-        wheels.turn(turn);
+        drive_sub.turn(turn);
         if (left)
         {
             turn += 0.01;
@@ -63,6 +64,6 @@ public class Wiggle extends Command
     @Override
     protected void end()
     {
-        wheels.stop();
+        drive_sub.stop();
     }
 }

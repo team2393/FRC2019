@@ -26,9 +26,6 @@ public class DriveDemoRobot extends BasicRobot
         super.robotInit();
         System.out.println("Left/right servo drives on PWM " + left.getChannel() + ", " + right.getChannel());
         System.out.println("Push USER button to move/rotate in auto resp. teleop");
-        // Because of the way the demo robot is wired, the motors need to be reversed
-        left.setInverted(true);
-        right.setInverted(true);
     }
   
     @Override

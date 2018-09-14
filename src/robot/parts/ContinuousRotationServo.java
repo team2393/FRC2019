@@ -17,5 +17,6 @@ public class ContinuousRotationServo extends PWMSpeedController
         setSpeed(0.0);
         setZeroLatch();
         setName("ContinuousRotationServo", getChannel());
+        setInverted(true);
     }
 }

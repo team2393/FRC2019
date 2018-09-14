@@ -1,4 +1,4 @@
-package robot.demos.blacky;
+package robot.util;
 
 /** A smooth motion curve
  * 

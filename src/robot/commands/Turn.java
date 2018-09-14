@@ -1,31 +1,32 @@
-package robot.demos.blacky;
+package robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import robot.subsystems.DriveSubsystem;
 
 /** Command to rotate left/right */
 public class Turn extends Command
 {
-    private Wheels wheels;
+    private DriveSubsystem drive_sub;
 
     private double turn;
 
-    /** @param wheels {@link Wheels} that we use
+    /** @param drive_sub {@link DriveSubsystem} that we use
      *  @param turn How fast to rotate, left -1 to right 1
      *  @param duration How long [seconds]. -1 to keep going until stopped
      */
-    public Turn(Wheels wheels, double turn, double duration)
+    public Turn(DriveSubsystem drive_sub, double turn, double duration)
     {
-        this.wheels = wheels;
+        this.drive_sub = drive_sub;
         this.turn = turn;
         if (duration > 0)
             setTimeout(duration);
-        doesRequire(wheels);
+        doesRequire(drive_sub);
     }
 
     @Override
     protected void execute()
     {
-        wheels.turn(turn);
+        drive_sub.turn(turn);
     }
 
     @Override
@@ -37,6 +38,6 @@ public class Turn extends Command
     @Override
     protected void end()
     {
-        wheels.stop();
+        drive_sub.stop();
     }
 }

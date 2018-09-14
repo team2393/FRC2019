@@ -1,30 +1,31 @@
-package robot.demos.blacky;
+package robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import robot.subsystems.DriveSubsystem;
 
 /** Command to move forward or back */
 public class Move extends Command
 {
-    private Wheels wheels;
+    private DriveSubsystem drive_sub;
     private double speed;
 
-    /** @param wheels {@link Wheels} that we use
+    /** @param drive_sub {@link DriveSubsystem} that we use
      *  @param speed How fast to move forward or back, -1..1
      *  @param duration How long [seconds]. -1 to keep going until stopped
      */
-    public Move(Wheels wheels, double speed, double duration)
+    public Move(DriveSubsystem drive_sub, double speed, double duration)
     {
-        this.wheels = wheels;
+        this.drive_sub = drive_sub;
         this.speed = speed;
         if (duration > 0)
             setTimeout(duration);
-        doesRequire(wheels);
+        doesRequire(drive_sub);
     }
 
     @Override
     protected void execute()
     {
-        wheels.move(speed);
+        drive_sub.move(speed);
     }
 
     @Override
@@ -36,6 +37,6 @@ public class Move extends Command
     @Override
     protected void end()
     {
-        wheels.stop();
+        drive_sub.stop();
     }
 }

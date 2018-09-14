@@ -11,7 +11,7 @@ public class JoystickDemo1 extends BasicRobot
     public void robotInit()
     {
         super.robotInit();
-        System.out.println("In teleop mode, move Joystick");
+        System.out.println("Displaying Joystick values in teleop");
     }
 
     

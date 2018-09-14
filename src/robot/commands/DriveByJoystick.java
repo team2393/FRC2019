@@ -20,7 +20,8 @@ public class DriveByJoystick extends Command
     @Override
     protected void execute()
     {
-        drive_subsys.drive(joystick.getRawAxis(5), joystick.getRawAxis(4));
+        // Positive speed = forward, positive turn = right
+        drive_subsys.drive(-joystick.getRawAxis(5), joystick.getRawAxis(4));
     }
 
     @Override

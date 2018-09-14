@@ -61,5 +61,4 @@ public class JoystickDemo4 extends BasicRobot
         // In auto, start the command holding the heading
         hold_heading.start();
     }
-
 }

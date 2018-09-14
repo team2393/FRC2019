@@ -17,16 +17,18 @@ public class JoystickDemo3 extends BasicRobot
     public void robotInit()
     {
         super.robotInit();
-        System.out.println("In teleop mode, move Joystick and watch on Dashboard");
+        System.out.println("In teleop mode, drive with Joystick");
     }
     
     @Override
     public void teleopPeriodic()
     {
+        // Joystick 'forward' sends negative number, so invert
+        double speed = -joystick.getRawAxis(5);
+        // Joystick 'right' is positive
         double turn = joystick.getRawAxis(4);
-        double speed = joystick.getRawAxis(5);
-        SmartDashboard.putNumber("Turn", turn);
         SmartDashboard.putNumber("Speed", speed);
+        SmartDashboard.putNumber("Turn", turn);
         drive.arcadeDrive(speed, turn);
     }
 }
