@@ -57,3 +57,19 @@ Code in the `first` and `bank` packages can run via 'Run As', 'Java Application'
 
 For anything in `robot` you need the WPILib. That way you can view and edit the code.
 To actually run it, you'll need the roboRIO hardware which we'll have in the meetings.
+
+
+Eclipse Editor Tweaks
+---------------------
+
+ * Menu Window, Preferences, Java, Code Style, Formatter, Import
+ * Select YourHomeDir, git, 2393First, Formatter.xml
+
+
+ * Menu Window, Preferences, Java, Editor, Save Actions:
+ * [x] Perform the selection actions on save,
+ * [x] Organize imports
+ * [x] Additional Actions, 'Configure':
+     * Code Organizing: Remove training whitespace
+     * Unnecessary Code: Remove unused imports
+
