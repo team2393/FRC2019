@@ -48,7 +48,7 @@ public class LEDRobot extends BasicRobot
     public void robotInit()
     {
         super.robotInit();
-        System.out.println("LED on DIO " + RobotMap.DIO_LED);
+        System.out.println("LED on DIO " + RobotMap.led.getChannel());
         System.out.println("Push USER button.");
 
         // PrintCommand is a built-in type that prints text

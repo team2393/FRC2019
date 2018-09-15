@@ -23,11 +23,7 @@ public class Robot extends BasicRobot
 
     // Subsystems, Components
     // Wrap the motors into a DriveSubsystem
-    private ContinuousRotationServo left_motor = new ContinuousRotationServo(0);
-    private ContinuousRotationServo right_motor = new ContinuousRotationServo(1);
-    final DifferentialDrive drive = new DifferentialDrive(left_motor, right_motor);
-    private DriveSubsystem drive_subsys = new DriveSubsystem(drive);
-    private Gyro gyro = new ADXRS450_Gyro();
+    private DriveSubsystem drive_subsys = new DriveSubsystem(RobotMap.drive);
     private Button user = new USERButton();
 
     // Commands
@@ -36,15 +32,15 @@ public class Robot extends BasicRobot
     private Command left = new Turn(drive_subsys, -max_speed/2, -1);
     private Command rock = new RocknRoll(drive_subsys, max_speed, -1);
     private Command wiggle = new Wiggle(drive_subsys, max_speed, -1);
-    private Command hold = new HoldHeading(drive_subsys, gyro);
-    private Command blink = new Blink(RobotMap.DIO_LED, 0.3);
+    private Command hold = new HoldHeading(drive_subsys, RobotMap.gyro);
+    private Command blink = new Blink(RobotMap.led, 0.3);
 
     @Override
     public void robotInit ()
     {
         super.robotInit();
-        System.out.println("Left and right drive_subsys connected to PWM " + RobotMap.PWM_LEFT + " resp. " + RobotMap.PWM_RIGHT);
-        System.out.println("LED on DIO " + RobotMap.DIO_LED);
+        
+        RobotMap.describe();
 
         user.toggleWhenPressed(blink);
 

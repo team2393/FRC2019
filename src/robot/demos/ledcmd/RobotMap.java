@@ -1,5 +1,7 @@
 package robot.demos.ledcmd;
 
+import edu.wpi.first.wpilibj.DigitalOutput;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -8,6 +10,6 @@ package robot.demos.ledcmd;
  */
 public class RobotMap
 {
-    /** Port used by LED */
-    public static int DIO_LED = 9;
+    /** LED */
+    public static DigitalOutput led = new DigitalOutput(9);
 }
