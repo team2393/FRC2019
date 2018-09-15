@@ -1,21 +1,21 @@
-package robot.demos.blacky;
+package robot.blacky;
 
 import edu.wpi.first.wpilibj.command.Command;
 import robot.subsystems.DriveSubsystem;
 
-/** Command to rock the robot back and forth */
-public class RocknRoll extends Command
+/** Command to wiggle the robot left/right */
+public class Wiggle extends Command
 {
     private DriveSubsystem drive_sub;
     private double max;
-    private double speed = 0.0;
-    private boolean forward = true;
+    private double turn = 0.0;
+    private boolean left = true;
 
     /** @param drive_sub {@link DriveSubsystem} that we use
-     *  @param max How fast to rock/roll
+     *  @param max How fast to wiggle
      *  @param duration How long [seconds]. -1 to keep going until stopped
      */
-    public RocknRoll(DriveSubsystem drive_sub, double max, double duration)
+    public Wiggle(DriveSubsystem drive_sub, double max, double duration)
     {
         this.drive_sub = drive_sub;
         this.max = max;
@@ -27,30 +27,30 @@ public class RocknRoll extends Command
     @Override
     protected void initialize()
     {
-        speed = 0.0;
-        forward = true;
+        turn = 0.0;
+        left = true;
     }
 
     @Override
     protected void execute()
     {
-        drive_sub.move(speed);
-        if (forward)
+        drive_sub.turn(turn);
+        if (left)
         {
-            speed += 0.01;
-            if (speed >= max)
+            turn += 0.01;
+            if (turn >= max)
             {
-                speed = max;
-                forward = false;
+                turn = max;
+                left = false;
             }
         }
         else
         {
-            speed -= 0.01;
-            if (speed <= -max)
+            turn -= 0.01;
+            if (turn <= -max)
             {
-                speed = -max;
-                forward = true;
+                turn = -max;
+                left = true;
             }
         }
     }

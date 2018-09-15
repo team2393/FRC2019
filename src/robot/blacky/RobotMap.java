@@ -1,4 +1,4 @@
-package robot.demos.blacky;
+package robot.blacky;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DigitalOutput;

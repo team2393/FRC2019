@@ -51,15 +51,16 @@ public class LEDRobot extends BasicRobot
         System.out.println("LED on DIO " + RobotMap.led.getChannel());
         System.out.println("Push USER button.");
 
-        // PrintCommand is a built-in type that prints text
+        // PrintCommand is a built-in type that prints text, and finishes right away
         say_hello = new PrintCommand("Hello!");
         // For this demo, we want all commands to also work when disabled
         say_hello.setRunWhenDisabled(true);
 
-        // Our LookBusy command
-        look_busy = new LookBusy(activity_indicator, 0.5);
+        // Our LookBusy command: Turn LED on for 5 seconds (or until cancelled)
+        look_busy = new LookBusy(activity_indicator, 5.0);
         look_busy.setRunWhenDisabled(true);
 
+        // ----------------------------------------------------------
         // The beauty of commands is that we can combine them:
         do_something = new CommandGroup("Be Really Busy");
 
@@ -76,6 +77,7 @@ public class LEDRobot extends BasicRobot
         }
         do_something.addSequential(new PrintCommand("Done."));
         do_something.setRunWhenDisabled(true);
+        // ----------------------------------------------------------
 
         // Publish the subsystem to dashboard, so it will show when it's used by a command
         SmartDashboard.putData(activity_indicator);

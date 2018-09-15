@@ -1,4 +1,4 @@
-package robot.demos.blacky;
+package robot.blacky;
 
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Timer;

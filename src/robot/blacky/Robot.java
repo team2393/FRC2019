@@ -1,19 +1,15 @@
-package robot.demos.blacky;
+package robot.blacky;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
 import robot.commands.HoldHeading;
 import robot.commands.Move;
 import robot.commands.SmoothMove;
 import robot.commands.Turn;
-import robot.parts.ContinuousRotationServo;
 import robot.parts.USERButton;
 import robot.subsystems.DriveSubsystem;
 
