@@ -1,6 +1,5 @@
 package robot.demos.ledcmd;
 
-import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -13,7 +12,6 @@ class ActivityIndicator extends Subsystem
 {
     // A Subsystem tends to handle one or more physical parts of the robot.
     // This subsystem includes an LED
-    private DigitalOutput led = new DigitalOutput(RobotMap.DIO_LED);
 
     public ActivityIndicator()
     {
@@ -35,7 +33,7 @@ class ActivityIndicator extends Subsystem
      */
     public void setActive(boolean active)
     {
-        led.set(active);
+        RobotMap.led.set(active);
         SmartDashboard.putBoolean("Active", active);
     }
 }

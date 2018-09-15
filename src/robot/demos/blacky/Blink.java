@@ -11,12 +11,12 @@ public class Blink extends Command
     private Timer timer = new Timer();
     private double period;
     
-    /** @param channel DIO channel for LED
+    /** @param channel {@link DigitalOutput} channel for LED
      *  @param period Period in seconds
      */
-    public Blink(int channel, double period)
+    public Blink(DigitalOutput channel, double period)
     {
-        led = new DigitalOutput(channel);
+        led = channel;
         this.period = period;
     }
     
