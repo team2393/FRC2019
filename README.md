@@ -41,6 +41,13 @@ To work with the robot code, you need to install the WPIlib.
  * You'll see "Installing Software" in the bottom right corner.
  * When prompted to restart Eclipse, do that.
 
+WPILib is the robotics library started at Worcester Polytechnic Institute (WPI)
+that is used for controlling FIRST robots.
+It's an open-source project on GitHub where anybody can
+make suggestions and contributions,
+see https://github.com/wpilibsuite/allwpilib/issues/954
+
+![Java Duke](duke.png)
 
 
 Running
