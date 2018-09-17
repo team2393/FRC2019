@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
 import robot.commands.HoldHeading;
 import robot.commands.HoldHeadingPID;
+import robot.commands.HoldHeadingPID2;
 import robot.commands.JoystickMove;
 import robot.commands.Move;
 import robot.commands.POVHeading;
@@ -35,6 +36,7 @@ public class Robot extends BasicRobot
     private Command wiggle = new Wiggle(drive_subsys, max_speed, -1);
     private Command hold = new HoldHeading(drive_subsys, RobotMap.gyro);
     private Command hold_pid = new HoldHeadingPID(drive_subsys, RobotMap.gyro);
+    private Command hold_pid2 = new HoldHeadingPID2(drive_subsys, RobotMap.gyro);
     private Command pov = new POVHeading(drive_subsys, RobotMap.gyro, joystick);
     private Command stick = new JoystickMove(drive_subsys, joystick);
     private Command blink = new Blink(RobotMap.led, 0.3);
@@ -56,6 +58,7 @@ public class Robot extends BasicRobot
         SmartDashboard.putData("Wiggle", wiggle);
         SmartDashboard.putData("Hold Heading", hold);
         SmartDashboard.putData("Hold Heading PID", hold_pid);
+        SmartDashboard.putData("Hold Heading PID2", hold_pid2);
         SmartDashboard.putData("POV Heading", pov);
         SmartDashboard.putData("Joystick", stick);
     }

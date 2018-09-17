@@ -9,7 +9,7 @@ import robot.subsystems.DriveSubsystem;
  *
  *  On start, fetch current heading from gyro
  *  and use that as the desired heading.
- *  From then on, use proportional gain to hold heading.
+ *  From then on, use P & I gain to hold heading.
  */
 public class HoldHeadingPID extends Command
 {
@@ -40,11 +40,6 @@ public class HoldHeadingPID extends Command
     {
         desired_heading = heading;
         integral = 0.0;
-    }
-
-    public double getDesiredHeading()
-    {
-        return desired_heading;
     }
 
     @Override
