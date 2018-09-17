@@ -1,5 +1,6 @@
 package robot.blacky;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -7,7 +8,10 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
 import robot.commands.HoldHeading;
+import robot.commands.HoldHeadingPID;
+import robot.commands.JoystickMove;
 import robot.commands.Move;
+import robot.commands.POVHeading;
 import robot.commands.SmoothMove;
 import robot.commands.Turn;
 import robot.parts.USERButton;
@@ -21,6 +25,7 @@ public class Robot extends BasicRobot
     // Wrap the motors into a DriveSubsystem
     private DriveSubsystem drive_subsys = new DriveSubsystem(RobotMap.drive);
     private Button user = new USERButton();
+    private Joystick joystick = new Joystick(0);
 
     // Commands
     private Command jog = new SmoothMove(drive_subsys, 0.3, 0.6, 7.0);
@@ -29,13 +34,16 @@ public class Robot extends BasicRobot
     private Command rock = new RocknRoll(drive_subsys, max_speed, -1);
     private Command wiggle = new Wiggle(drive_subsys, max_speed, -1);
     private Command hold = new HoldHeading(drive_subsys, RobotMap.gyro);
+    private Command hold_pid = new HoldHeadingPID(drive_subsys, RobotMap.gyro);
+    private Command pov = new POVHeading(drive_subsys, RobotMap.gyro, joystick);
+    private Command stick = new JoystickMove(drive_subsys, joystick);
     private Command blink = new Blink(RobotMap.led, 0.3);
 
     @Override
     public void robotInit ()
     {
         super.robotInit();
-        
+
         RobotMap.describe();
 
         user.toggleWhenPressed(blink);
@@ -47,6 +55,9 @@ public class Robot extends BasicRobot
         SmartDashboard.putData("Rock'n'Roll", rock);
         SmartDashboard.putData("Wiggle", wiggle);
         SmartDashboard.putData("Hold Heading", hold);
+        SmartDashboard.putData("Hold Heading PID", hold_pid);
+        SmartDashboard.putData("POV Heading", pov);
+        SmartDashboard.putData("Joystick", stick);
     }
 
     @Override

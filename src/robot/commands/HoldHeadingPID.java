@@ -11,29 +11,23 @@ import robot.subsystems.DriveSubsystem;
  *  and use that as the desired heading.
  *  From then on, use proportional gain to hold heading.
  */
-public class HoldHeading extends Command
+public class HoldHeadingPID extends Command
 {
     private final DriveSubsystem drive_subsys;
     private final Gyro gyro;
 
     // Gain for correcting error.
-    // Example:
-    // desired heading is 10.0 degrees, but gyro tells us we're pointed to 8 degrees.
-    // error = 10 - 8 = 2 degrees
-    // error * P = 0.02, so we'd slowly turn clockwise (left)
-    //
-    // error = 90 degrees -> we'd turn 90*0.01 = 0.9 i.e. almost full speed clockwise
-    //
-    // error = 150 degrees -> we'd try to turn by 1.5,
-    // but motor classes already limit values to the -1..1 range, so we'd turn by 1.0
-    private double P = 0.01;
-    private double desired_heading;
+    private double desired_heading, integral = 0.0;
 
-    public HoldHeading(DriveSubsystem drive_subsys, Gyro gyro)
+    public HoldHeadingPID(DriveSubsystem drive_subsys, Gyro gyro)
     {
         this.drive_subsys = drive_subsys;
         this.gyro = gyro;
         doesRequire(drive_subsys);
+
+        SmartDashboard.setDefaultNumber("P", 0.01);
+        SmartDashboard.setDefaultNumber("I", 0.001);
+        SmartDashboard.setDefaultNumber("Imax", 90);
     }
 
     @Override
@@ -45,6 +39,7 @@ public class HoldHeading extends Command
     public void setDesiredHeading(double heading)
     {
         desired_heading = heading;
+        integral = 0.0;
     }
 
     public double getDesiredHeading()
@@ -55,10 +50,19 @@ public class HoldHeading extends Command
     @Override
     protected void execute()
     {
+        double P = SmartDashboard.getNumber("P", 0.01);
+        double I = SmartDashboard.getNumber("I", 0.001);
+        double integral_limit = SmartDashboard.getNumber("Imax", 90.0);
+
         double heading = gyro.getAngle();
 
         double error = desired_heading - heading;
-        drive_subsys.turn(P * error);
+        integral += error;
+        if (integral > integral_limit)
+            integral = integral_limit;
+        else if (integral < - integral_limit)
+            integral = - integral_limit;
+        drive_subsys.turn(P * error + I * integral);
 
         SmartDashboard.putNumber("error", error);
     }

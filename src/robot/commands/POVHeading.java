@@ -1,55 +1,38 @@
 package robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.subsystems.DriveSubsystem;
 
-/** Command to hold current heading
+/** Command to set heading based on Joystick POV
  *
  *  On start, fetch current heading from gyro
- *  and use that as the desired heading.
+ *  and use that as the "zero" heading.
  *  From then on, use proportional gain to hold heading.
  */
-public class HoldHeading extends Command
+public class POVHeading extends Command
 {
     private final DriveSubsystem drive_subsys;
     private final Gyro gyro;
+    private final Joystick joystick;
 
     // Gain for correcting error.
-    // Example:
-    // desired heading is 10.0 degrees, but gyro tells us we're pointed to 8 degrees.
-    // error = 10 - 8 = 2 degrees
-    // error * P = 0.02, so we'd slowly turn clockwise (left)
-    //
-    // error = 90 degrees -> we'd turn 90*0.01 = 0.9 i.e. almost full speed clockwise
-    //
-    // error = 150 degrees -> we'd try to turn by 1.5,
-    // but motor classes already limit values to the -1..1 range, so we'd turn by 1.0
     private double P = 0.01;
-    private double desired_heading;
+    private double start_heading, desired_heading;
 
-    public HoldHeading(DriveSubsystem drive_subsys, Gyro gyro)
+    public POVHeading(DriveSubsystem drive_subsys, Gyro gyro, Joystick joystick)
     {
         this.drive_subsys = drive_subsys;
         this.gyro = gyro;
+        this.joystick = joystick;
         doesRequire(drive_subsys);
     }
 
     @Override
     protected void initialize()
     {
-        setDesiredHeading(gyro.getAngle());
-    }
-
-    public void setDesiredHeading(double heading)
-    {
-        desired_heading = heading;
-    }
-
-    public double getDesiredHeading()
-    {
-        return desired_heading;
+        start_heading = desired_heading = gyro.getAngle();
     }
 
     @Override
@@ -57,10 +40,17 @@ public class HoldHeading extends Command
     {
         double heading = gyro.getAngle();
 
+        int pov = joystick.getPOV();
+        if (pov < 0)
+            desired_heading = start_heading;
+        else
+        {
+            if (pov > 180)
+                pov -= 360;
+            desired_heading = start_heading + pov;
+        }
         double error = desired_heading - heading;
         drive_subsys.turn(P * error);
-
-        SmartDashboard.putNumber("error", error);
     }
 
     @Override
