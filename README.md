@@ -32,10 +32,23 @@ Install WPILib
 
 To work with the robot code, you need to install the WPIlib.
 
- * Download http://first.wpi.edu/FRC/roborio/release/EclipsePluginsV2018.4.1.zip
+You can try this directly from the web:
+
+ * In Eclipse, "Help", "Install new software", and then enter
+   "http://first.wpi.edu/FRC/roborio/release/eclipse"
+
+
+Alternatively, use a EclipsePluginsV2018.4.1.zip that you get
+from a USB stick during a meetup or download from
+http://first.wpi.edu/FRC/roborio/release/EclipsePluginsV2018.4.1.zip.
+
  * In the Windows File Explorer, unpack/extract the downloaded `EclipsePluginsV2018.4.1.zip`
- * In Eclipse, "Help", "Install new software", "Add", "Local",
- * Select the `eclipse` directory inside the extracted `EclipsePluginsV2018.4.1`.
+ * In Eclipse, "Help", "Install new software", press "Add", "Local",
+   and select the `eclipse` directory inside the extracted `EclipsePluginsV2018.4.1`.
+
+
+Either way, you then continue like this:
+
  * Click the drop-down arrow near "WPILib Robot Development" to expand, then select "Robot _Java(!)_ Development".
  * Press Next, Accept, ..., Finish
  * You'll see "Installing Software" in the bottom right corner.
