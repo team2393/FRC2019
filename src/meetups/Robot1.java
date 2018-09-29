@@ -3,7 +3,7 @@ package meetups;
 import robot.BasicRobot;
 
 // Simplest robot:
-// New "Robot.." class based on BasicRobot.
+// New "Robot.." class based ('superclass') on BasicRobot.
 // To select, set build.properties
 // robot.class=meetups.Robot1
 public class Robot1 extends BasicRobot
