@@ -4,12 +4,14 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
 import robot.parts.ContinuousRotationServo;
 
 public class Robot3 extends BasicRobot
 {
-    // Variables to control the left/right motor
+	private static final int Integral_Limit = 20;
+	// Variables to control the left/right motor
     ContinuousRotationServo left = new ContinuousRotationServo(1);
     ContinuousRotationServo right = new ContinuousRotationServo(0);
 
@@ -23,7 +25,9 @@ public class Robot3 extends BasicRobot
     // Gyto (used in autonomous)
     Gyro gyro = new ADXRS450_Gyro();
     double desiredheading = 0.0;
-
+    double integral = 0.0;
+    private static final double P_Gain = 0.01;
+    private static final double I_Gain = 0.01;
 
     @Override
     public void autonomousPeriodic()
@@ -33,11 +37,20 @@ public class Robot3 extends BasicRobot
 
         // Assume for example an error of 45 degrees
         double error = desiredheading - heading;
+        integral += error;
+        if(integral > Integral_Limit) 
+        	integral = Integral_Limit;
+        if(integral < -Integral_Limit)
+        	integral = -Integral_Limit;
         // ==> We'd turn by 0.5, half speed
-        double turn = error/90;
-
+        double turn = P_Gain*error + I_Gain * integral;
+        if(Math.abs(turn) < 0.05)
+        	turn = 0;
         System.out.println(error);
         drive.arcadeDrive(0, turn);
+        SmartDashboard.putNumber("Error", error);
+        SmartDashboard.putNumber("Integral", integral);
+        
     }
 
     @Override
