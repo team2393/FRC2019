@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
 import robot.parts.ContinuousRotationServo;
 
-// Robot that drives with joystick and holds heading
-public class Robot3 extends BasicRobot
+// Add integral gain to improve heading hold
+public class Robot4 extends BasicRobot
 {
 	// Variables to control the left/right motor
     ContinuousRotationServo left = new ContinuousRotationServo(1);
@@ -24,8 +24,11 @@ public class Robot3 extends BasicRobot
 
     // Gyro (used in autonomous)
     Gyro gyro = new ADXRS450_Gyro();
-    double desiredheading = 0.0;
     private static final double P_Gain = 0.01;
+    private static final double I_Gain = 0.01;
+    private static final int Integral_Limit = 20;
+    double desiredheading = 0.0;
+    double integral = 0.0;
 
     @Override
     public void autonomousPeriodic()
@@ -33,16 +36,30 @@ public class Robot3 extends BasicRobot
         // Try to keep robot at desired heading
         double heading = gyro.getAngle();
 
-        // Assume for example an error of 50 degrees
+        // Compute error
         double error = desiredheading - heading;
-        // ==> We'd turn by 0.5, half speed
-        double turn = P_Gain*error;
 
+        // Accumulate error readings for integral
+        integral += error;
+        // Keep integral from getting too large
+        if(integral > Integral_Limit)
+        	integral = Integral_Limit;
+        // .. same for negative integral
+        if(integral < -Integral_Limit)
+        	integral = -Integral_Limit;
+
+        // P-I control
+        double turn = P_Gain*error + I_Gain * integral;
+
+        // If there's really no need to turn, don't turn at reduce motor wear
+        if(Math.abs(turn) < 0.05)
+        	turn = 0;
         drive.arcadeDrive(0, turn);
 
-        // Display the error in console and dashboard
+        // Display/publish some data
         System.out.println(error);
         SmartDashboard.putNumber("Error", error);
+        SmartDashboard.putNumber("Integral", integral);
     }
 
     @Override

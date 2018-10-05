@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Servo;
 import robot.BasicRobot;
 
+// Robot that does a little bit on the various modes
 public class Robot2 extends BasicRobot
 {
     // Add variables for LED connected to DIO #9
