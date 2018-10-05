@@ -62,6 +62,17 @@ see https://github.com/wpilibsuite/allwpilib/issues/954
 
 ![Java Duke](duke.png)
 
+The WPILib requires that the JAVA_HOME environment variable is set,
+and the Java tools are on the Path.
+To set these:
+
+ * Open the Windows File Explorer
+ * In File Explorer right-click on the This PC (or Computer) icon,
+   then click Properties -> Advanced System Settings -> Environmental Variables.
+ * Add
+   `JAVA_HOME = C:\Program Files\Java\jdk1.8.0_171`
+ * Select the `Path` variable, and add an entry for `C:\Program Files\Java\jdk1.8.0_171`
+
 
 Running
 -------
