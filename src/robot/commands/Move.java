@@ -19,7 +19,6 @@ public class Move extends Command
         this.speed = speed;
         if (duration > 0)
             setTimeout(duration);
-        doesRequire(drive_sub);
     }
 
     @Override

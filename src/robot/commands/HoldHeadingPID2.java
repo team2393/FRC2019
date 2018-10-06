@@ -23,7 +23,6 @@ public class HoldHeadingPID2 extends PIDCommand
         super(0.01, 0.003, 0.001);
         this.drive_subsys = drive_subsys;
         this.gyro = gyro;
-        doesRequire(drive_subsys);
 
         // This helps the PID controller to clamp the integral sum
         getPIDController().setOutputRange(-1.0, +1.0);

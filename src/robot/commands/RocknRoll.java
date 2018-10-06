@@ -21,7 +21,6 @@ public class RocknRoll extends Command
         this.max = max;
         if (duration > 0)
             setTimeout(duration);
-        doesRequire(drive_sub);
     }
 
     @Override

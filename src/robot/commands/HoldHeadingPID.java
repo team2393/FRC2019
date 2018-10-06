@@ -23,7 +23,6 @@ public class HoldHeadingPID extends Command
     {
         this.drive_subsys = drive_subsys;
         this.gyro = gyro;
-        doesRequire(drive_subsys);
 
         SmartDashboard.setDefaultNumber("P", 0.01);
         SmartDashboard.setDefaultNumber("I", 0.001);

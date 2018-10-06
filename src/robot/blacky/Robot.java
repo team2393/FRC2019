@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
+import robot.commands.Blink;
 import robot.commands.DriveByJoystick;
 import robot.commands.HoldHeading;
 import robot.commands.HoldHeadingPID;

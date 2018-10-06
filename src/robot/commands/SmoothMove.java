@@ -20,7 +20,6 @@ public class SmoothMove extends TimedCommand
         super(duration);
         this.drive_sub = drive_sub;
         motion = new MotionCurve(acceleration, speed, duration);
-        doesRequire(drive_sub);
     }
 
     @Override

@@ -26,7 +26,6 @@ public class POVHeading extends Command
         this.drive_subsys = drive_subsys;
         this.gyro = gyro;
         this.joystick = joystick;
-        doesRequire(drive_subsys);
     }
 
     @Override

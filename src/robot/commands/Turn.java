@@ -20,7 +20,6 @@ public class Turn extends Command
         this.turn = turn;
         if (duration > 0)
             setTimeout(duration);
-        doesRequire(drive_sub);
     }
 
     @Override

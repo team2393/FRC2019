@@ -33,7 +33,6 @@ public class HoldHeading extends Command
     {
         this.drive_subsys = drive_subsys;
         this.gyro = gyro;
-        doesRequire(drive_subsys);
     }
 
     @Override
