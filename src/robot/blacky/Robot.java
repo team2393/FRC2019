@@ -5,16 +5,19 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
+import robot.commands.DriveByJoystick;
 import robot.commands.HoldHeading;
 import robot.commands.HoldHeadingPID;
 import robot.commands.HoldHeadingPID2;
-import robot.commands.JoystickMove;
 import robot.commands.Move;
 import robot.commands.POVHeading;
+import robot.commands.RocknRoll;
 import robot.commands.SmoothMove;
 import robot.commands.Turn;
+import robot.commands.Wiggle;
 import robot.parts.USERButton;
 import robot.subsystems.DriveSubsystem;
 
@@ -38,8 +41,11 @@ public class Robot extends BasicRobot
     private Command hold_pid = new HoldHeadingPID(drive_subsys, RobotMap.gyro);
     private Command hold_pid2 = new HoldHeadingPID2(drive_subsys, RobotMap.gyro);
     private Command pov = new POVHeading(drive_subsys, RobotMap.gyro, joystick);
-    private Command stick = new JoystickMove(drive_subsys, joystick);
+    private Command stick = new DriveByJoystick(drive_subsys, joystick);
     private Command blink = new Blink(RobotMap.led, 0.3);
+    private CommandGroup moves = new CommandGroup();
+
+    private SendableChooser<Command> auto_options = new SendableChooser<>();
 
     @Override
     public void robotInit ()
@@ -48,9 +54,25 @@ public class Robot extends BasicRobot
 
         RobotMap.describe();
 
+        // Build some more complex commands
+        moves.addSequential(new SmoothMove(drive_subsys, 0.25, 1.0, 3.0));
+        moves.addSequential(new SmoothMove(drive_subsys, 0.5, 1.0, 5.0));
+        moves.addSequential(new SmoothMove(drive_subsys, 0.1, max_speed, 5.0));
+        moves.addSequential(new Wiggle(drive_subsys, 0.3, 2.0));
+        moves.addSequential(new SmoothMove(drive_subsys, 0.1, -max_speed/2, 3.0));
+        moves.addSequential(new RocknRoll(drive_subsys, 0.3, 3.0));
+
+        // List options for auto
+        auto_options.addObject("Moves", moves);
+        auto_options.addObject("Blink", blink);
+        auto_options.addObject("Rock'n'Roll", rock);
+        auto_options.addDefault("Wiggle", wiggle);
+
+        // Bind blinking to the User button
         user.toggleWhenPressed(blink);
 
         // Publish commands to allow control from dashboard
+        SmartDashboard.putData("Auto Options", auto_options);
         SmartDashboard.putData("Jog", jog);
         SmartDashboard.putData("Forward", forward);
         SmartDashboard.putData("Left", left);
@@ -73,15 +95,18 @@ public class Robot extends BasicRobot
     public void autonomousInit()
     {
         super.autonomousInit();
-        CommandGroup moves = new CommandGroup();
-        moves.addSequential(new SmoothMove(drive_subsys, 0.25, 1.0, 3.0));
-        moves.addSequential(new SmoothMove(drive_subsys, 0.5, 1.0, 5.0));
-        moves.addSequential(new SmoothMove(drive_subsys, 0.1, max_speed, 5.0));
-        moves.addSequential(new Wiggle(drive_subsys, 0.3, 2.0));
-        moves.addSequential(new SmoothMove(drive_subsys, 0.1, -max_speed/2, 3.0));
-        moves.addSequential(new RocknRoll(drive_subsys, 0.3, 3.0));
-        moves.start();
+
+        // Start the selected command
+        auto_options.getSelected().start();
     }
 
-    // In teleop, use dashboard to trigger commands
+    @Override
+    public void teleopInit()
+    {
+        super.teleopInit();
+
+        // In teleop, you would typically enable joystick operation,
+        // but dashboard can also start/stop commands
+        stick.start();
+    }
 }

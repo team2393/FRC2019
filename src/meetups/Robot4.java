@@ -42,17 +42,17 @@ public class Robot4 extends BasicRobot
         // Accumulate error readings for integral
         integral += error;
         // Keep integral from getting too large
-        if(integral > Integral_Limit)
+        if (integral > Integral_Limit)
         	integral = Integral_Limit;
         // .. same for negative integral
-        if(integral < -Integral_Limit)
+        if (integral < -Integral_Limit)
         	integral = -Integral_Limit;
 
         // P-I control
         double turn = P_Gain*error + I_Gain * integral;
 
         // If there's really no need to turn, don't turn at reduce motor wear
-        if(Math.abs(turn) < 0.05)
+        if (Math.abs(turn) < 0.05)
         	turn = 0;
         drive.arcadeDrive(0, turn);
 
