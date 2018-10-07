@@ -1,6 +1,10 @@
 package robot.arm;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 import robot.BasicRobot;
 
 public class Robot extends BasicRobot
@@ -8,44 +12,50 @@ public class Robot extends BasicRobot
     private Arm arm = new Arm();
     private Joystick joystick = new Joystick(0);
 
-    /** Called once on startup */
+    private Command manual = new JoystickArmControl(arm, joystick);
+    private CommandGroup moves = new CommandGroup();
+
     @Override
     public void robotInit()
     {
         super.robotInit();
 
-        System.out.println("Front buttons: Open, close");
-        System.out.println("Front levers : Left, right");
-        System.out.println("Left Joystick: Outer arm");
-        System.out.println("Right Joystick: Inner arm");
-        System.out.println("Red button    : Home");
+        moves.addSequential(new MoveArm(arm, Arm.HAND_HOME, Arm.INNER_HOME, Arm.OUTER_HOME, Arm.BASE_HOME));
+        moves.addSequential(new MoveArm(arm, 160, 80.45, 60, 90));
+        moves.addSequential(new MoveArm(arm, 105, 80.45, 60, 90));
+        moves.addSequential(new MoveArm(arm, 105, 42, 120, 90));
+        moves.addSequential(new MoveArm(arm, 105, 42, 120, 145));
+        moves.addSequential(new MoveArm(arm, 105, 81.65, 84.65, 145));
+        moves.addSequential(new MoveArm(arm, 160, 81.65, 84.65, 145));
+        moves.addSequential(new WaitCommand(2.0));
+        moves.addSequential(new MoveArm(arm, 160, 42, 120, 145));
+        moves.addSequential(new MoveArm(arm, Arm.HAND_HOME, Arm.INNER_HOME, Arm.OUTER_HOME, Arm.BASE_HOME));
+        moves.addSequential(new WaitCommand(2.0));
+        moves.addSequential(new MoveArm(arm, 160, 42, 120, 145));
+        moves.addSequential(new MoveArm(arm, 160, 81.65, 84.65, 145));
+        moves.addSequential(new MoveArm(arm, 105, 81.65, 84.65, 145));
+        moves.addSequential(new MoveArm(arm, 105, 42, 120, 145));
+        moves.addSequential(new MoveArm(arm, 105, 42, 120, 90));
+        moves.addSequential(new MoveArm(arm, 105, 80.45, 60, 90));
+        moves.addSequential(new MoveArm(arm, 160, 80.45, 60, 90));
+        moves.addSequential(new MoveArm(arm, Arm.HAND_HOME, Arm.INNER_HOME, Arm.OUTER_HOME, Arm.BASE_HOME));
     }
 
     @Override
-    public void teleopPeriodic()
+    public void robotPeriodic()
     {
-        if (joystick.getRawButton(2))
-            arm.home();
+        Scheduler.getInstance().run();
+    }
 
-        if (joystick.getRawButton(5))
-            arm.changeHand(0.5);
-        else if (joystick.getRawButton(6))
-            arm.changeHand(-0.5);
+    @Override
+    public void teleopInit()
+    {
+        manual.start();
+    }
 
-        if (joystick.getRawAxis(5) <= -0.5)
-            arm.changeInner(0.25);
-        else if (joystick.getRawAxis(5) >= 0.5)
-            arm.changeInner(-0.25);
-
-        if (joystick.getRawAxis(1) <= -0.5)
-            arm.changeOuter(0.25);
-        else if (joystick.getRawAxis(1) >= 0.5)
-            arm.changeOuter(-0.25);
-
-        if (joystick.getRawAxis(2) >= 0.5)
-            arm.changeBase(0.25);
-        else if (joystick.getRawAxis(3) >= 0.5)
-            arm.changeBase(-0.25);
-
+    @Override
+    public void autonomousInit()
+    {
+        moves.start();
     }
 }

@@ -6,10 +6,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Arm extends Subsystem
 {
-    private static final double BASE_HOME = 90.0;
-    private static final double OUTER_HOME = 90.0;
-    private static final double INNER_HOME = 45.0;
-    private static final double HAND_HOME = 160.0;
+    public static final double BASE_HOME = 90.0;
+    public static final double OUTER_HOME = 90.0;
+    public static final double INNER_HOME = 45.0;
+    public static final double HAND_HOME = 160.0;
 
     /** Servos on ports 1..4 as labeled on the servo connector */
     private Servo hand = new Servo(1);
@@ -25,7 +25,8 @@ public class Arm extends Subsystem
         setBase(BASE_HOME);
     }
 
-    public void home()
+    /** Move toward the home position of each servo */
+    public void moveHome()
     {
         home(hand, HAND_HOME);
         home(inner, INNER_HOME);
@@ -49,6 +50,12 @@ public class Arm extends Subsystem
         // No default command
     }
 
+    /** @return Hand angle */
+    public double getHand()
+    {
+        return hand.getAngle();
+    }
+
     /** @param angle Hand angle: 90 (closed) .. 160 (open) */
     public void setHand(double angle)
     {
@@ -64,6 +71,12 @@ public class Arm extends Subsystem
     public void changeHand(double angle)
     {
         setHand(hand.getAngle() + angle);
+    }
+
+    /** @return Inner angle */
+    public double getInner()
+    {
+        return inner.getAngle();
     }
 
     /** @param angle Inner angle: 20 (close) .. 120 (out) */
@@ -82,6 +95,12 @@ public class Arm extends Subsystem
         setInner(inner.getAngle() + angle);
     }
 
+    /** @return Outer angle */
+    public double getOuter()
+    {
+        return outer.getAngle();
+    }
+
     /** @param angle Outer angle: 60 .. 170 */
     public void setOuter(double angle)
     {
@@ -96,6 +115,12 @@ public class Arm extends Subsystem
     public void changeOuter(double angle)
     {
         setOuter(outer.getAngle() + angle);
+    }
+
+    /** @return Base angle */
+    public double getBase()
+    {
+        return base.getAngle();
     }
 
     /** @param angle Base angle: 11 (right) .. 165 (left) */
