@@ -20,16 +20,24 @@ public class JoystickArmControl extends Command
     {
         super.start();
         System.out.println("Arm control via Joystick");
-        System.out.println("Front buttons: Open, close");
-        System.out.println("Front levers : Left, right");
-        System.out.println("Left Joystick: Outer arm");
+        System.out.println("Front buttons : Open, close");
+        System.out.println("Front levers  : Left, right");
+        System.out.println("Left Joystick : Outer arm");
         System.out.println("Right Joystick: Inner arm");
+        System.out.println("Green button  : Print waypoint");
         System.out.println("Red button    : Home");
     }
 
     @Override
     protected void execute()
     {
+        if (joystick.getRawButtonPressed(1))
+            System.out.format("        moves.addSequential(new MoveArm(arm, %.1f, %.1f, %.1f, %.1f));\n",
+                              arm.getHand(),
+                              arm.getInner(),
+                              arm.getOuter(),
+                              arm.getBase());
+
         if (joystick.getRawButton(2))
             arm.moveHome();
 
@@ -52,6 +60,7 @@ public class JoystickArmControl extends Command
             arm.changeBase(0.25);
         else if (joystick.getRawAxis(3) >= 0.5)
             arm.changeBase(-0.25);
+
     }
 
     @Override
