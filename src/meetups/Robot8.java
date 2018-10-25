@@ -39,6 +39,7 @@ public class Robot8 extends BasicRobot
     @Override
     public void robotPeriodic()
     {
+        // Always run the scheduler; it handles the commands
         Scheduler.getInstance().run();
     }
 }
