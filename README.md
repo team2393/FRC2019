@@ -26,6 +26,14 @@ To later get an update, i.e. to fetch the latest:
  * Team
  * "Pull" (there's a similar option "Pull..", don't use that. Use the one just named "Pull")
 
+If you changed the source code on your computer, you might get an error message
+that mentions some "conflict".
+In that case:
+ * Right-click on the "2393First" project
+ * Replace-With
+ * HEAD Revision
+
+.. and then try the "Pull" again.
 
 Install WPILib
 --------------
