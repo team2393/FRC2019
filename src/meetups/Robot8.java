@@ -16,24 +16,25 @@ import robot.subsystems.DriveSubsystem;
 public class Robot8 extends BasicRobot
 {
     // Beeper or LED
-    private DigitalOutput beepy = new DigitalOutput(0);
+    private final DigitalOutput beepy = new DigitalOutput(0);
 
     // 2-Wheel Drive
-    private ContinuousRotationServo left = new ContinuousRotationServo(0);
-    private ContinuousRotationServo right = new ContinuousRotationServo(1);
-    private DifferentialDrive diffdrive = new DifferentialDrive(left, right);
-    private DriveSubsystem drive = new DriveSubsystem(diffdrive);
+    private final ContinuousRotationServo left = new ContinuousRotationServo(0);
+    private final ContinuousRotationServo right = new ContinuousRotationServo(1);
+    private final DifferentialDrive diffdrive = new DifferentialDrive(left, right);
+    private final DriveSubsystem drive = new DriveSubsystem(diffdrive);
 
     //encoder
-    Encoder spin = new Encoder(1, 2);
+    private final Encoder spin = new Encoder(1, 2);
 
     // Commands
-    private Command short_beep = new BeepCommand(beepy, 0.5);
-    private Command long_beep = new BeepCommand(beepy, 2);
-    private CommandGroup signal = new CommandGroup();
+    private final Command short_beep = new BeepCommand(beepy, 0.5);
+    private final Command long_beep = new BeepCommand(beepy, 2);
+    private final CommandGroup signal = new CommandGroup();
+    private final Command fanfare = new FanfareCommand(beepy);
 
-    private Command small_step = new JogCommand(drive, 1);
-    private Command longer_jog = new JogCommand(drive, 2);
+    private final Command small_step = new JogCommand(drive, 1);
+    private final Command longer_jog = new JogCommand(drive, 2);
 
     @Override
     public void robotInit()
@@ -49,6 +50,7 @@ public class Robot8 extends BasicRobot
         SmartDashboard.putData("Beep", short_beep);
         SmartDashboard.putData("BEEEP!", long_beep);
         SmartDashboard.putData("BeepBeep", signal);
+        SmartDashboard.putData("Fanfare", fanfare);
         SmartDashboard.putData("Step", small_step);
         SmartDashboard.putData("Jog", longer_jog);
 
@@ -62,5 +64,11 @@ public class Robot8 extends BasicRobot
         Scheduler.getInstance().run();
 
         SmartDashboard.putNumber("ticks", spin.get());
+    }
+
+    @Override
+    public void autonomousInit()
+    {
+        fanfare.start();
     }
 }
