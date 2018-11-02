@@ -12,10 +12,12 @@ public class GrabberTest
     public static void main(String[] args)
     {
         GrabberLogic grab = new GrabberLogic();
-        // Grabber Should Not Do Anything
+
+        // Initially, Grabber Should Not Do Anything
         compare(grab.getMotorSpeed(), 0);
 
-        // Grabber Pulls In
+        // When activated, Grabber Pulls In by slowly
+        // turning the motor in negative direction
         grab.activate();
         compare(grab.getMotorSpeed(), -0.3);
 
@@ -28,6 +30,7 @@ public class GrabberTest
         compare(grab.getMotorSpeed(), -0.3);
 
         // Pushing the 'Eject' button Should Eject The Cube
+        // by running motor full speed in positive direction
         grab.eject();
         compare(grab.getMotorSpeed(), 1);
     }
