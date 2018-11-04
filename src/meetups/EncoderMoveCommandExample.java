@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Command;
 import robot.subsystems.DriveSubsystem;
 
-public class EncoderMoveCommand extends Command
+public class EncoderMoveCommandExample extends Command
 {
     private final DriveSubsystem drive;
     private final Encoder encoder;
@@ -15,7 +15,7 @@ public class EncoderMoveCommand extends Command
      *  @param encoder Encoder that tells us about current position
      *  @param position Desired position
      */
-    public EncoderMoveCommand(DriveSubsystem drive, Encoder encoder, double position)
+    public EncoderMoveCommandExample(DriveSubsystem drive, Encoder encoder, double position)
     {
         this.drive = drive;
         this.encoder = encoder;
@@ -25,19 +25,19 @@ public class EncoderMoveCommand extends Command
     @Override
     protected void execute()
     {
-        // TODO Compute drive speed based on encoder and desired position
+        double error = position - encoder.getDistance();
+        drive.move(0.01 * error);
     }
 
     @Override
     protected boolean isFinished()
     {
-        // TODO What should we return here?
         return false;
     }
 
     @Override
     protected void end()
     {
-        // TODO Turn motors off
+        drive.stop();
     }
 }
