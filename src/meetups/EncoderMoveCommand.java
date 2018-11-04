@@ -10,6 +10,11 @@ public class EncoderMoveCommand extends Command
     private Encoder encoder;
     private double position;
 
+    /** Command that moves to desired position
+     *  @param drive Motors
+     *  @param encoder Encoder that tells us about current position
+     *  @param position Desired position
+     */
     public EncoderMoveCommand(DriveSubsystem drive, Encoder encoder, double position)
     {
         this.drive = drive;
