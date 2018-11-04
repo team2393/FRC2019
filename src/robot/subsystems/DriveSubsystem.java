@@ -30,6 +30,16 @@ public class DriveSubsystem extends Subsystem
     {
     }
 
+    public double getSpeed()
+    {
+        return speed;
+    }
+
+    public double getTurn()
+    {
+        return rotation;
+    }
+
     // Update the speed & rotation which periodic() will then send to drive
     /** @param speed Forward (0..1) or backward (-1..0) speed */
     public void move(final double speed)
