@@ -7,18 +7,20 @@ import edu.wpi.first.wpilibj.command.Command;
 public class FanfareCommand extends Command
 {
     // Steps for a 'bip -- bip - bip - beeep - bip - beep':
+    // "b--b-b-bbb-b-bbb".
     // For each 'b' character in the string,
     // we turn the beeper on, and for '-' we turn it off.
-    private static final String on_off = "b--b-b-bbb-b-bbb";
+    private final String on_off;
 
     private final DigitalOutput beeper;
 
     private int step;
     private boolean done = false;
 
-    public FanfareCommand(final DigitalOutput the_beeper)
+    public FanfareCommand(final DigitalOutput the_beeper, final String on_off_info)
     {
         beeper = the_beeper;
+        on_off = on_off_info;
         // Typically, commands won't run in 'disabled' mode.
         // That's a safety mechanism:
         // All motors etc. must stop when disabled.
