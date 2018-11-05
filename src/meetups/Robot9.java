@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
 import robot.commands.DriveByJoystick;
 import robot.parts.ContinuousRotationServo;
+import robot.parts.PDPController;
 import robot.subsystems.DriveSubsystem;
 
 public class Robot9 extends BasicRobot
@@ -68,7 +69,7 @@ public class Robot9 extends BasicRobot
         SmartDashboard.putNumber("position", encoder.getDistance());
 
         // Zero the encoder when red 'B' button is pressed
-        if (joystick.getRawButtonPressed(2))
+        if (joystick.getRawButtonPressed(PDPController.B_BUTTON))
             encoder.reset();
     }
 

@@ -2,6 +2,7 @@ package robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
+import robot.parts.PDPController;
 import robot.subsystems.DriveSubsystem;
 
 /** Command that controls a {@link DriveSubsystem} from the Joystick
@@ -34,8 +35,8 @@ public class DriveByJoystick extends Command
     protected void execute()
     {
         // Positive speed = forward, positive turn = right
-        double speed = -joystick.getRawAxis(5);
-        double turn = joystick.getRawAxis(4);
+        double speed = -joystick.getRawAxis(PDPController.RIGHT_STICK_VERTICAL);
+        double turn = joystick.getRawAxis(PDPController.RIGHT_STICK_HORIZONTAL);
 
         // Ignore small joystick values caused by noise around the stick center
         if (Math.abs(speed) < deadband)
@@ -46,7 +47,8 @@ public class DriveByJoystick extends Command
         // Full speed?
         // Buttons 5 and 6 are the two push-buttons at the front.
         // Holding at least one of them enables full speed
-        if (joystick.getRawButton(5)  ||  joystick.getRawButton(6))
+        if (joystick.getRawButton(PDPController.LEFT_FRONT_BUTTON)  ||
+            joystick.getRawButton(PDPController.RIGHT_FRONT_BUTTON))
             drive_subsys.drive(speed, turn);
         else
             drive_subsys.drive(slow*speed, slow*turn);
