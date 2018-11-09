@@ -31,7 +31,7 @@ public class Robot8 extends BasicRobot
     private final Command short_beep = new BeepCommand(beepy, 0.5);
     private final Command long_beep = new BeepCommand(beepy, 2);
     private final CommandGroup signal = new CommandGroup();
-    private final Command fanfare = new FanfareCommand(beepy, "b--b-b-bbb-b-bbb");
+    private final Command fanfare = new BeepPatternCommand(beepy, "b--b-b-bbb-b-bbb");
 
     private final Command small_step = new JogCommand(drive, 1);
     private final Command longer_jog = new JogCommand(drive, 2);

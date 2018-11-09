@@ -32,7 +32,7 @@ public class Robot9 extends BasicRobot
     private final Joystick joystick = new Joystick(0);
 
     // Commands
-    private final Command fanfare = new FanfareCommand(beepy, "b--b-b-bbb-b-bbb");
+    private final Command fanfare = new BeepPatternCommand(beepy, "b--b-b-bbb-b-bbb");
 
     private final Command joydrive = new DriveByJoystick(drive, joystick);
 
