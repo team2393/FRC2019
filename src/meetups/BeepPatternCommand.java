@@ -6,13 +6,13 @@ import edu.wpi.first.wpilibj.command.Command;
 /** Command that plays some pattern on a beeper */
 public class BeepPatternCommand extends Command
 {
+    private final DigitalOutput beeper;
+
     // Steps for a 'bip -- bip - bip - beeep - bip - beep':
     // "b--b-b-bbb-b-bbb".
     // For each 'b' character in the string,
     // we turn the beeper on, and for '-' we turn it off.
     private final String on_off;
-
-    private final DigitalOutput beeper;
 
     private boolean done = false;
 
