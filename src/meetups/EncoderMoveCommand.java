@@ -2,6 +2,7 @@ package meetups;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.subsystems.DriveSubsystem;
 
 public class EncoderMoveCommand extends Command
@@ -20,24 +21,36 @@ public class EncoderMoveCommand extends Command
         this.drive = drive;
         this.encoder = encoder;
         this.position = position;
+
+        // Allow setting the gain on dashboard
+        SmartDashboard.setDefaultNumber("gain", 0.02);
     }
 
     @Override
     protected void execute()
     {
-        // TODO Compute drive speed based on encoder and desired position
+        // Compute drive speed based on encoder and desired position
+        // based on error and proportional gain
+        double actual = encoder.getDistance();
+        double gain = SmartDashboard.getNumber("gain", 0.02);
+        double error = actual - position;
+        drive.move(- error * gain);
     }
 
     @Override
     protected boolean isFinished()
     {
-        // TODO What should we return here?
+        // What should we return here?
+        // Could return true once we're close enough to the desired location.
+        // But we return false so we continue to adjust the position,
+        // in case somebody bumps the robot we'll always move back.
         return false;
     }
 
     @Override
     protected void end()
     {
-        // TODO Turn motors off
+        // Turn motors off
+        drive.stop();
     }
 }

@@ -33,6 +33,8 @@ public class Robot9 extends BasicRobot
 
     // Commands
     private final Command fanfare = new BeepPatternCommand(beepy, "b--b-b-bbb-b-bbb");
+    private final Command fanfare2 = new BeepPatternCommand(beepy, "bbbbbb---bbbbbb");
+    private final Command backup_beep = new BeepPatternCommand(beepy, "bbb---");
 
     private final Command joydrive = new DriveByJoystick(drive, joystick);
 
@@ -58,6 +60,7 @@ public class Robot9 extends BasicRobot
         SmartDashboard.putData(auto_options);
 
         SmartDashboard.putData("Fanfare", fanfare);
+        SmartDashboard.putData("dooo-doooo", fanfare2);
     }
 
     @Override
@@ -81,6 +84,17 @@ public class Robot9 extends BasicRobot
 
         joystick.setRumble(RumbleType.kLeftRumble, Math.abs(drive.getSpeed()));
         joystick.setRumble(RumbleType.kRightRumble, Math.abs(drive.getSpeed()));
+
+        // When moving backwards, start the backup_beep.
+        // This keeps starting respectively stopping the command, even if
+        // it's already running resp. stopped.
+        // No problem:
+        // If a command is already running, starting it again has no effect.
+        // Same for stopping if already stopped.
+        if (joystick.getRawAxis(PDPController.RIGHT_STICK_VERTICAL) > 0)
+            backup_beep.start();
+        else
+            backup_beep.cancel();
     }
 
     @Override
