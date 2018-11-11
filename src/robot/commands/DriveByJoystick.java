@@ -24,6 +24,8 @@ public class DriveByJoystick extends Command
     /** Factor by which we reduce speed & turn values in slow mode */
     private double slow = 0.2;
 
+    private boolean full_speed = false;
+
     public DriveByJoystick(DriveSubsystem drive_subsys, Joystick joystick)
     {
         this.drive_subsys = drive_subsys;
@@ -44,11 +46,15 @@ public class DriveByJoystick extends Command
         if (Math.abs(turn) < deadband)
             turn = 0.0;
 
-        // Full speed?
-        // Buttons 5 and 6 are the two push-buttons at the front.
-        // Holding at least one of them enables full speed
-        if (joystick.getRawButton(PDPController.LEFT_FRONT_BUTTON)  ||
-            joystick.getRawButton(PDPController.RIGHT_FRONT_BUTTON))
+        // Full speed when any of the push-buttons at the front are pressed
+        full_speed = joystick.getRawButton(PDPController.LEFT_FRONT_BUTTON)  ||
+                     joystick.getRawButton(PDPController.RIGHT_FRONT_BUTTON);
+
+        // Toggle speed with right front button
+//        if (joystick.getRawButtonPressed(PDPController.RIGHT_FRONT_BUTTON))
+//            full_speed = ! full_speed;
+
+        if (full_speed)
             drive_subsys.drive(speed, turn);
         else
             drive_subsys.drive(slow*speed, slow*turn);

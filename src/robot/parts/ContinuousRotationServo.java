@@ -10,9 +10,9 @@ public class ContinuousRotationServo extends PWMSpeedController
     public ContinuousRotationServo(final int channel)
     {
         super(channel);
-        
+
         // Values from Servo and Spark class
-        setBounds(2.4, 1.52, 1.50, 1.48, 0.6);
+        setBounds(2.2, 1.52, 1.50, 1.48, 0.8);
         setPeriodMultiplier(PeriodMultiplier.k4X);
         setSpeed(0.0);
         setZeroLatch();
