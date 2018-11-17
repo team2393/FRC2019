@@ -1,15 +1,19 @@
 package meetups;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
 import robot.commands.DriveByJoystick;
+import robot.commands.HoldHeadingPID;
+import robot.commands.SmoothMove;
 import robot.parts.ContinuousRotationServo;
 import robot.parts.PDPController;
 import robot.subsystems.DriveSubsystem;
@@ -18,6 +22,8 @@ public class Robot10 extends BasicRobot
 {
     // Beeper or LED
     private final DigitalOutput beepy = new DigitalOutput(0);
+
+    private final  Gyro gyro = new ADXRS450_Gyro();
 
     // 2-Wheel Drive
     private final ContinuousRotationServo left = new ContinuousRotationServo(1);
@@ -32,6 +38,8 @@ public class Robot10 extends BasicRobot
 
     private final Command joydrive = new DriveByJoystick(drive, joystick);
 
+    private final Command sm1 = new SmoothMove(drive, 0.75, 1.0, 10.0);
+    private final HoldHeadingPID hold = new HoldHeadingPID(drive, gyro);
     private SendableChooser<Command> auto_options = new SendableChooser<>();
 
     @Override
@@ -75,6 +83,20 @@ public class Robot10 extends BasicRobot
     public void autonomousInit()
     {
         super.autonomousInit();
-        auto_options.getSelected().start();
+        //auto_options.getSelected().start();
+
+        gyro.reset();
+        hold.start();
+        sm1.start();
+    }
+
+    @Override
+    public void autonomousPeriodic()
+    {
+        if (sm1.isCompleted())
+        {
+            hold.setDesiredHeading(hold.getDesiredHeading() + 180.0);
+            sm1.start();
+        }
     }
 }

@@ -35,6 +35,11 @@ public class HoldHeadingPID extends Command
         setDesiredHeading(gyro.getAngle());
     }
 
+    public double getDesiredHeading()
+    {
+        return desired_heading;
+    }
+
     public void setDesiredHeading(double heading)
     {
         desired_heading = heading;

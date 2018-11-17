@@ -24,6 +24,7 @@ public class DriveByJoystick extends Command
     /** Factor by which we reduce speed & turn values in slow mode */
     private double slow = 0.2;
 
+    private boolean was_pushed = false;
     private boolean full_speed = false;
 
     public DriveByJoystick(DriveSubsystem drive_subsys, Joystick joystick)
@@ -46,13 +47,31 @@ public class DriveByJoystick extends Command
         if (Math.abs(turn) < deadband)
             turn = 0.0;
 
-        // Full speed when any of the push-buttons at the front are pressed
-        full_speed = joystick.getRawButton(PDPController.LEFT_FRONT_BUTTON)  ||
-                     joystick.getRawButton(PDPController.RIGHT_FRONT_BUTTON);
+        // Idea 1: Turn on/off via separate buttons
+        // Works fine, but required two buttons
+        //        if (joystick.getRawButton(PDPController.LEFT_FRONT_BUTTON)
+        //            full_speed = false;
+        //        if (joystick.getRawButton(PDPController.RIGHT_FRONT_BUTTON)
+        //                full_speed = true;
 
-        // Toggle speed with right front button
-//        if (joystick.getRawButtonPressed(PDPController.RIGHT_FRONT_BUTTON))
-//            full_speed = ! full_speed;
+        // Idea 2: Toggle full speed on/off via one button
+        // Full speed when any of the push-buttons at the front are pressed.
+        // Consumes just one joystick button.
+        // Requires a 'was_pushed' type variable to remember if the button
+        // was previously pressed.
+        // Then check if button is right now pressed:
+        //        boolean is_pushed = joystick.getRawButton(PDPController.RIGHT_FRONT_BUTTON);
+        // If pressed, but wasn't last time we checked, toggle the full speed mode on/off
+        //        // if (!was_pushed      &&   is_pushed)
+        //        if (was_pushed==false   &&   is_pushed==true)
+        //            full_speed = ! full_speed;
+        // Remember if button was pushed
+        //        was_pushed = is_pushed;
+
+        // Idea 2.1: Use joystick's built-in was-button-pressed logic
+        // The Joystick class has such logic already built in.
+        if (joystick.getRawButtonPressed(PDPController.RIGHT_FRONT_BUTTON))
+            full_speed = ! full_speed;
 
         if (full_speed)
             drive_subsys.drive(speed, turn);
