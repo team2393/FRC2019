@@ -19,6 +19,7 @@ public class Robot extends BasicRobot
     private Command back_and_forth = createBackAndForth();
     private Command stack_two = createStackTwo();
     private Command stack_two2 = createStackTwo2();
+    private Command tony = createTony(), devon = createDevon();
 
     private SendableChooser<Command> auto_options = new SendableChooser<>();
 
@@ -31,6 +32,8 @@ public class Robot extends BasicRobot
         auto_options.addObject("Stack Two", stack_two);
         auto_options.addObject("Stack Two 2", stack_two2);
         auto_options.addObject("Home", home);
+        auto_options.addObject("Tony", tony);
+        auto_options.addObject("Devon", devon);
         SmartDashboard.putData(auto_options);
     }
 
@@ -50,6 +53,31 @@ public class Robot extends BasicRobot
     public void autonomousInit()
     {
         auto_options.getSelected().start();
+    }
+
+    private Command createTony()
+    {
+        CommandGroup moves = new CommandGroup();
+        moves.addSequential(new MoveArm(arm, 159.5, 45.3, 90.2, 90.5));
+        moves.addSequential(new MoveArm(arm, 159.5, 77.0, 89.2, 52.9));
+        moves.addSequential(new MoveArm(arm, 91.9, 105.6, 131.4, 51.9));
+        moves.addSequential(new MoveArm(arm, 91.9, 63.3, 78.9, 51.9));
+        moves.addSequential(new MoveArm(arm, 140.0, 45.3, 89.7, 89.5));
+        return moves;
+    }
+
+    private Command createDevon()
+    {
+        CommandGroup moves = new CommandGroup();
+        moves.addSequential(new MoveArm(arm, 159.5, 45.4, 90.4, 90.3));
+        moves.addSequential(new MoveArm(arm, 144.5, 53.0, 98.2, 64.8));
+        moves.addSequential(new MoveArm(arm, 144.5, 90.2, 106.6, 55.8));
+        moves.addSequential(new MoveArm(arm, 95.0, 107.7, 120.8, 51.0));
+        moves.addSequential(new MoveArm(arm, 95.0, 67.4, 91.2, 52.7));
+        moves.addSequential(new MoveArm(arm, 95.0, 38.2, 113.0, 159.3));
+        moves.addSequential(new MoveArm(arm, 95.0, 80.7, 97.3, 165.0));
+        moves.addSequential(new MoveArm(arm, 139.5, 85.5, 97.3, 165.0));
+        return moves;
     }
 
     private Command createBackAndForth()
