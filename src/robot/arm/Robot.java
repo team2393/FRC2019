@@ -1,5 +1,6 @@
 package robot.arm;
 
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -7,10 +8,12 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import meetups.BeepPatternCommand;
 import robot.BasicRobot;
 
 public class Robot extends BasicRobot
 {
+    private DigitalOutput beeper = new DigitalOutput(0);
     private Arm arm = new Arm();
     private Joystick joystick = new Joystick(0);
 
@@ -19,7 +22,7 @@ public class Robot extends BasicRobot
     private Command back_and_forth = createBackAndForth();
     private Command stack_two = createStackTwo();
     private Command stack_two2 = createStackTwo2();
-    private Command tony = createTony(), devon = createDevon();
+    private Command tony = createTony(), devon = createDevon(), anna = createAnna(), bella = createBella();
 
     private SendableChooser<Command> auto_options = new SendableChooser<>();
 
@@ -34,6 +37,8 @@ public class Robot extends BasicRobot
         auto_options.addObject("Home", home);
         auto_options.addObject("Tony", tony);
         auto_options.addObject("Devon", devon);
+        auto_options.addObject("Anna", anna);
+        auto_options.addObject("Bella", bella);
         SmartDashboard.putData(auto_options);
     }
 
@@ -66,6 +71,20 @@ public class Robot extends BasicRobot
         return moves;
     }
 
+    private Command createBella()
+    {
+        CommandGroup moves = new CommandGroup();
+        moves.addSequential(new MoveArm(arm, 160.0, 66.8, 99.9, 55.1));
+        moves.addSequential(new MoveArm(arm, 160.0, 106.4, 125.2, 51.5));
+        moves.addSequential(new MoveArm(arm, 95.0, 106.4, 125.2, 51.5));
+        moves.addSequential(new MoveArm(arm, 95.0, 56.3, 80.8, 51.5));
+        moves.addSequential(new BeepPatternCommand(beeper, "b-b-b-bbbbb------b-b-bbbb"));
+        moves.addSequential(new MoveArm(arm, 95.0, 67.3, 91.6, 165.0));
+        moves.addSequential(new MoveArm(arm, 95.0, 67.3, 91.6, 165.0));
+        moves.addSequential(new MoveArm(arm, 155.5, 67.3, 91.6, 165.0));
+        return moves;
+    }
+
     private Command createDevon()
     {
         CommandGroup moves = new CommandGroup();
@@ -79,6 +98,28 @@ public class Robot extends BasicRobot
         moves.addSequential(new MoveArm(arm, 139.5, 85.5, 97.3, 165.0));
         return moves;
     }
+
+    private Command createAnna()
+    {
+        CommandGroup moves = new CommandGroup();
+        moves.addSequential(new MoveArm(arm, 160.0, 44.5, 90.4, 51.1));
+        moves.addSequential(new MoveArm(arm, 160.0, 91.0, 113.0, 51.1));
+        moves.addSequential(new MoveArm(arm, 153.0, 101.8, 117.8, 51.1));
+        moves.addSequential(new MoveArm(arm, 93.0, 101.8, 117.8, 51.1));
+        moves.addSequential(new MoveArm(arm, 93.0, 39.7, 118.4, 51.1));
+        moves.addSequential(new MoveArm(arm, 93.0, 39.7, 118.4, 161.5));
+        moves.addSequential(new MoveArm(arm, 93.0, 73.1, 64.6, 161.5));
+        moves.addSequential(new BeepPatternCommand(beeper, "b-b-b-b-b-b-b-b-b-bbbbbbbbbbb"));
+        moves.addSequential(new MoveArm(arm, 156.5, 73.1, 64.6, 161.5));
+        moves.addSequential(new MoveArm(arm, 91.9, 73.1, 64.6, 161.5));
+        moves.addSequential(new MoveArm(arm, 91.9, 38.9, 111.6, 52.6));
+        moves.addSequential(new MoveArm(arm, 91.9, 97.7, 109.5, 52.6));
+        moves.addSequential(new MoveArm(arm, 160.0, 81.0, 93.0, 68.7));
+        moves.addSequential(new MoveArm(arm, 160.0, 45.4, 90.4, 89.5));
+        moves.addSequential(new BeepPatternCommand(beeper, "b-b-b-b-b-b-b-b-b-bbbbbbbbbbb"));
+        return moves;
+    }
+
 
     private Command createBackAndForth()
     {
