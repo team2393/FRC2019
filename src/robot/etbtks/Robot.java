@@ -12,8 +12,8 @@ import robot.parts.PDPController;
  * 
  *  Drive via joystick
  *  Read encoder
+ *  Commands to drive certain distances
  *  TODO Read gyro
- *  TODO Commands to drive certain distances
  *  TODO Commands to hold heading
  *  NOT TODO beep
  *  @author Anna
@@ -29,6 +29,9 @@ public class Robot extends BasicRobot
 	
 	Encoder encoder = new Encoder(2,1);
 	
+	double integral = 0;
+
+	
 	public Robot()
 	{
 		left.setInverted(true);
@@ -41,6 +44,8 @@ public class Robot extends BasicRobot
 	public void robotPeriodic()
 	{
 		super.robotPeriodic();
+		// always publishes coder position
+		SmartDashboard.putNumber("encoder", encoder.getDistance());
 	}
 	
 	@Override
@@ -53,6 +58,26 @@ public class Robot extends BasicRobot
 	public void autonomousPeriodic() 
 	{
 		super.autonomousPeriodic();
+	
+		double desired_distance = 50.0; 
+		// Proportional gain
+		double p_gain = 0.015;
+		
+		// Integral limit and gain
+		double limit = 5;
+		double i_gain = 0.01;
+
+		double actual_distance = encoder.getDistance();
+		double error = desired_distance - actual_distance;
+		integral = integral + error;
+		
+		if (integral > limit)
+			integral = limit;
+		if (integral < -limit)
+			integral = -limit;
+		
+		double speed = p_gain * error   + i_gain * integral; 
+		drive.arcadeDrive(speed, 0.0);	
 	}
 	
 	@Override
@@ -71,7 +96,7 @@ public class Robot extends BasicRobot
 		drive.arcadeDrive(-joystick.getRawAxis(PDPController.RIGHT_STICK_VERTICAL),
 				          joystick.getRawAxis(PDPController.RIGHT_STICK_HORIZONTAL));
 		// System.out.println(encoder.getDistance() + "mm");
-		SmartDashboard.putNumber("encoder", encoder.getDistance());
+	
 	}	
 	
 }
