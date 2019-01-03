@@ -1,8 +1,10 @@
 package robot.etbtks;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
 import robot.parts.ContinuousRotationServo;
@@ -13,8 +15,9 @@ import robot.parts.PDPController;
  *  Drive via joystick
  *  Read encoder
  *  Commands to drive certain distances
- *  TODO Read gyro
- *  TODO Commands to hold heading
+ *  Read gyro
+ *  Commands to hold heading
+ *  TODO Use Commands
  *  NOT TODO beep
  *  @author Anna
  */
@@ -29,7 +32,9 @@ public class Robot extends BasicRobot
 	
 	Encoder encoder = new Encoder(2,1);
 	
+	Gyro gyro = new ADXRS450_Gyro();
 	double integral = 0;
+	double hedtegral = 0;
 
 	
 	public Robot()
@@ -46,6 +51,8 @@ public class Robot extends BasicRobot
 		super.robotPeriodic();
 		// always publishes coder position
 		SmartDashboard.putNumber("encoder", encoder.getDistance());
+		SmartDashboard.putNumber("heading", gyro.getAngle());
+
 	}
 	
 	@Override
@@ -57,27 +64,41 @@ public class Robot extends BasicRobot
 	@Override
 	public void autonomousPeriodic() 
 	{
-		super.autonomousPeriodic();
-	
 		double desired_distance = 50.0; 
 		// Proportional gain
 		double p_gain = 0.015;
 		
 		// Integral limit and gain
-		double limit = 5;
-		double i_gain = 0.01;
+		double limit = 20;
+		double i_gain = 0.015;
 
 		double actual_distance = encoder.getDistance();
 		double error = desired_distance - actual_distance;
 		integral = integral + error;
-		
 		if (integral > limit)
 			integral = limit;
 		if (integral < -limit)
 			integral = -limit;
 		
 		double speed = p_gain * error   + i_gain * integral; 
-		drive.arcadeDrive(speed, 0.0);	
+
+		double desired_heading = 0;		
+		
+		// Proportional gain and limit
+		double rot_p_gain = 0.02;
+		double rot_limit = 15;
+
+		double heading = gyro.getAngle(); 
+		double rot_error = desired_heading - heading; 
+		hedtegral = hedtegral + rot_error; 		
+		if (hedtegral > rot_limit)
+			hedtegral = rot_limit;
+		if (hedtegral < -rot_limit)
+			hedtegral = -rot_limit;
+		
+		double rotation = rot_p_gain * rot_error + i_gain * hedtegral;
+		
+		drive.arcadeDrive(speed, rotation);	
 	}
 	
 	@Override
@@ -90,7 +111,10 @@ public class Robot extends BasicRobot
 	public void teleopPeriodic() 
 	{
 		if (joystick.getRawButtonPressed(PDPController.A_BUTTON))
+		{
 			encoder.reset();
+			gyro.reset();
+		}
 		
 		// Joystick reports -1 for "full forward"
 		drive.arcadeDrive(-joystick.getRawAxis(PDPController.RIGHT_STICK_VERTICAL),
