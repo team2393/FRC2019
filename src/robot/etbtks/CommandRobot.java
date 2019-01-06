@@ -1,6 +1,7 @@
 package robot.etbtks;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
@@ -37,6 +38,9 @@ public class CommandRobot extends BasicRobot
 	
 	Gyro gyro = new ADXRS450_Gyro();
 	
+	AnalogInput leftlight = new AnalogInput(2);
+	AnalogInput rightlight = new AnalogInput(3);
+	
 	Command pos1 = new MoveAndTurnCommand(0, 100, encoder, gyro, drive);
 	CommandGroup moves = new CommandGroup();
 	
@@ -61,6 +65,8 @@ public class CommandRobot extends BasicRobot
 		// always publishes coder position
 		SmartDashboard.putNumber("encoder", encoder.getDistance());
 		SmartDashboard.putNumber("heading", gyro.getAngle());
+		SmartDashboard.putNumber("left light", leftlight.getVoltage());
+		SmartDashboard.putNumber("right light", rightlight.getVoltage());
 
 	}
 	
@@ -86,9 +92,24 @@ public class CommandRobot extends BasicRobot
 			gyro.reset();
 		}
 		
+		
+		double rotation = joystick.getRawAxis(PDPController.RIGHT_STICK_HORIZONTAL);
+		
+		// While holding button, check if we are on the white line
+		if (joystick.getRawButton(PDPController.LEFT_FRONT_BUTTON))
+		{
+			boolean leftonline = leftlight.getVoltage() > 1.2,
+					rightonline = rightlight.getVoltage() > 1.2;
+			if (leftonline == true) 
+				rotation = -0.5; 
+			if (rightonline == true)
+				rotation = 0.5; 
+		}
+		SmartDashboard.putNumber("rotation", rotation);
+		
 		// Joystick reports -1 for "full forward"
 		drive.arcadeDrive(-joystick.getRawAxis(PDPController.RIGHT_STICK_VERTICAL),
-				          joystick.getRawAxis(PDPController.RIGHT_STICK_HORIZONTAL));
+				          rotation);
 		// System.out.println(encoder.getDistance() + "mm");
 	
 	}	
