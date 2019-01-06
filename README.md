@@ -3,6 +3,39 @@
 
 ![Simple Robot](blacky.jpg)
 
+Setup for the 2019 season, generally described at 
+https://www.firstinspires.org/resource-library/frc/competition-manual-qa-system and 
+http://wpilib.screenstepslive.com/s/4485
+
+May not be required, but to start fresh you can remove the 2018 software:
+
+ * Uninstall "National Instruments Software" to remove the 2018 FRC
+ * Delete folders %HOME%/wpilib, Shuffleboard, SmartDashboard, RobotBuilder
+
+Install new tools:
+
+ * Install .NET update from https://support.microsoft.com/en-us/help/3151800/the-net-framework-4-6-2-offline-installer-for-windows. It may tell you that it's already installed, so then just cancel.
+ * Install 
+WPILibInstaller_Windows64-2019.1.1.zip from https://github.com/wpilibsuite/allwpilib/releases.
+  * You can select to install only for the current user (yourself).
+  * In the first dialog, select to download VS Code.
+  * Select all but "C++ Compiler"
+ * Install FRCUpdateSuite from http://www.ni.com/download/first-robotics-software-2017/7904/en/ Yes, link looks like 2017 but there'll be a file FRCUpdateSuite_2019.0.0.zip. To unpack this ZIP, you need the code from the Kit-of-Parts.
+ * Install git from https://git-scm.com/downloads
+
+
+As a result, you should have FRC desktop icons for VS Code,
+SmartDashboard etc which all point to software installed under 
+C:\Users\Public\frc2019.
+
+We'll update this repo to the new format.
+Meanwhile, it can be imported into VS Code via the command "WPILib: Import a WPILib Eclipse project".
+
+
+Below is the older information for the 2018 setup...
+into Eclipse,
+
+
 Git Clone
 ---------
 
