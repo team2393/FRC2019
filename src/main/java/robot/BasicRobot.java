@@ -27,7 +27,8 @@ public class BasicRobot extends TimedRobot
         // Print the class name (which might be the name of the derived class).
         // This way we can see what's running on the roboRIO console.
         System.out.println("###################################################");
-        System.out.println("########### Team 2393 " + getClass().getName());
+        System.out.println("########### Team 2393");
+        System.out.println("########### " + getClass().getName());
         System.out.println("###################################################");
     }
 

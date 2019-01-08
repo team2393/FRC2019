@@ -20,7 +20,7 @@ WPILibInstaller_Windows64-2019.1.1.zip from https://github.com/wpilibsuite/allwp
   * You can select to install only for the current user (yourself).
   * In the first dialog, select to download VS Code.
   * Select all but "C++ Compiler"
- * Install FRCUpdateSuite from http://www.ni.com/download/first-robotics-software-2017/7904/en/ Yes, link looks like 2017 but there'll be a file FRCUpdateSuite_2019.0.0.zip. To unpack this ZIP, you need the code from the Kit-of-Parts.
+ * Install FRCUpdateSuite from http://www.ni.com/download/first-robotics-software-2017/7904/en/ Yes, link looks like 2017 but there'll be a file FRCUpdateSuite_2019.0.0.zip. To unpack this ZIP, you need the password and the serial code from the Kit-of-Parts.
  * Install git from https://git-scm.com/downloads
 
 
