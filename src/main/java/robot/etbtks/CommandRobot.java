@@ -1,5 +1,6 @@
 package robot.etbtks;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Encoder;
@@ -54,6 +55,10 @@ public class CommandRobot extends BasicRobot
 		moves.addSequential(new MoveAndTurnCommand(0, 300, encoder, gyro, drive));
 		moves.addSequential(new MoveAndTurnCommand(90, 300, encoder, gyro, drive));
 		moves.addSequential(new MoveAndTurnCommand(90, 600, encoder, gyro, drive));
+
+		// Publish image from USB camera
+		CameraServer camera = CameraServer.getInstance();
+		camera.startAutomaticCapture();
 	}
 	
 	@Override
