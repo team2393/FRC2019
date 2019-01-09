@@ -5,6 +5,21 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "java",
+      "name": "CodeLens (Launch) - Hello",
+      "request": "launch",
+      "mainClass": "first.Hello",
+      "console": "integratedTerminal",
+      "projectName": "2393First"
+    },
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - Primes",
+      "request": "launch",
+      "mainClass": "first.Primes",
+      "projectName": "2393First"
+    },
+    {
       "type": "wpilib",
       "name": "WPILib Desktop Debug",
       "request": "launch",

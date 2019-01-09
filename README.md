@@ -50,6 +50,14 @@ Running
 Code in the `first` and `bank` packages can run by opening those
 files that contain a `main()` method and pushing the "Run" button
 that will appear above the `main()` method.
+When running code that reads from `System.in` you might notice that
+the code runs in the internal console which doesn't permit keyboard input.
+Locate the launch configuration in the file `.vscode/launch.json`.
+Add a line
+```
+"console": "integratedTerminal",
+```
+and now the code will run in a terminal that allows keyboard input.
 
 For anything in `robot` you need the WPILib. That way you can view and edit the code.
 To compile, invoke "Build Robot Code" from the upper right "..." menu.
