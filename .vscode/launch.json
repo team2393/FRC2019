@@ -1,139 +1,20 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "type": "java",
-            "name": "Debug (Launch)",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "stopOnEntry": false,
-            "mainClass": "",
-            "args": ""
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch)-BugDemo<2393First>",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "stopOnEntry": false,
-            "mainClass": "first.BugDemo",
-            "args": "",
-            "projectName": "2393First"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch)-Calculator<2393First>",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "integratedTerminal",
-            "stopOnEntry": false,
-            "mainClass": "first.Calculator",
-            "args": "",
-            "projectName": "2393First"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch)-Hello<2393First>",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "integratedTerminal",
-            "stopOnEntry": false,
-            "mainClass": "first.Hello",
-            "args": "",
-            "projectName": "2393First"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch)-PositionTrackerDemo1<2393First>",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "stopOnEntry": false,
-            "mainClass": "first.PositionTrackerDemo1",
-            "args": "",
-            "projectName": "2393First"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch)-PositionTrackerDemo2<2393First>",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "stopOnEntry": false,
-            "mainClass": "first.PositionTrackerDemo2",
-            "args": "",
-            "projectName": "2393First"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch)-PositionTrackerDemo3<2393First>",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "stopOnEntry": false,
-            "mainClass": "first.PositionTrackerDemo3",
-            "args": "",
-            "projectName": "2393First"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch)-Primes<2393First>",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "stopOnEntry": false,
-            "mainClass": "first.Primes",
-            "args": "",
-            "projectName": "2393First"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch)-PrimesInParallel<2393First>",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "stopOnEntry": false,
-            "mainClass": "first.PrimesInParallel",
-            "args": "",
-            "projectName": "2393First"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch)-PrimesInParallel2<2393First>",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "stopOnEntry": false,
-            "mainClass": "first.PrimesInParallel2",
-            "args": "",
-            "projectName": "2393First"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch)-Quadratic<2393First>",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "integratedTerminal",
-            "stopOnEntry": false,
-            "mainClass": "first.Quadratic",
-            "args": "",
-            "projectName": "2393First"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch)-Types<2393First>",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "stopOnEntry": false,
-            "mainClass": "first.Types",
-            "args": "",
-            "projectName": "2393First"
-        }
-    ]
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "wpilib",
+      "name": "WPILib Desktop Debug",
+      "request": "launch",
+      "desktop": true
+    },
+    {
+      "type": "wpilib",
+      "name": "WPILib roboRIO Debug",
+      "request": "launch",
+      "desktop": false
+    }
+  ]
 }
