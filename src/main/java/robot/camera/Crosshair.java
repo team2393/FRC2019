@@ -27,19 +27,24 @@ public class Crosshair implements Runnable
     @Override
     public void run()
     {
+        // Get size of original image
         final VideoMode mode = camera.getVideoMode();
-        final CvSink video = server.getVideo();
-        final CvSource processed = CameraServer.getInstance().putVideo("Processed", mode.width, mode.height);
-        final int mid_x = mode.width/2;
-        final int mid_y = mode.height/2;
+        final int width = mode.width, height = mode.height;
+        final int mid_x = width  / 2, mid_y = height / 2;
 
-        final Mat source = new Mat();
-        final Mat output = new Mat();
+        final CvSink original = server.getVideo();
+        final CvSource processed = CameraServer.getInstance().putVideo("Processed", width, height);
+        
+        final Mat source = new Mat(), output = new Mat();
+        final Scalar color = new Scalar(200.0, 200.0, 200.0);
         while (!Thread.interrupted())
         {
-            if (video.grabFrame(source) == 0)
+            if (original.grabFrame(source) == 0)
             {
-                System.out.println(video.getError());
+                // Could not fetch frame.
+                // Report error..
+                System.out.println(original.getError());
+                // .. and wait a little in hope of better luck next time
                 try
                 {
                     Thread.sleep(1000);
@@ -51,16 +56,18 @@ public class Crosshair implements Runnable
             }
             else
             {
+                // Convert to grayscale
                 Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
-                // Imgproc.HoughLines() ?!
+            
                 // Horizontal arrows
-                Imgproc.arrowedLine(output, new Point(0, mid_y), new Point(mid_x-50, mid_y), new Scalar(200.0, 200.0, 200.0));
-                Imgproc.arrowedLine(output, new Point(mode.width, mid_y), new Point(mid_x+50, mid_y), new Scalar(200.0, 200.0, 200.0));
+                Imgproc.arrowedLine(output, new Point(0, mid_y), new Point(mid_x - 50, mid_y), color);
+                Imgproc.arrowedLine(output, new Point(width, mid_y), new Point(mid_x+50, mid_y), color);
 
                 // Vertical arrows
-                Imgproc.arrowedLine(output, new Point(mid_x, 0), new Point(mid_x, mid_y-50), new Scalar(200.0, 200.0, 200.0));
-                Imgproc.arrowedLine(output, new Point(mid_x, mode.height), new Point(mid_x, mid_y+50), new Scalar(200.0, 200.0, 200.0));
+                Imgproc.arrowedLine(output, new Point(mid_x, 0), new Point(mid_x, mid_y - 50), color);
+                Imgproc.arrowedLine(output, new Point(mid_x, height), new Point(mid_x, mid_y+50), color);
 
+                // Publish the result
                 processed.putFrame(output);
             }
         }
