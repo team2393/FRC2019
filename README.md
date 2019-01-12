@@ -54,9 +54,14 @@ Go to View > SCM. This will show what has changed.
 You can double click on one of the listed files to
 see what has changed. On the right side of the file name
 there are three icons.
-1) paper with arrow-> allows you to see the changes made
-2) 
-
+1) paper with arrow-> just reopens the file
+2) curved arrow-> will remove the changes 
+3) plus sign-> stages the changes for a commit
+Once all changes are staged, you can commit them
+with a message by clicking the check button on top.
+You can then push them to GitHub by clicking the
+3 dots on top and selecting "Push" from the
+dropdown.
 
 
 Running
