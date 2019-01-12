@@ -42,6 +42,21 @@ invoke View, Command Palette, and type "Git: Pull".
 You can also use View, SCM, and then invoke "Pull"
 from the "..." menu.
 
+Creating a Git Branch
+---------------------
+To create a branch click on the branch name in the 
+lower left corner. Select Create new branch from the
+dropdown, then enter a name.
+
+Committing Changes
+------------------
+Go to View > SCM. This will show what has changed.
+You can double click on one of the listed files to
+see what has changed. On the right side of the file name
+there are three icons.
+1) paper with arrow-> allows you to see the changes made
+2) 
+
 
 
 Running
