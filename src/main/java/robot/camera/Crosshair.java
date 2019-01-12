@@ -10,6 +10,7 @@ import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.VideoCamera;
 import edu.wpi.cscore.VideoMode;
 import edu.wpi.first.cameraserver.CameraServer;
+import robot.camera.GripPipeline.Line;
 
 /** Video processor that adds a crosshair */
 public class Crosshair implements Runnable
@@ -37,6 +38,8 @@ public class Crosshair implements Runnable
         
         final Mat source = new Mat(), output = new Mat();
         final Scalar color = new Scalar(200.0, 200.0, 200.0);
+
+        // TODO final GripPipeline pipeline = new GripPipeline();
         while (!Thread.interrupted())
         {
             if (original.grabFrame(source) == 0)
@@ -56,6 +59,15 @@ public class Crosshair implements Runnable
             }
             else
             {
+                // TODO Example for passing image to GRIP pipeline
+                // pipeline.process(source);
+                // .. and then doing something with the result
+                // if (pipeline.filterLinesOutput().size() > 0)
+                // {
+                //     Line line = pipeline.filterLinesOutput().get(0);
+                //     // .. 
+                //     Imgproc.line(output, new Point(line.x1, line.y1), new Point(line.x2, line.y2), color);
+                // }
                 // Convert to grayscale
                 Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
             
