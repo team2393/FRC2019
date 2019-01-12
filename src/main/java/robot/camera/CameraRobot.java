@@ -5,6 +5,7 @@ import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
+import edu.wpi.cscore.CameraServerJNI;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
@@ -32,14 +33,18 @@ public class CameraRobot extends BasicRobot
 		camera.setFPS(10);
 
 		Thread thread = new Thread(new Crosshair(server, camera));
-		thread.start();	
+		thread.start();
+
+		// Enable telemetry measurements
+		CameraServerJNI.setTelemetryPeriod(1.0);
 	}
 
 	@Override
     public void robotPeriodic()
     {
-		double rate = camera.getActualDataRate();
-		SmartDashboard.putNumber("Rate", rate);
-		SmartDashboard.putBoolean("Too Much", rate*8 > 4*1024*1024);
+		// Convert bytes per second into bits (8) and Mega (1e6)
+		double bits_per_sec = camera.getActualDataRate()*8/1000.0/1000.0;
+		SmartDashboard.putNumber("Camera Mbps", bits_per_sec);
+		SmartDashboard.putBoolean("Too Much", bits_per_sec >= 4.0);
     }
 }
