@@ -1,15 +1,7 @@
 package robot.camera;
 
-import org.opencv.core.Mat;
-import org.opencv.core.Point;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
-
 import edu.wpi.cscore.CameraServerJNI;
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
-import edu.wpi.cscore.VideoMode;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
@@ -28,23 +20,43 @@ public class CameraRobot extends BasicRobot
 		// Publish image from USB camera
 		server = CameraServer.getInstance();
 		camera = server.startAutomaticCapture();
-		CameraInfo.show(camera);
-		camera.setResolution(640, 480);
-		camera.setFPS(10);
+		if (camera.isValid())
+		{
+			// Enable telemetry measurements
+			CameraServerJNI.setTelemetryPeriod(1.0);
 
-		Thread thread = new Thread(new Crosshair(server, camera));
-		thread.start();
+			CameraInfo.show(camera);
+			camera.setResolution(320, 240);
+			camera.setFPS(10);
 
-		// Enable telemetry measurements
-		CameraServerJNI.setTelemetryPeriod(1.0);
+			Thread thread = new Thread(new VisionPipeline1(server, camera));
+			thread.start();
+		}
+		else
+			System.out.println("No camera");
 	}
 
 	@Override
     public void robotPeriodic()
     {
-		// Convert bytes per second into bits (8) and Mega (1e6)
-		double bits_per_sec = camera.getActualDataRate()*8/1000.0/1000.0;
-		SmartDashboard.putNumber("Camera Mbps", bits_per_sec);
-		SmartDashboard.putBoolean("Too Much", bits_per_sec >= 4.0);
+		try
+		{
+			if (camera.isConnected())
+			{
+				// Convert bytes per second into bits (8) and Mega (1e6)
+				double bits_per_sec = camera.getActualDataRate()*8/1000.0/1000.0;
+				SmartDashboard.putNumber("Camera Mbps", bits_per_sec);
+				SmartDashboard.putBoolean("Too Much", bits_per_sec >= 4.0);
+			}
+		}
+		catch (Throwable ex)
+		{
+			// No camera data
+		}
+
+		final Runtime rt = Runtime.getRuntime();
+		final long max = rt.maxMemory();
+		final long used = max - rt.freeMemory();
+		SmartDashboard.putNumber("Memory Percentage", used * 100 / max);
     }
 }
