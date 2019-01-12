@@ -1,7 +1,7 @@
 <grip:Pipeline>
   <sources>
     <grip:ImageFile>
-      <property name="path" value="C:\Users\Kay\GRIP\rocket.png"/>
+      <property name="path" value="C:\Users\Kay\git\2393First\GRIP\rocket.png"/>
     </grip:ImageFile>
   </sources>
   <steps>
