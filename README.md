@@ -63,6 +63,15 @@ You can then push them to GitHub by clicking the
 3 dots on top and selecting "Push" from the
 dropdown.
 
+Merging and Syncing
+-------------------
+If a branch contains useful changes, we can go to the
+github page and make a pull request. You should 
+periodically press the sync button to ensure you have the
+latest changes. Before starting new work, go to the 
+master branch, sync, and  then create a new branch for your
+work.
+
 
 Running
 -------
