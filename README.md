@@ -48,6 +48,9 @@ To create a branch click on the branch name in the
 lower left corner. Select Create new branch from the
 dropdown, then enter a name.
 
+Github has a section that shows all branches:
+https://github.com/kasemir/2393First/network
+
 Committing Changes
 ------------------
 Go to View > SCM. This will show what has changed.
