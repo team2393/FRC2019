@@ -81,13 +81,17 @@ public class VisionPipeline1 implements Runnable
                 Imgproc.resize(source, tmp1, new Size(proc_width, proc_height));
                 // tmp1 is now the smaller image
 
+                // Scale colors to use full 0..255 range
+                Core.normalize(tmp1, tmp2, 0.0, 255.0, Core.NORM_MINMAX);
+                // tmp2 is normalized
+
                 // Find specific hue, saturation, lunimance
-                Imgproc.cvtColor(tmp1, tmp2, Imgproc.COLOR_BGR2HLS);
-                Core.inRange(tmp2, thres_low, thres_high, tmp2);
-                // tmp2 is now a black/white image (mask)
+                Imgproc.cvtColor(tmp2, tmp1, Imgproc.COLOR_BGR2HLS);
+                Core.inRange(tmp1, thres_low, thres_high, tmp1);
+                // tmp1 is now a black/white image (mask)
 
                 // Detect lines
-                lsd.detect(tmp2, tmp1);
+                lsd.detect(tmp1, tmp2);
                 // tmp1 now contains the lines
 
                 // Check which lines look like they belong to the target markers
@@ -99,10 +103,10 @@ public class VisionPipeline1 implements Runnable
                 int cx = 0, cy = 0;
 
                 // Add overlay to the original source
-                for (int i=0;  i<tmp1.rows();  ++i)
+                for (int i=0;  i<tmp2.rows();  ++i)
                 {
                     // line = [ x1, y1, x2, y2 ]
-                    final double[] line = tmp1.get(i, 0);
+                    final double[] line = tmp2.get(i, 0);
                     final double dx = line[2] - line[0];
                     final double dy = line[3] - line[1];
                     
