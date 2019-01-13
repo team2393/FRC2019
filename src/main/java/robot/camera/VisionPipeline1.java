@@ -32,6 +32,7 @@ public class VisionPipeline1 implements Runnable
     public void run()
     {
         // Parameters used to filter image and detect lines
+        // TODO Find good hue for the camera with green LED
         final double[] hue = {0.0, 180.0};
         final double[] sat = {0.0, 255.0};
         final double[] lum = {220.0, 255.0};
@@ -39,6 +40,7 @@ public class VisionPipeline1 implements Runnable
         final Scalar thres_high = new Scalar(hue[1], lum[1], sat[1]);
         // Some can be changed via dashboard
         SmartDashboard.setDefaultNumber("Length Threshold", 10.0);
+        // TODO Need two angles, one for left and one for right marker
         SmartDashboard.setDefaultNumber("Angle Threshold", 90.0);
 
         // Get size of original image
@@ -90,7 +92,7 @@ public class VisionPipeline1 implements Runnable
 
                 // Check which lines look like they belong to the target markers
                 final double min_length = SmartDashboard.getNumber("Length Threshold", 10.0);
-                final double desired_angle = SmartDashboard.getNumber("Angle Threshold", 90.0);
+                final int desired_angle = (int) SmartDashboard.getNumber("Angle Threshold", 90.0);
                 
                 // Used to compute average location (= 'center') of detected lines
                 int points = 0;
@@ -112,10 +114,13 @@ public class VisionPipeline1 implements Runnable
                     // Ignore lines at wrong angle
                     // Note that 'horizontal' lines can have angle 0, 180 or -180.
                     // 'Vertical' lines have angle 90 or -90.
+                    // --> Normalize all angles to be within 0..180
                     final double angle = Math.toDegrees(Math.atan2(dy, dx));
-                    // System.out.println(angle);
-                    if (Math.abs(desired_angle - angle) > 10)
+                    final int norm_angle = ((int)angle + 180) % 180;
+                    if (Math.abs(desired_angle - norm_angle) > 10)
                         continue;
+
+                    // TODO Look for left vs. right marker
 
                     // Found a line that looks about right
                     Imgproc.line(source, new Point(line[0]*scale, line[1]*scale),
@@ -125,6 +130,10 @@ public class VisionPipeline1 implements Runnable
                     cx += line[0]*scale + line[2]*scale;
                     cy += line[1]*scale + line[3]*scale;
                 }
+
+                // TODO Look if both left and right marker was found,
+                //      and if left is indeed left of the right marker.
+                //      Target should then be between those markers.
 
                 // Arrow from middle of image to detected location
                 if (points > 0)
