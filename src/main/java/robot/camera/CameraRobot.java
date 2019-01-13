@@ -3,6 +3,7 @@ package robot.camera;
 import edu.wpi.cscore.CameraServerJNI;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
 
@@ -20,12 +21,12 @@ public class CameraRobot extends BasicRobot
 		// Publish image from USB camera
 		server = CameraServer.getInstance();
 		camera = server.startAutomaticCapture();
-		if (camera.isValid())
+		// Check if we _have_ a camera
+		// (would otherwise crash when trying to use it)
+		if (CameraInfo.show(camera))
 		{
 			// Enable telemetry measurements
 			CameraServerJNI.setTelemetryPeriod(1.0);
-
-			CameraInfo.show(camera);
 			camera.setResolution(320, 240);
 			camera.setFPS(10);
 
@@ -33,7 +34,7 @@ public class CameraRobot extends BasicRobot
 			thread.start();
 		}
 		else
-			System.out.println("No camera");
+			DriverStation.reportWarning("Dude, no camera?!", false);
 	}
 
 	@Override
