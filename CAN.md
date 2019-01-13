@@ -56,3 +56,21 @@ To use CTRE devices like `TalonSRX` in Java code:
  2) Select "Manage Vendor Libraries"
  3) Select "Install new libraries (offline)"
  4) Select "CTRE-Phoenix"
+
+
+Troubleshooting
+---------------
+
+ * When power is off, the CAN bus should measure a resistance of 60 Ohm
+   when both ends are properly terminated.
+   If you measure 120 Ohm, that's the termination on the roboRIO side,
+   and the other end of the bus is not terminated, or some daisy-chain
+   hop is broken.
+
+ * Test each device individually, so it's the only device on the bus.
+   With a single device and short wires, you can skip the termination.
+
+ * Update device firmware via Tuner.
+   Firmware files are in C:\Users\Public\Documents\FRC
+
+ * User Tuner to run "Self Test" on each device.
