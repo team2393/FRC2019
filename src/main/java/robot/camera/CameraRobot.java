@@ -29,7 +29,7 @@ public class CameraRobot extends BasicRobot
 			camera.setResolution(320, 240);
 			camera.setFPS(10);
 
-			Thread thread = new Thread(new VisionPipeline1(server, camera));
+			Thread thread = new Thread(new VisionProcessor1(server, camera));
 			thread.start();
 		}
 		else
