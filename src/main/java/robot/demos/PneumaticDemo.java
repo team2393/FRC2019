@@ -7,7 +7,8 @@ import robot.BasicRobot;
 /** Demo of turning output of Pneumatic Control Module on/off */
 public class PneumaticDemo extends BasicRobot
 {
-    private final Solenoid sol1 = new Solenoid(0);
+    private final int PCM_ID = 0;
+    private final Solenoid sol1 = new Solenoid(PCM_ID, 0);
 
     @Override
     public void robotInit()
