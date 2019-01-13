@@ -52,7 +52,7 @@ public class VisionPipeline1 implements Runnable
         final int proc_width = width / scale, proc_height = height / scale;
         final CvSink original = server.getVideo();
         final CvSource processed = CameraServer.getInstance().putVideo("Processed", width, height);
-        
+
         final Mat source = new Mat();
         final Mat tmp1 = new Mat(), tmp2 = new Mat();
         final LineSegmentDetector lsd = Imgproc.createLineSegmentDetector();
@@ -97,7 +97,7 @@ public class VisionPipeline1 implements Runnable
                 // Check which lines look like they belong to the target markers
                 final double min_length = SmartDashboard.getNumber("Length Threshold", 10.0);
                 final int desired_angle = (int) SmartDashboard.getNumber("Angle Threshold", 90.0);
-                
+
                 // Used to compute average location (= 'center') of detected lines
                 int points = 0;
                 int cx = 0, cy = 0;
@@ -105,31 +105,42 @@ public class VisionPipeline1 implements Runnable
                 // Add overlay to the original source
                 for (int i=0;  i<tmp2.rows();  ++i)
                 {
-                    // line = [ x1, y1, x2, y2 ]
+                    // line = [ x1, y1, x2, y2 ] for line from ( x1, y1 ) to ( x2, y2 )
                     final double[] line = tmp2.get(i, 0);
+                    // Compute x2 - x1  and  y2 - y1
                     final double dx = line[2] - line[0];
                     final double dy = line[3] - line[1];
-                    
-                    // Ignore lines that are too short
+
+                    // Length of line
                     final double length = Math.sqrt(dx*dx + dy*dy);
+                    // Ignore lines that are too short
                     if (length < min_length)
                         continue;
-                
-                    // Ignore lines at wrong angle
-                    // Note that 'horizontal' lines can have angle 0, 180 or -180.
+
+                    // Angle of line, convert from radians to degrees
+                    final double angle = Math.toDegrees(Math.atan2(dy, dx));
+                    // To us, the direction of the line doesn't really matter.
+                    // A line from ( x1, y1 ) to ( x2, y2 ) looks just like
+                    // a line from ( x2, y2 ) to ( x1, y1 ).
+                    // But the computed angle would differ.
+                    // 'Horizontal' lines can have angle 0, 180 or -180.
                     // 'Vertical' lines have angle 90 or -90.
                     // --> Normalize all angles to be within 0..180
-                    final double angle = Math.toDegrees(Math.atan2(dy, dx));
                     final int norm_angle = ((int)angle + 180) % 180;
+                    // Ignore lines at wrong angle
                     if (Math.abs(desired_angle - norm_angle) > 10)
                         continue;
 
-                    // TODO Look for left vs. right marker
+                    // TODO Distinguish between left vs. right marker
 
-                    // Found a line that looks about right
+                    // Found a line that looks about right.
+                    // Draw it into the original(!) image.
+                    // -> Need to scale coordinates back from the resized image.
                     Imgproc.line(source, new Point(line[0]*scale, line[1]*scale),
                                          new Point(line[2]*scale, line[3]*scale), overlay_bgr);
-                    
+
+                    // Compute average of start and end of all lines
+                    // so we can later point into the general direction of them
                     points += 2;
                     cx += line[0]*scale + line[2]*scale;
                     cy += line[1]*scale + line[3]*scale;
