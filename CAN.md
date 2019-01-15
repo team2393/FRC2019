@@ -3,7 +3,7 @@ CAN Bus
 
 The CAN bus uses a daisy-chain of two wires,
 usually a twisted pair of green and yellow,
-to connect up to 64 devices to the roboRIO.
+to connect up to 64 devices one one type to the roboRIO.
 Each device has a CAN ID, a number from 0 to 63.
 
 The chain starts at the roboRIO, runs to the first device,
