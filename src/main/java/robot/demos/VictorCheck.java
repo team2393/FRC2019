@@ -17,6 +17,11 @@ public class VictorCheck extends BasicRobot
         super.robotInit();
         System.out.println("Victor Firmware:");
         System.out.println(vic.getFirmwareVersion());
+
+        // You can also configure the Victor via the Tuner application,
+        // but it's best to configuret them from the code at robot initialization
+        // because that allows swapping the actual Victor controller,
+        // needing only to set the ID, and the rest is then configured in here.
         vic.configFactoryDefault();
         vic.setNeutralMode(NeutralMode.Brake);
     }
