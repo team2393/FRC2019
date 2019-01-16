@@ -14,7 +14,7 @@ public class VictorCheck extends BasicRobot
     // VictorSPX offers full access to the controller.
     // WPI_VictorSPX wraps that to add the basic set(speed)
     // necessary for DifferentialDrive, in case we need that later.
-    private final WPI_VictorSPX vic = new WPI_VictorSPX(1);
+    private final WPI_VictorSPX vic = new WPI_VictorSPX(2);
 
     private final Joystick joystick = new Joystick(0);
 
@@ -33,7 +33,7 @@ public class VictorCheck extends BasicRobot
         vic.configFactoryDefault();
         vic.setNeutralMode(NeutralMode.Brake); // Brake or coast?
         vic.setInverted(false);                // Invert?
-        vic.configOpenloopRamp(2.0);           // Use N seconds to ramp to full speed
+        vic.configOpenloopRamp(3.0);           // Use N seconds to ramp to full speed
 
         // The WPI_VictorSPX can be placed on the dashboard to show some basic info
         SmartDashboard.putData("Victor", vic);
