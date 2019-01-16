@@ -3,7 +3,7 @@ CAN Bus
 
 The CAN bus uses a daisy-chain of two wires,
 usually a twisted pair of green and yellow,
-to connect up to 64 devices one one type to the roboRIO.
+to connect up to about 64 devices of one type to the roboRIO.
 Each device has a CAN ID, a number from 0 to 63.
 
 The chain starts at the roboRIO, runs to the first device,
@@ -31,7 +31,7 @@ except that their CAN IDs default to 0, so you could only use one of them.
 To program CAN IDs, monitor the state of the CAN bus, and to get support
 for additional CAN devices like motor controllers, you need to install the
 Cross-The-Road-Electronics "Phoenix" software,
-https://phoenix-documentation.readthedocs.io/en/latest/index.html:
+https://phoenix-documentation.readthedocs.io/en/latest/index.html
 
  * Download / unzip CTRE Phoenix Framework ZIP and run the *.exe.
    It should auto-select Lifeboard, Tuner, C++/Java.
@@ -50,7 +50,8 @@ Now you can configure your CAN devices:
  3) Add more devices, one at a time, to set their CAN ID.
 
 
-To use CTRE devices like `TalonSRX` in Java code:
+To use CTRE devices like `TalonSRX` in Java code
+(that's already been done for this software):
 
  1) Right-click on the file `build.gradle`
  2) Select "Manage Vendor Libraries"
