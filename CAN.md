@@ -58,6 +58,8 @@ To use CTRE devices like `TalonSRX` in Java code
  3) Select "Install new libraries (offline)"
  4) Select "CTRE-Phoenix"
 
+ Examples are in https://github.com/CrossTheRoadElec/Phoenix-Examples-Languages/tree/master/Java
+
 
 Troubleshooting
 ---------------
