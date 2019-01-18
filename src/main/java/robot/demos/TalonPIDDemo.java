@@ -15,10 +15,13 @@ import robot.parts.PDPController;
 
 /** Demo of PID position control with TalonSRX */
 public class TalonPIDDemo extends BasicRobot
+
 {
     private final WPI_TalonSRX tal = new WPI_TalonSRX(3);
 
     private final Joystick joystick = new Joystick(0);
+
+    private final PowerDistributionPanel panel = new PowerDistributionPanel(); //:)
 
     @Override
     public void robotInit()
@@ -33,26 +36,26 @@ public class TalonPIDDemo extends BasicRobot
         tal.configFactoryDefault();
         tal.setNeutralMode(NeutralMode.Coast); // Brake or coast?
         tal.setInverted(false);                // Invert?
-        tal.configOpenloopRamp(0.0);           // Use N seconds to ramp to full speed
+        tal.configOpenloopRamp(3.0);           // Use N seconds to ramp to full speed
 
         // Use quad (relative) encoder
         tal.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         // Does the sensor rotate in opposite direction compared to motor?
-        tal.setSensorPhase(false);
+        tal.setSensorPhase(true);
         // Set full output range [-1, 1] or restrict it
-        tal.configPeakOutputReverse(-1.0);
-        tal.configPeakOutputForward(1.0);
+        tal.configPeakOutputReverse(-0.5);
+        tal.configPeakOutputForward(0.5);
         
         // PID Settings
         tal.configNeutralDeadband(0.04); // Default is 0.04
         tal.configClosedloopRamp(0.0);
-        tal.config_kP(0, 0.01);
-        tal.config_kI(0, 0.0);
+        tal.config_kP(0, 0.075);
+        tal.config_kI(0, 0.0005);
         tal.config_kD(0, 0.0);
         tal.config_kF(0, 0.0);
         // Limit integral to one turn
-        tal.config_IntegralZone(0, 4096);
-        tal.configClosedLoopPeakOutput(0, 1.0);
+        tal.config_IntegralZone(0, 1000);
+        tal.configClosedLoopPeakOutput(0, 0.5);
 
         // Reset the sensor position
         tal.setSelectedSensorPosition(0);
@@ -72,7 +75,7 @@ public class TalonPIDDemo extends BasicRobot
         // Joystick value is [-1, 1], making it positive when stick forward
         // Scale to [-4096, 4096] to get one revolution back/forward,
         // assuming encoder counts 4096 ticks per rev
-        final double pos = -joystick.getRawAxis(PDPController.RIGHT_STICK_VERTICAL) * 4096;
+        final double pos = -joystick.getRawAxis(PDPController.RIGHT_STICK_VERTICAL) * 4096*10;
         tal.set(ControlMode.Position, pos);
 
         // If there are any faults, print them
@@ -83,6 +86,9 @@ public class TalonPIDDemo extends BasicRobot
     
         // Display encoder position
         SmartDashboard.putNumber("Position", tal.getSelectedSensorPosition());
+        SmartDashboard.putNumber("Current", panel.getTotalCurrent());
+        SmartDashboard.putNumber("Desired Position",pos);
+
     }
 
     @Override
@@ -93,5 +99,7 @@ public class TalonPIDDemo extends BasicRobot
             tal.set(ControlMode.Position, 0);
         else
             tal.set(ControlMode.Position, 1.0 * 4096);
+
+        SmartDashboard.putNumber("Position", tal.getSelectedSensorPosition());
     }
 }
