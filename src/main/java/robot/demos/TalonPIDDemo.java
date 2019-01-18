@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.Faults;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.SensorTerm;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -15,7 +14,6 @@ import robot.parts.PDPController;
 
 /** Demo of PID position control with TalonSRX */
 public class TalonPIDDemo extends BasicRobot
-
 {
     private final WPI_TalonSRX tal = new WPI_TalonSRX(3);
 
@@ -48,12 +46,12 @@ public class TalonPIDDemo extends BasicRobot
         
         // PID Settings
         tal.configNeutralDeadband(0.04); // Default is 0.04
-        tal.configClosedloopRamp(0.0);
-        tal.config_kP(0, 0.075);
-        tal.config_kI(0, 0.0005);
-        tal.config_kD(0, 0.0);
-        tal.config_kF(0, 0.0);
-        // Limit integral to one turn
+        tal.configClosedloopRamp(0.0);   // Use N seconds to ramp up to full PID output
+        tal.config_kP(0, 0.075);         // Proportional, 
+        tal.config_kI(0, 0.0005);        // Integral,
+        tal.config_kD(0, 0.0);           // Differential Gain.
+        tal.config_kF(0, 0.0);           // ???
+        // Limit integral to about a quarter turn
         tal.config_IntegralZone(0, 1000);
         tal.configClosedLoopPeakOutput(0, 0.5);
 
@@ -74,7 +72,8 @@ public class TalonPIDDemo extends BasicRobot
         // Set motor position from joystick
         // Joystick value is [-1, 1], making it positive when stick forward
         // Scale to [-4096, 4096] to get one revolution back/forward,
-        // assuming encoder counts 4096 ticks per rev
+        // assuming encoder counts 4096 ticks per rev,
+        // then scale to command -10 .. +10 turns
         final double pos = -joystick.getRawAxis(PDPController.RIGHT_STICK_VERTICAL) * 4096*10;
         tal.set(ControlMode.Position, pos);
 
@@ -85,10 +84,9 @@ public class TalonPIDDemo extends BasicRobot
             System.out.println(faults);
     
         // Display encoder position
+        SmartDashboard.putNumber("Desired Position",pos);
         SmartDashboard.putNumber("Position", tal.getSelectedSensorPosition());
         SmartDashboard.putNumber("Current", panel.getTotalCurrent());
-        SmartDashboard.putNumber("Desired Position",pos);
-
     }
 
     @Override
