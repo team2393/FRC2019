@@ -30,24 +30,26 @@ public class VisionProcessor1 implements Runnable
     @Override
     public void run()
     {
-        // Parameters used to filter image and detect lines
-        // TODO Find good hue for the camera with green LED
-        final double[] hue = { 0.0, 180.0 };
-        // TODO Only well saturated colors?
-        final double[] sat = { 0.0, 255.0 };
-        // Only bright colors
-        final double[] lum = { 220.0, 255.0 };
+        // Parameters used to filter image and detect lines:
+        // "Green" hue for the camera with green LED
+        final double[] hue = { 70.0, 90.0 };
+        // Only well saturated colors
+        final double[] sat = { 200.0, 255.0 };
+        // In principle, we're looking for bright colors near 255,
+        // but in tests including darker values worked better.
+        final double[] lum = { 130.0, 255.0 };
 
         final Scalar thres_low = new Scalar(hue[0], lum[0], sat[0]);
         final Scalar thres_high = new Scalar(hue[1], lum[1], sat[1]);
         // Some can be changed via dashboard
         SmartDashboard.setDefaultNumber("Length Threshold", 10.0);
-        // TODO Need two angles, one for left and one for right marker
-        SmartDashboard.setDefaultNumber("Angle Threshold", 90.0);
+        // Angle range +- the nominal 14.5 deg
+        SmartDashboard.setDefaultNumber("Angle Width", 10.0);
 
         // Get size of original image
         final VideoMode mode = camera.getVideoMode();
         final int width = mode.width, height = mode.height;
+        final Point center = new Point(width / 2, height / 2);
         final CvSink video = server.getVideo();
 
         // Size of intermediate image used for processing the data
@@ -102,11 +104,15 @@ public class VisionProcessor1 implements Runnable
 
                 // Check which lines look like they belong to the target markers
                 final double min_length = SmartDashboard.getNumber("Length Threshold", 10.0);
-                final int desired_angle = (int) SmartDashboard.getNumber("Angle Threshold", 90.0);
+                final int angle_width = (int) SmartDashboard.getNumber("Angle Width", 10.0);
+                
+                // Find 'left' marker
+                final int left_angle  = 90 + 15;
+                final int right_angle = 90 - 15;
 
                 // Used to compute average location (= 'center') of detected lines
-                int pt_count = 0;
-                int ctr_x = 0, ctr_y = 0;
+                int l_count = 0, r_count = 0;
+                int l_x = 0, l_y = 0, r_x = 0, r_y = 0;
 
                 // Check all detected lines
                 for (int i = 0; i < tmp2.rows(); ++i)
@@ -133,34 +139,48 @@ public class VisionProcessor1 implements Runnable
                     // 'Vertical' lines have angle 90 or -90.
                     // --> Normalize all angles to be within 0..180
                     final int norm_angle = ((int) angle + 180) % 180;
-                    // Ignore lines at wrong angle
-                    if (Math.abs(desired_angle - norm_angle) > 10)
+                    // Is it close to the desired 'left' or 'right' marker's angle?
+                    if (Math.abs(left_angle - norm_angle) < angle_width)
+                    {
+                        // Compute average of start and end of all lines
+                        // so we can later point into the general direction of them
+                        l_count += 2;
+                        l_x += line[0] * scale + line[2] * scale;
+                        l_y += line[1] * scale + line[3] * scale;
+                    }
+                    else if (Math.abs(right_angle - norm_angle) < angle_width)
+                    {
+                        r_count += 2;
+                        r_x += line[0] * scale + line[2] * scale;
+                        r_y += line[1] * scale + line[3] * scale;
+                    }
+                    else
                         continue;
-
-                    // TODO Distinguish between left vs. right marker
 
                     // Found a line that looks about right.
                     // Draw it into the original(!) image.
                     // -> Need to scale coordinates back from the resized image.
                     Imgproc.line(original, new Point(line[0] * scale, line[1] * scale),
                             new Point(line[2] * scale, line[3] * scale), overlay_bgr);
-
-                    // Compute average of start and end of all lines
-                    // so we can later point into the general direction of them
-                    pt_count += 2;
-                    ctr_x += line[0] * scale + line[2] * scale;
-                    ctr_y += line[1] * scale + line[3] * scale;
                 }
 
-                // TODO Look if both left and right marker was found,
-                // and if left is indeed left of the right marker.
-                // Target should then be between those markers.
-
-                // Arrow from middle of image to detected location
-                if (pt_count > 0)
-                    Imgproc.arrowedLine(original, new Point(width / 2, height / 2),
-                            new Point(ctr_x / pt_count, ctr_y / pt_count), overlay_bgr);
-
+                // Did we find at least one line (i.e. 2 points) at the 'left' and 'right'?
+                if (l_count >= 2  &&  r_count >= 2)
+                {
+                    int left_x = l_x / l_count;
+                    int right_x = r_x / r_count;
+                    // Is the 'left' marker actually on the left?
+                    if (left_x < right_x)
+                    {
+                        // Imgproc.line(original, center,
+                        //         new Point(left_x, l_y / l_count), overlay_bgr);
+                        // Imgproc.line(original, center,
+                        //         new Point(right_x, r_y / r_count), overlay_bgr);
+                        Imgproc.arrowedLine(original, center,
+                              new Point((left_x + right_x)/2, center.y), overlay_bgr);
+                    }
+                }
+        
                 // Publish the source with overlay as 'Processed'
                 processed.putFrame(original);
             }
