@@ -3,7 +3,6 @@ package robot.camera;
 import edu.wpi.cscore.CameraServerJNI;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
 
