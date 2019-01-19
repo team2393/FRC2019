@@ -33,8 +33,6 @@ public class CameraRobot extends BasicRobot
 			Thread thread = new Thread(new VisionProcessor1(server, camera));
 			thread.start();
 		}
-		else
-			DriverStation.reportWarning("Dude, no camera?!", false);
 	}
 
 	@Override

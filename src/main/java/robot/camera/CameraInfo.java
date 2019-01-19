@@ -4,6 +4,7 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoException;
 import edu.wpi.cscore.VideoMode;
 import edu.wpi.cscore.VideoProperty;
+import edu.wpi.first.wpilibj.DriverStation;
 
 /** Helper for showing camera info */
 public class CameraInfo
@@ -27,6 +28,7 @@ public class CameraInfo
 		}
 		catch (VideoException ex)
 		{
+			DriverStation.reportWarning("Dude, no camera?!", false);
 			return false;
 		}
 		return true;
