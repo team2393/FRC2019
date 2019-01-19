@@ -11,6 +11,7 @@ public class CameraRobot extends BasicRobot
 {
 	private CameraServer server;
 	private UsbCamera camera;
+	private VisionProcessor1 vision;
 
 	@Override
 	public void robotInit()
@@ -29,7 +30,8 @@ public class CameraRobot extends BasicRobot
 			camera.setResolution(320, 240);
 			camera.setFPS(10);
 
-			Thread thread = new Thread(new VisionProcessor1(server, camera));
+			vision = new VisionProcessor1(server, camera);
+			Thread thread = new Thread(vision);
 			thread.start();
 		}
 	}
@@ -45,16 +47,16 @@ public class CameraRobot extends BasicRobot
 				double bits_per_sec = camera.getActualDataRate()*8/1000.0/1000.0;
 				SmartDashboard.putNumber("Camera Mbps", bits_per_sec);
 				SmartDashboard.putBoolean("Too Much", bits_per_sec >= 4.0);
+				SmartDashboard.putBoolean("Too Much", bits_per_sec >= 4.0);
+				// Cannot use putNumber(  , vision.getDirection())
+				// because it doesn't handle Double.NaN,
+				// so publishing as text.
+				SmartDashboard.putString("Direction", Double.toString(vision.getDirection()));
 			}
 		}
 		catch (Throwable ex)
 		{
 			// No camera data
 		}
-
-		final Runtime rt = Runtime.getRuntime();
-		final long max = rt.maxMemory();
-		final long used = max - rt.freeMemory();
-		SmartDashboard.putNumber("Memory Percentage", used * 100 / max);
     }
 }

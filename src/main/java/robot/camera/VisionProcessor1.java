@@ -21,10 +21,22 @@ public class VisionProcessor1 implements Runnable
     private final CameraServer server;
     private final VideoCamera camera;
 
+    private volatile double direction = Double.NaN;
+
     public VisionProcessor1(final CameraServer server, final VideoCamera camera)
     {
         this.server = server;
         this.camera = camera;
+    }
+
+    /**@return Direction to markers.
+     *         Negative for 'left',
+     *         positive for 'right',
+     *         NaN when not known.
+     */
+    public double getDirection()
+    {
+        return direction;
     }
 
     @Override
@@ -71,7 +83,9 @@ public class VisionProcessor1 implements Runnable
         while (!Thread.interrupted())
         {
             if (video.grabFrame(original) == 0)
-            {   // Could not fetch frame.
+            {
+                direction = Double.NaN;
+                // Could not fetch frame.
                 // Report error..
                 System.out.println(video.getError());
                 try
@@ -172,15 +186,21 @@ public class VisionProcessor1 implements Runnable
                     // Is the 'left' marker actually on the left?
                     if (left_x < right_x)
                     {
+                        final int markers_x = (left_x + right_x)/2;
                         // Imgproc.line(original, center,
                         //         new Point(left_x, l_y / l_count), overlay_bgr);
                         // Imgproc.line(original, center,
                         //         new Point(right_x, r_y / r_count), overlay_bgr);
                         Imgproc.arrowedLine(original, center,
-                              new Point((left_x + right_x)/2, center.y), overlay_bgr);
+                              new Point(markers_x, center.y), overlay_bgr);
+                        direction = markers_x - center.x;
                     }
+                    else
+                        direction = Double.NaN;
                 }
-        
+                else
+                 direction = Double.NaN;
+               
                 // Publish the source with overlay as 'Processed'
                 processed.putFrame(original);
             }
