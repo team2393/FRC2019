@@ -2,9 +2,23 @@ package robot.demos;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
 
-/** Robot that displays the gyro heading */
+/** Robot that displays the gyro heading
+ * 
+ *  With initial FRCUpdateSuite_2019.0.0,
+ *  the gyro always reports 0.0 heading.
+ *  Start git bash,
+ *     ssh admin@172.22.11.2
+ *     updateNIDrivers
+ *  Takes 5 minutes,
+ *  ends with WARNING: Could not unload ..
+ *  and "Do you want to reboot?" prompt.
+ *  Answer "yes"
+ *
+ *  Later FRCUpdateSuite supposedly fixes that.
+ */
 public class GyroRobot extends BasicRobot
 {
     private Gyro gyro = new ADXRS450_Gyro();
@@ -30,6 +44,7 @@ public class GyroRobot extends BasicRobot
         //         Examples:
         //         "-179.3",
         //         "  +0.5"
-        System.out.format("Heading: %+6.1f degrees\n", heading);
+        // System.out.format("Heading: %+6.1f degrees\n", heading);
+        SmartDashboard.putNumber("Heading", heading);
 	}
 }
