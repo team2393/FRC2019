@@ -16,6 +16,7 @@ import robot.parts.PDPController;
 public class TalonPIDDemo extends BasicRobot
 {
     private final WPI_TalonSRX tal = new WPI_TalonSRX(3);
+    private final WPI_TalonSRX tal2 = new WPI_TalonSRX(8);
 
     private final Joystick joystick = new Joystick(0);
 
@@ -47,19 +48,36 @@ public class TalonPIDDemo extends BasicRobot
         // PID Settings
         tal.configNeutralDeadband(0.04); // Default is 0.04
         tal.configClosedloopRamp(0.0);   // Use N seconds to ramp up to full PID output
-        tal.config_kP(0, 0.075);         // Proportional, 
-        tal.config_kI(0, 0.0005);        // Integral,
-        tal.config_kD(0, 0.0);           // Differential Gain.
+        // To adjust PID gains, use Tuner,
+        // then copy/paste the values in here
+        tal.config_kP(0, 0.1);           // Proportional, 
+        tal.config_kI(0, 0.001);         // Integral,
+        tal.config_kD(0, 2.0);           // Differential Gain.
         tal.config_kF(0, 0.0);           // ???
-        // Limit integral to about a quarter turn
-        tal.config_IntegralZone(0, 1000);
-        tal.configClosedLoopPeakOutput(0, 0.5);
+        tal.config_IntegralZone(0, 40000);
+        tal.configMaxIntegralAccumulator(0, 40000);
+        tal.configClosedLoopPeakOutput(0, 1.0);
 
         // Reset the sensor position
         tal.setSelectedSensorPosition(0);
 
         // The WPI_TalonSRX can be placed on the dashboard to show some basic info
         SmartDashboard.putData("Talon", tal);
+
+        // Second motor is controlled by another Talong
+        // which follows the first one
+        tal2.configFactoryDefault();
+        tal2.setInverted(false);                // Invert?
+        tal2.follow(tal);
+    }
+
+    @Override
+    public void robotPeriodic()
+    {
+        SmartDashboard.putNumber("Position", tal.getSelectedSensorPosition());
+        SmartDashboard.putNumber("Current", panel.getTotalCurrent());
+        SmartDashboard.putNumber("Error", tal.getClosedLoopError());
+        SmartDashboard.putNumber("Integral", tal.getIntegralAccumulator());
     }
 
     @Override
@@ -85,8 +103,16 @@ public class TalonPIDDemo extends BasicRobot
     
         // Display encoder position
         SmartDashboard.putNumber("Desired Position",pos);
-        SmartDashboard.putNumber("Position", tal.getSelectedSensorPosition());
-        SmartDashboard.putNumber("Current", panel.getTotalCurrent());
+    }
+
+    @Override
+    public void autonomousInit()
+    {
+        super.autonomousInit();
+        // At start of auto, set current position as "0".
+        // This allows testing where pos. is manually set
+        // while disabled, then start auto from that pos on.
+        tal.setSelectedSensorPosition(0);
     }
 
     @Override
@@ -97,7 +123,5 @@ public class TalonPIDDemo extends BasicRobot
             tal.set(ControlMode.Position, 0);
         else
             tal.set(ControlMode.Position, 1.0 * 4096);
-
-        SmartDashboard.putNumber("Position", tal.getSelectedSensorPosition());
     }
 }

@@ -2,6 +2,7 @@ package robot;
 
 import edu.wpi.first.wpilibj.RobotBase;
 import robot.camera.CameraRobot;
+import robot.demos.GyroRobot;
 import robot.demos.TalonCheck;
 import robot.demos.TalonPIDDemo;
 
