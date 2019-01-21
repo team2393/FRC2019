@@ -13,7 +13,22 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import robot.BasicRobot;
 
 /**
- * main robot class for deep space 2019
+ *  Main robot class for deep space 2019
+ * 
+ *  TODO:
+ *  Camera & Vision
+ * 
+ *  Drive motors: Left and right, 2 Talons each side, one follows the other, 1 encoder per side, gyro
+ *  -> Need to program PID for movement with gyro to keep heading
+ * 
+ *  Gearbox Shifter: 1 or 2 Solenoids
+ *
+ *  Disk grabber: 1 solenoid to hold/release disk
+ * 
+ *  Lift: 1 motor, encoder, limit switch, button box to move lift to ~4 predertermined heights
+ *  -> Can use Talon PID & motion magic
+ * 
+ *  Push-up mechanism: 1 solenoid for 2 front cylinders, 1 solenoid for back cylinder, 1 drive motor controller
  */
 public class Robot extends BasicRobot
 {
