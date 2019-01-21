@@ -52,11 +52,18 @@ public class TalonPIDDemo extends BasicRobot
         // then copy/paste the values in here
         tal.config_kP(0, 0.1);           // Proportional, 
         tal.config_kI(0, 0.001);         // Integral,
-        tal.config_kD(0, 2.0);           // Differential Gain.
+        tal.config_kD(0, 2.0);           // Differential Gain. (manual suggests 10*kP)
         tal.config_kF(0, 0.0);           // ???
         tal.config_IntegralZone(0, 40000);
         tal.configMaxIntegralAccumulator(0, 40000);
         tal.configClosedLoopPeakOutput(0, 1.0);
+
+        // TODO: Try 'MotionMagic'.
+        // MUST then set a kF = 1023 / max speed
+        // with max speed in ticks per 100ms as shown in Tuner plot.
+        // Set max speed and accelleration to about half or 75% of max speed in tics/100ms
+        // tal.configMotionAcceleration(4096);
+        // tal.configMotionCruiseVelocity(4096);
 
         // Reset the sensor position
         tal.setSelectedSensorPosition(0);
@@ -87,13 +94,27 @@ public class TalonPIDDemo extends BasicRobot
         if (joystick.getRawButtonPressed(PDPController.X_BUTTON))
             tal.setSelectedSensorPosition(0);
         
-        // Set motor position from joystick
-        // Joystick value is [-1, 1], making it positive when stick forward
-        // Scale to [-4096, 4096] to get one revolution back/forward,
-        // assuming encoder counts 4096 ticks per rev,
-        // then scale to command -10 .. +10 turns
-        final double pos = -joystick.getRawAxis(PDPController.RIGHT_STICK_VERTICAL) * 4096*10;
-        tal.set(ControlMode.Position, pos);
+        if (joystick.getRawButton(PDPController.LEFT_FRONT_BUTTON) ||
+            joystick.getRawButton(PDPController.RIGHT_FRONT_BUTTON))
+        {
+            // Set motor position from joystick
+            // Joystick value is [-1, 1], making it positive when stick forward
+            // Scale to [-4096, 4096] to get one revolution back/forward,
+            // assuming encoder counts 4096 ticks per rev,
+            // then scale to command -10 .. +10 turns
+            final double pos = -joystick.getRawAxis(PDPController.RIGHT_STICK_VERTICAL) * 4096*10;
+            tal.set(ControlMode.Position, pos);
+            // TODO: Try 'MotionMagic'
+            // tal.set(ControlMode.MotionMagic, pos);
+
+            // Display encoder position
+            SmartDashboard.putNumber("Desired Position", pos);
+        }
+        else
+        {
+            // Set plain speed, not controlling position based on encoder
+            tal.set(ControlMode.PercentOutput, -joystick.getRawAxis(PDPController.RIGHT_STICK_VERTICAL));
+        }
 
         // If there are any faults, print them
         final Faults faults = new Faults();
@@ -101,8 +122,6 @@ public class TalonPIDDemo extends BasicRobot
         if (faults.hasAnyFault())
             System.out.println(faults);
     
-        // Display encoder position
-        SmartDashboard.putNumber("Desired Position",pos);
     }
 
     @Override
@@ -118,7 +137,7 @@ public class TalonPIDDemo extends BasicRobot
     @Override
     public void autonomousPeriodic()
     {
-        // Every to seconds, change from pos 0 to 1 turn (4096 encoder steps)
+        // Every 2 seconds, change from pos 0 to 1 turn (4096 encoder steps)
         if (((System.currentTimeMillis() / 2000) % 2) == 1)
             tal.set(ControlMode.Position, 0);
         else
