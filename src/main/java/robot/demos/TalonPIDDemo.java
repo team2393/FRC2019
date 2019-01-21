@@ -50,21 +50,23 @@ public class TalonPIDDemo extends BasicRobot
         tal.configClosedloopRamp(0.0);   // Use N seconds to ramp up to full PID output
         // To adjust PID gains, use Tuner,
         // then copy/paste the values in here
-        tal.config_kP(0, 0.1);           // Proportional, 
-        tal.config_kI(0, 0.001);         // Integral,
-        tal.config_kD(0, 2.0);           // Differential Gain. (manual suggests 10*kP)
-        tal.config_kF(0, 0.0);           // ???
-        tal.config_IntegralZone(0, 40000);
-        tal.configMaxIntegralAccumulator(0, 40000);
+        tal.config_kP(0, 1.0);           // Proportional, 
+        tal.config_kI(0, 0.0002);        // Integral,
+        tal.config_kD(0, 10.0);          // Differential Gain. (manual suggests 10*kP)
+        tal.config_IntegralZone(0, 80);
+        // tal.configMaxIntegralAccumulator(0, 40000);
         tal.configClosedLoopPeakOutput(0, 1.0);
-
-        // TODO: Try 'MotionMagic'.
-        // MUST then set a kF = 1023 / max speed
+        
+        // Add 'MotionMagic'.
+        // MUST set kF = 1023 / max speed
         // with max speed in ticks per 100ms as shown in Tuner plot.
-        // Set max speed and accelleration to about half or 75% of max speed in tics/100ms
-        // tal.configMotionAcceleration(4096);
-        // tal.configMotionCruiseVelocity(4096);
-
+        final int max_speed = 8500;
+        tal.config_kF(0, 1023.0/max_speed);
+        // Set max speed to about 75% of max speed in tics/100ms
+        tal.configMotionCruiseVelocity(max_speed*2/3);
+        // Accelerate twice as fast to reach cruise velocity in half a second
+        tal.configMotionAcceleration(2*max_speed*2/3);
+        
         // Reset the sensor position
         tal.setSelectedSensorPosition(0);
 
@@ -102,10 +104,12 @@ public class TalonPIDDemo extends BasicRobot
             // Scale to [-4096, 4096] to get one revolution back/forward,
             // assuming encoder counts 4096 ticks per rev,
             // then scale to command -10 .. +10 turns
-            final double pos = -joystick.getRawAxis(PDPController.RIGHT_STICK_VERTICAL) * 4096*10;
-            tal.set(ControlMode.Position, pos);
-            // TODO: Try 'MotionMagic'
-            // tal.set(ControlMode.MotionMagic, pos);
+            final double pos = -joystick.getRawAxis(PDPController.RIGHT_STICK_VERTICAL) * 4096*2;
+
+            if (joystick.getRawButton(PDPController.LEFT_FRONT_BUTTON))
+                tal.set(ControlMode.Position, pos);
+            else
+                tal.set(ControlMode.MotionMagic, pos);
 
             // Display encoder position
             SmartDashboard.putNumber("Desired Position", pos);
@@ -138,9 +142,9 @@ public class TalonPIDDemo extends BasicRobot
     public void autonomousPeriodic()
     {
         // Every 2 seconds, change from pos 0 to 1 turn (4096 encoder steps)
-        if (((System.currentTimeMillis() / 2000) % 2) == 1)
-            tal.set(ControlMode.Position, 0);
+        if (((System.currentTimeMillis() / 4000) % 2) == 1)
+            tal.set(ControlMode.MotionMagic, 0);
         else
-            tal.set(ControlMode.Position, 1.0 * 4096);
+            tal.set(ControlMode.MotionMagic, 20.0 * 4096);
     }
 }
