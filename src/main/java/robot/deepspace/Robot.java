@@ -16,19 +16,28 @@ import robot.BasicRobot;
  *  Main robot class for deep space 2019
  * 
  *  TODO:
- *  Camera & Vision
+ *  Camera & Vision: Show video from front of robot,
+ *  with overlay when target markers are detected.
  * 
  *  Drive motors: Left and right, 2 Talons each side, one follows the other, 1 encoder per side, gyro
- *  -> Need to program PID for movement with gyro to keep heading
+ *  -> Need to program PID for movement with gyro to keep heading for autonomous moves
  * 
- *  Gearbox Shifter: 1 or 2 Solenoids
+ *  Prepare autonomous moves from start N positions to M initial disk placements.
+ *  Maybe leave last leg of route to driver, using vision, but get them close.
+ * 
+ *  Gearbox Shifter: 1 or 2 Solenoids, button to shift high <-> low, indicate current gear on dashboard
  *
- *  Disk grabber: 1 solenoid to hold/release disk
+ *  Disk grabber: 1 solenoid to hold/release disk, button to toggle
  * 
  *  Lift: 1 motor, encoder, limit switch, button box to move lift to ~4 predertermined heights
- *  -> Can use Talon PID & motion magic
+ *  -> Can use Talon PID & motion magic.
  * 
- *  Push-up mechanism: 1 solenoid for 2 front cylinders, 1 solenoid for back cylinder, 1 drive motor controller
+ *  Push-up mechanism: 1 solenoid for 2 front cylinders, 1 solenoid for back cylinder, 1 drive motor controller.
+ *  Idea:
+ *  Push button to lower 2 front and 1 back cylinder,
+ *  and now bottom drive will move with other wheels forward/backward.
+ *  Push button to raise 2 front cylinders back up, bottom drive still follows main wheels.
+ *  Push button to raise back cylinder, bottom drive off.
  */
 public class Robot extends BasicRobot
 {
@@ -39,6 +48,7 @@ public class Robot extends BasicRobot
         // this is where the camera streaming begins
         UsbCamera camera =  CameraServer.getInstance().startAutomaticCapture();
         //160 by 120 at 10fps - 0.3mbs
+        //320 by 240 at 10fps - 0.9mbs  <--- Using this for now
         //640 by 480 at 10fps - 3.1mbs
         //640 by 480 at 15fps - 4.1mbs
         //610 by 450 at 15fps - 3.4mbs
