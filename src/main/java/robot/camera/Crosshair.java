@@ -7,17 +7,17 @@ import org.opencv.imgproc.Imgproc;
 
 import edu.wpi.cscore.CvSource;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.vision.VisionPipeline;
 
-/** Video processor that adds a crosshair */
-public class Crosshair implements VisionPipeline
+/** Vision processor that adds a crosshair */
+public class Crosshair implements VisionProcessor
 {
-    private final int width, height, mid_x, mid_y;
+    private int width, height, mid_x, mid_y;
+    private CvSource processed;
     private final Scalar color = new Scalar(200.0, 200.0, 200.0);
-    private final CvSource processed;
     private final Mat output = new Mat();
 
-    public Crosshair(final int width, final int height)
+    @Override
+    public void init(final CameraServer server, final int width, final int height)
     {
         // Remember original image size
         this.width = width;
@@ -25,8 +25,9 @@ public class Crosshair implements VisionPipeline
         // Compute center of image
         mid_x = width  / 2;
         mid_y = height / 2;
+        
         // Create video stream for processed image
-        processed = CameraServer.getInstance().putVideo("Processed", width, height);
+        processed = server.putVideo("Processed", width, height);
     }
 
     @Override

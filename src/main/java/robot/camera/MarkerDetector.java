@@ -10,11 +10,10 @@ import org.opencv.imgproc.LineSegmentDetector;
 
 import edu.wpi.cscore.CvSource;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.vision.VisionPipeline;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/** Video processor that looks for target markers */
-public class VisionProcessor1 implements VisionPipeline
+/** Vision processor that looks for target markers */
+public class MarkerDetector implements VisionProcessor
 {
     // Parameters used to filter image and detect lines:
     // "Green" hue for the camera with green LED
@@ -31,11 +30,11 @@ public class VisionProcessor1 implements VisionPipeline
     private final Scalar thres_high = new Scalar(hue[1], lum[1], sat[1]);
 
     // Center of original image
-    private final Point center;
+    private Point center;
 
     // Size of intermediate image used for processing the data
     private final int scale = 2;
-    private final int proc_width, proc_height;
+    private int proc_width, proc_height;
     // Intermediate images used for processing
     private final Mat tmp1 = new Mat(), tmp2 = new Mat();
     
@@ -46,15 +45,13 @@ public class VisionProcessor1 implements VisionPipeline
     private final Scalar overlay_bgr = new Scalar(200.0, 100.0, 255.0);
     
     // Video stream for processed image (will again have same size of original)
-    private final CvSource processed;
+    private CvSource processed;
 
     // Direction from center of image to the markers
     private volatile double direction = Double.NaN;
 
-    /** @param width  Width ..
-     *  @param height .. and height of original image
-     */
-    public VisionProcessor1(final int width, final int height)
+    @Override
+    public void init(final CameraServer server, int width, final int height)
     {
         center = new Point(width / 2, height / 2);
      
@@ -106,7 +103,7 @@ public class VisionProcessor1 implements VisionPipeline
 
         // Used to compute average location (= 'center') of detected lines
         int l_count = 0, r_count = 0;
-        int l_x = 0, l_y = 0, r_x = 0, r_y = 0;
+        int l_x = 0, r_x = 0;
 
         // Check all detected lines
         for (int i = 0; i < tmp2.rows(); ++i)
@@ -140,13 +137,11 @@ public class VisionProcessor1 implements VisionPipeline
                 // so we can later point into the general direction of them
                 l_count += 2;
                 l_x += line[0] * scale + line[2] * scale;
-                l_y += line[1] * scale + line[3] * scale;
             }
             else if (Math.abs(right_angle - norm_angle) < angle_width)
             {   // Found a 'right' line. Add its start & end to average
                 r_count += 2;
                 r_x += line[0] * scale + line[2] * scale;
-                r_y += line[1] * scale + line[3] * scale;
             }
             else
                 continue;
@@ -169,14 +164,6 @@ public class VisionProcessor1 implements VisionPipeline
             if (left_x < right_x)
             {
                 final int markers_x = (left_x + right_x)/2;
-                // Imgproc.line(original, center,
-                //         new Point(left_x, l_y / l_count), overlay_bgr);
-                // Imgproc.line(original, center,
-                //         new Point(right_x, r_y / r_count), overlay_bgr);
-                Imgproc.arrowedLine(original,
-                                    center,
-                                    new Point(markers_x, center.y),
-                                    overlay_bgr);
                 direction = markers_x - center.x;
             }
             else
@@ -184,6 +171,13 @@ public class VisionProcessor1 implements VisionPipeline
         }
         else
             direction = Double.NaN;
+        
+        Imgproc.circle(original, center, 3, overlay_bgr);
+        if (! Double.isNaN(direction))
+            Imgproc.arrowedLine(original,
+                                center,
+                                new Point(center.x + direction, center.y),
+                                overlay_bgr);
         
         // Publish the source with overlay as 'Processed'
         processed.putFrame(original);

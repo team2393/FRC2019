@@ -6,25 +6,24 @@ import edu.wpi.cscore.CameraServerJNI;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.vision.VisionPipeline;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /** Helper class for handling the camera
  * 
  *  Connects to the USB camera,
  *  publishes the original image,
- *  and runs a separate thread for a VisionPipeline
+ *  and runs a separate thread for a VisionProcessor
  */
 public class CameraHandler
 {
-    private final VisionPipeline pipeline;
+    private final VisionProcessor processor;
 	private CameraServer server;
     private UsbCamera camera;
 
     /** Start USB camera for given width x height
      *  at fps frames per second.
      *  Publish each original image
-     *  plus call a processing pipeline for each image.
+     *  plus call a processor for each image.
      * 
      *  In case there is no image, we call the pipeline
      *  with 'null'.
@@ -32,13 +31,13 @@ public class CameraHandler
      *  @param width
      *  @param height
      *  @param fps
-     *  @param pipeline
+     *  @param processor
      */
     public CameraHandler(final int width, final int height,
                          final int fps,
-                         final VisionPipeline pipeline)
+                         final VisionProcessor processor)
     {
-        this.pipeline = pipeline;
+        this.processor = processor;
  
         // Start USB camera, publish original image
 		server = CameraServer.getInstance();
@@ -53,7 +52,10 @@ public class CameraHandler
             
             // Configure
 			camera.setResolution(width, height);
-			camera.setFPS(fps);
+            camera.setFPS(fps);
+            
+            // Initialize processor
+            processor.init(server, width, height);
 
             // Start new thread for processing images
 			Thread thread = new Thread(this::process);
@@ -73,7 +75,7 @@ public class CameraHandler
             if (video.grabFrame(original) == 0)
             {
                 // Could not fetch frame.
-                pipeline.process(null);
+                processor.process(null);
                 // Report error..
                 System.out.println(video.getError());
                 try
@@ -86,7 +88,7 @@ public class CameraHandler
                 }
             }
             else
-                pipeline.process(original);
+             processor.process(original);
         }
     }
 

@@ -6,16 +6,15 @@ import robot.BasicRobot;
 /** Camera Tests */
 public class CameraRobot extends BasicRobot
 {
+	private final MarkerDetector vision = new MarkerDetector();
 	private CameraHandler camera;
-	private VisionProcessor1 vision;
 
 	@Override
 	public void robotInit()
 	{
 		super.robotInit();
 	
-		// Run USB camera with VisionProcessor1
-		vision = new VisionProcessor1(320, 240);
+		// Run USB camera
 		camera = new CameraHandler(320, 240, 10, vision);
 	}
 
@@ -24,7 +23,7 @@ public class CameraRobot extends BasicRobot
     {
 		camera.publishState();
 
-		// Cannot use putNumber(  , vision.getDirection())
+		// Cannot use putNumber(".."  , vision.getDirection())
 		// because it doesn't handle Double.NaN,
 		// so publishing as text.
 		SmartDashboard.putString("Direction", Double.toString(vision.getDirection()));
