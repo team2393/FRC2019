@@ -10,7 +10,9 @@ package robot.deepspace;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.Joystick;
 import robot.BasicRobot;
+import robot.parts.PDPController;
 
 /**
  *  Main robot class for deep space 2019
@@ -41,6 +43,9 @@ import robot.BasicRobot;
  */
 public class Robot extends BasicRobot
 {
+    private final Lift lift = new Lift();
+    private final Joystick joystick = new Joystick(0);
+
     @Override
     public void robotInit()
     {
@@ -55,5 +60,20 @@ public class Robot extends BasicRobot
         camera.setResolution(600, 440);
         camera.setFPS(10);
         
+    }
+
+    @Override
+    public void teleopPeriodic()
+    {
+        lift.drive(-joystick.getRawAxis(PDPController.LEFT_STICK_VERTICAL));
+    }
+
+    @Override
+    public void autonomousPeriodic()
+    {
+        if ((System.currentTimeMillis() / 3000) % 2 == 0)
+            lift.setposition(0.0);
+        else
+            lift.setposition(30*4096.0);
     }
 }
