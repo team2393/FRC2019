@@ -16,18 +16,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class MarkerDetector implements VisionProcessor
 {
     // Parameters used to filter image and detect lines:
-    // "Green" hue for the camera with green LED
-    private final double[] hue = { 70.0, 90.0 };
- 
-    // Only well saturated colors
-    private final double[] sat = { 200.0, 255.0 };
- 
+    // "Green" hue, 70..90 for the camera with green LED
+    //
+    // Only well saturated colors, 200..255
+    //
     // In principle, we're looking for bright colors near 255,
-    // but in tests including darker values worked better.
-    private final double[] lum = { 130.0, 255.0 };
- 
-    private final Scalar thres_low = new Scalar(hue[0], lum[0], sat[0]);
-    private final Scalar thres_high = new Scalar(hue[1], lum[1], sat[1]);
+    // but in tests including darker values, 130..255 worked better.
+    private final Scalar thres_low  = new Scalar( 70.0, 200.0, 130.0);
+    private final Scalar thres_high = new Scalar( 90.0, 255.0, 255.0);
 
     // Center of original image
     private Point center;
@@ -60,7 +56,13 @@ public class MarkerDetector implements VisionProcessor
         proc_height = height / scale;
         processed = CameraServer.getInstance().putVideo("Processed", width, height);
 
-        // Fit parameterst hat can be changed via dashboard:
+        // Fit parameters that can be changed via dashboard
+        // Hue in terms of center and +- width
+        SmartDashboard.setDefaultNumber("Hue", 135.0);
+        SmartDashboard.setDefaultNumber("Hue Width", 65.0);
+        // Lower end of sat and lum range
+        SmartDashboard.setDefaultNumber("Saturation", 200.0);
+        SmartDashboard.setDefaultNumber("Luminance", 130.0);
         // Minimum line length
         SmartDashboard.setDefaultNumber("Length Threshold", 10.0);
         // Angle range +- the nominal 14.5 deg
@@ -86,6 +88,14 @@ public class MarkerDetector implements VisionProcessor
 
         // Find specific hue, saturation, lunimance
         Imgproc.cvtColor(tmp2, tmp1, Imgproc.COLOR_BGR2HLS);
+        // Update start of HSV range from dashboard
+        final double hue = SmartDashboard.getNumber("Hue", 135.0);
+        final double hue_wid = SmartDashboard.getNumber("Hue Width", 65.0);
+        thres_low.val[0] = hue - hue_wid;
+        thres_low.val[1] = SmartDashboard.getNumber("Saturation", 200.0);
+        thres_low.val[2] = SmartDashboard.getNumber("Luminance", 130.0);
+        // Update end of hue from dash. End of sat and lum stay at 255
+        thres_high.val[0] = hue + hue_wid;
         Core.inRange(tmp1, thres_low, thres_high, tmp1);
         // tmp1 is now a black/white image (mask)
 
@@ -96,7 +106,7 @@ public class MarkerDetector implements VisionProcessor
         // Check which lines look like they belong to the target markers
         final double min_length = SmartDashboard.getNumber("Length Threshold", 10.0);
         final int angle_width = (int) SmartDashboard.getNumber("Angle Width", 10.0);
-        
+
         // Find 'left' marker
         final int left_angle  = 90 + 15;
         final int right_angle = 90 - 15;
