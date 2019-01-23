@@ -53,6 +53,9 @@ public class CameraHandler
             // Configure
 			camera.setResolution(width, height);
             camera.setFPS(fps);
+            // camera.setBrightness(brightness);
+            // camera.setExposureManual(value);
+            // camera.setWhiteBalanceManual(value);
             
             // Initialize processor
             processor.init(server, width, height);
