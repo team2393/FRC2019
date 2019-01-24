@@ -2,8 +2,7 @@ package robot;
 
 import edu.wpi.first.wpilibj.RobotBase;
 import robot.camera.CameraRobot;
-import robot.deepspace.Robot;
-import robot.demos.SwitchTestRobot;
+import robot.deepspace.DeepspaceRobot;
 import robot.demos.TalonPIDDemo;
 
 /** The java 'main' class */

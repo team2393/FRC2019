@@ -9,7 +9,6 @@ package robot.deepspace;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
 import robot.BasicRobot;
 import robot.parts.PDPController;
@@ -21,6 +20,13 @@ import robot.parts.PDPController;
  *  Camera & Vision: Show video from front of robot,
  *  with overlay when target markers are detected.
  * 
+ *  Lift: 1 motor, encoder, limit switch, button box to move lift to ~4 predertermined heights
+ *  -> Talon PID & motion magic.
+ *     Commands to drive with joystick, drive up, drive down, move to position.
+ *     The latter should be something like
+ *       new SetLiftPositionCommand(lift, "Middle Pos", 49000)
+ *     to set the lift position to 49000 but allow adjusting that pos via dashboard.
+ * 
  *  Drive motors: Left and right, 2 Talons each side, one follows the other, 1 encoder per side, gyro
  *  -> Need to program PID for movement with gyro to keep heading for autonomous moves
  * 
@@ -30,9 +36,7 @@ import robot.parts.PDPController;
  *  Gearbox Shifter: 1 or 2 Solenoids, button to shift high <-> low, indicate current gear on dashboard
  *
  *  Disk grabber: 1 solenoid to hold/release disk, button to toggle
- * 
- *  Lift: 1 motor, encoder, limit switch, button box to move lift to ~4 predertermined heights
- *  -> Can use Talon PID & motion magic.
+ *  -> Commands open/close? Automatically close when disk is detected?
  * 
  *  Push-up mechanism: 1 solenoid for 2 front cylinders, 1 solenoid for back cylinder, 1 drive motor controller.
  *  Idea:
@@ -41,7 +45,7 @@ import robot.parts.PDPController;
  *  Push button to raise 2 front cylinders back up, bottom drive still follows main wheels.
  *  Push button to raise back cylinder, bottom drive off.
  */
-public class Robot extends BasicRobot
+public class DeepspaceRobot extends BasicRobot
 {
     private final Lift lift = new Lift();
     private final Joystick joystick = new Joystick(0);
@@ -59,7 +63,6 @@ public class Robot extends BasicRobot
         //610 by 450 at 15fps - 3.4mbs
         camera.setResolution(600, 440);
         camera.setFPS(10);
-        
     }
 
     @Override
