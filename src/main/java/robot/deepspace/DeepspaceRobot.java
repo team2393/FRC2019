@@ -7,6 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
+import robot.camera.CameraHandler;
+import robot.camera.Crosshair;
+import robot.camera.MarkerDetector;
 import robot.parts.PDPController;
 
 /**
@@ -16,11 +19,11 @@ import robot.parts.PDPController;
  *  -> Talon PID & motion magic.
  *     Commands to drive with joystick, drive up, drive down, move to position.
  * 
- *  TODO:
- * 
  *  Camera & Vision: Show video from front of robot,
  *  with overlay when target markers are detected.
  *  Check if exposure etc. need to be controlled from dashboard instead of 'auto'.
+ * 
+ *  TODO:
  * 
  *  Drive motors: Left and right, 2 Talons each side, one follows the other, 1 encoder per side, gyro
  *  -> Need to program PID for movement with gyro to keep heading for autonomous moves.
@@ -47,6 +50,8 @@ public class DeepspaceRobot extends BasicRobot
     private final Lift lift = new Lift();
     private final Joystick joystick = new Joystick(0);
 
+    private CameraHandler camera;
+
     private final Command home_lift = new HomeLift(lift);
     private final Command drive_lift = new DriveLift(joystick, lift);
     private final Command move_lift_low = new MoveLift("Low Pos", lift, 15.5);
@@ -57,15 +62,13 @@ public class DeepspaceRobot extends BasicRobot
     public void robotInit()
     {
         super.robotInit();
-        // this is where the camera streaming begins
-        UsbCamera camera =  CameraServer.getInstance().startAutomaticCapture();
+		// Run USB camera
         //160 by 120 at 10fps - 0.3mbs
         //320 by 240 at 10fps - 0.9mbs  <--- Using this for now
         //640 by 480 at 10fps - 3.1mbs
         //640 by 480 at 15fps - 4.1mbs
         //610 by 450 at 15fps - 3.4mbs
-        camera.setResolution(600, 440);
-        camera.setFPS(10);
+		camera = new CameraHandler(320, 240, 10, new MarkerDetector());
 
         SmartDashboard.putData("Home Lift", home_lift);
         SmartDashboard.putData("Drive Lift", drive_lift);

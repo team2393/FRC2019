@@ -16,8 +16,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class MarkerDetector implements VisionProcessor
 {
     // Parameters used to filter image and detect lines:
-    // "Green" hue, 70..90 for the camera with green LED
-    private static final double HUE = 80.0;
+    // "Green" hue, 75..95 for the camera with green LED
+    private static final double HUE = 85.0;
     private static final double HUE_WIDTH = 10.0;
 
     // Only well saturated colors, 200..255
