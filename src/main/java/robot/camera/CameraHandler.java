@@ -40,6 +40,8 @@ public class CameraHandler
         this.processor = processor;
  
         // Start USB camera, publish original image
+        // Image shows in dashboard (add CameraServer stream viewer).
+        // Or try opening a webbrowser to frcvision.local:1181.
 		server = CameraServer.getInstance();
 		camera = server.startAutomaticCapture();
     
