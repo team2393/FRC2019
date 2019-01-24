@@ -17,20 +17,34 @@ public class MarkerDetector implements VisionProcessor
 {
     // Parameters used to filter image and detect lines:
     // "Green" hue, 70..90 for the camera with green LED
-    //
+    private static final double HUE = 80.0;
+    private static final double HUE_WIDTH = 10.0;
+
     // Only well saturated colors, 200..255
-    //
+    private static final double SAT = 200.0;
+
     // In principle, we're looking for bright colors near 255,
     // but in tests including darker values, 130..255 worked better.
-    private final Scalar thres_low  = new Scalar( 70.0, 200.0, 130.0);
-    private final Scalar thres_high = new Scalar( 90.0, 255.0, 255.0);
+    private static final double LUM = 130.0;
+
+    // opencv needs the HSV thresholds wrapped in a Scalar
+    // (well change most of the values later from dashboard)
+    private final Scalar thres_low  = new Scalar(HUE-HUE_WIDTH, LUM,   SAT);
+    private final Scalar thres_high = new Scalar(HUE+HUE_WIDTH, 255.0, 255.0);
+
+    // Minimum line length
+    private static final double LENGTH = 10.0;
+
+    // Tolerange for tilt angle
+    private static final double ANGLE = 10.0;
 
     // Center of original image
     private Point center;
 
-    // Size of intermediate image used for processing the data
+    // Scaling and resulting size of intermediate image used for processing the data
     private final int scale = 2;
     private int proc_width, proc_height;
+
     // Intermediate images used for processing
     private final Mat tmp1 = new Mat(), tmp2 = new Mat();
     
@@ -40,14 +54,14 @@ public class MarkerDetector implements VisionProcessor
     // RGB Color for drawing overlay
     private final Scalar overlay_bgr = new Scalar(200.0, 100.0, 255.0);
     
-    // Video stream for processed image (will again have same size of original)
+    // Video stream for processed image (will match full size of original)
     private CvSource processed;
 
-    // Direction from center of image to the markers
+    // Direction from center of image to the markers. NaN when not valid.
     private volatile double direction = Double.NaN;
 
     @Override
-    public void init(final CameraServer server, int width, final int height)
+    public void init(final CameraServer server, final int width, final int height)
     {
         center = new Point(width / 2, height / 2);
      
@@ -58,20 +72,21 @@ public class MarkerDetector implements VisionProcessor
 
         // Fit parameters that can be changed via dashboard
         // Hue in terms of center and +- width
-        SmartDashboard.setDefaultNumber("Hue", 135.0);
-        SmartDashboard.setDefaultNumber("Hue Width", 65.0);
+        SmartDashboard.setDefaultNumber("Hue", HUE);
+        SmartDashboard.setDefaultNumber("Hue Width", HUE_WIDTH);
         // Lower end of sat and lum range
-        SmartDashboard.setDefaultNumber("Saturation", 200.0);
-        SmartDashboard.setDefaultNumber("Luminance", 130.0);
+        SmartDashboard.setDefaultNumber("Saturation", SAT);
+        SmartDashboard.setDefaultNumber("Luminance", LUM);
         // Minimum line length
-        SmartDashboard.setDefaultNumber("Length Threshold", 10.0);
+        SmartDashboard.setDefaultNumber("Length Threshold", LENGTH);
         // Angle range +- the nominal 14.5 deg
-        SmartDashboard.setDefaultNumber("Angle Width", 10.0);
+        SmartDashboard.setDefaultNumber("Angle Width", ANGLE);
     }
 
     @Override
     public void process(final Mat original)
     {
+        // May be called with null if camera has no image
         if (original == null)
         {
             direction = Double.NaN;
@@ -87,15 +102,15 @@ public class MarkerDetector implements VisionProcessor
         // tmp2 is normalized
 
         // Find specific hue, saturation, lunimance
-        Imgproc.cvtColor(tmp2, tmp1, Imgproc.COLOR_BGR2HLS);
         // Update start of HSV range from dashboard
-        final double hue = SmartDashboard.getNumber("Hue", 135.0);
-        final double hue_wid = SmartDashboard.getNumber("Hue Width", 65.0);
+        final double hue = SmartDashboard.getNumber("Hue", HUE);
+        final double hue_wid = SmartDashboard.getNumber("Hue Width", HUE_WIDTH);
         thres_low.val[0] = hue - hue_wid;
-        thres_low.val[1] = SmartDashboard.getNumber("Saturation", 200.0);
-        thres_low.val[2] = SmartDashboard.getNumber("Luminance", 130.0);
+        thres_low.val[1] = SmartDashboard.getNumber("Luminance", LUM);
+        thres_low.val[2] = SmartDashboard.getNumber("Saturation", SAT);
         // Update end of hue from dash. End of sat and lum stay at 255
         thres_high.val[0] = hue + hue_wid;
+        Imgproc.cvtColor(tmp2, tmp1, Imgproc.COLOR_BGR2HLS);
         Core.inRange(tmp1, thres_low, thres_high, tmp1);
         // tmp1 is now a black/white image (mask)
 
@@ -104,10 +119,11 @@ public class MarkerDetector implements VisionProcessor
         // tmp1 now contains the lines
 
         // Check which lines look like they belong to the target markers
-        final double min_length = SmartDashboard.getNumber("Length Threshold", 10.0);
-        final int angle_width = (int) SmartDashboard.getNumber("Angle Width", 10.0);
+        final double min_length = SmartDashboard.getNumber("Length Threshold", LENGTH);
+        final int angle_width = (int) SmartDashboard.getNumber("Angle Width", ANGLE);
 
-        // Find 'left' marker
+        // 'left' and 'right' markers are angled 14.5 degree
+        // We use int for angle, so round up to 15
         final int left_angle  = 90 + 15;
         final int right_angle = 90 - 15;
 
@@ -158,7 +174,7 @@ public class MarkerDetector implements VisionProcessor
 
             // Found a line that looks about right.
             // Draw it into the original(!) image.
-            // -> Need to scale coordinates back from the resized image.
+            // -> Need to scale coordinates back from the smaller, resized image.
             Imgproc.line(original,
                          new Point(line[0] * scale, line[1] * scale),
                          new Point(line[2] * scale, line[3] * scale),
@@ -168,6 +184,7 @@ public class MarkerDetector implements VisionProcessor
         // Did we find at least one line (i.e. 2 points) at the 'left' and 'right'?
         if (l_count >= 2  &&  r_count >= 2)
         {
+            // Compute average (middle) or left resp. right lines
             int left_x = l_x / l_count;
             int right_x = r_x / r_count;
             // Is the 'left' marker actually on the left?
@@ -176,13 +193,15 @@ public class MarkerDetector implements VisionProcessor
                 final int markers_x = (left_x + right_x)/2;
                 direction = markers_x - center.x;
             }
-            else
+            else // 'left' is right from 'right' => Ignore, fishy
                 direction = Double.NaN;
         }
-        else
+        else // No lines found
             direction = Double.NaN;
         
+        // Center marker
         Imgproc.circle(original, center, 3, overlay_bgr);
+        // If we found the direction to the markers, indicate it
         if (! Double.isNaN(direction))
             Imgproc.arrowedLine(original,
                                 center,

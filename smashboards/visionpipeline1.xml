@@ -1,27 +1,36 @@
 <xml version="1.0">
 <dashboard>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
-		<location x="297" y="40"/>
-		<width>637</width>
-		<height>481</height>
+		<location x="215" y="8"/>
+		<width>661</width>
+		<height>488</height>
 		<property name="Camera Choice" value="Processed"/>
 	</static-widget>
 	<widget field="Direction" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="105"/>
+		<location x="0" y="168"/>
+	</widget>
+	<widget field="Hue" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="147"/>
 	</widget>
 	<widget field="Camera Mbps" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="84"/>
+		<location x="0" y="126"/>
 	</widget>
 	<widget field="Length Threshold" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="63"/>
+		<location x="0" y="105"/>
+	</widget>
+	<widget field="Saturation" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="84"/>
 	</widget>
 	<widget field="Angle Width" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="42"/>
+		<location x="0" y="63"/>
 	</widget>
 	<widget field="Too Much" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="42"/>
+	</widget>
+	<widget field="Hue Width" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="21"/>
 	</widget>
-	<widget field="Angle Threshold" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+	<widget field="Luminance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="0"/>
 	</widget>
 </dashboard>
