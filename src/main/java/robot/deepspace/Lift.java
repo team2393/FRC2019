@@ -15,8 +15,8 @@ public class Lift extends Subsystem
 {
     // TODO Measure how many inches lift moves per count
     private final double COUNTS_PER_INCH = 4096.0;
-    private final TalonSRX motor = new TalonSRX(3);
-    private final DigitalInput limit_switch = new DigitalInput(4);
+    private final TalonSRX motor = new TalonSRX(RobotMap.LIFT_MOTOR);
+    private final DigitalInput limit_switch = new DigitalInput(RobotMap.LIMIT_SWITCH);
 
     public Lift()
     {

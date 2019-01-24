@@ -25,6 +25,9 @@ import robot.parts.PDPController;
  * 
  *  TODO:
  * 
+ *  Disk grabber: 1 solenoid to hold/release disk, button to toggle
+ *  -> Commands open/close? Automatically close when disk is detected?
+ * 
  *  Drive motors: Left and right, 2 Talons each side, one follows the other, 1 encoder per side, gyro
  *  -> Need to program PID for movement with gyro to keep heading for autonomous moves.
  *  Use PIDCommand or PIDSubsystem.
@@ -35,9 +38,6 @@ import robot.parts.PDPController;
  *  Prepare autonomous moves from N start positions to M initial disk placements.
  *  Maybe leave last leg of route to driver, using vision, but get them close. 
  *
- *  Disk grabber: 1 solenoid to hold/release disk, button to toggle
- *  -> Commands open/close? Automatically close when disk is detected?
- * 
  *  Push-up mechanism: 1 solenoid for 2 front cylinders, 1 solenoid for back cylinder, 1 drive motor controller.
  *  Idea:
  *  Push button to lower 2 front and 1 back cylinder,
@@ -49,15 +49,18 @@ public class DeepspaceRobot extends BasicRobot
 {
     private final Lift lift = new Lift();
     private final Joystick joystick = new Joystick(0);
+    // TODO private final Joystick buttonboard = new Joystick(1);
 
     private CameraHandler camera;
+    private PanelGrabber grabber = new PanelGrabber();
 
     private final Command home_lift = new HomeLift(lift);
     private final Command drive_lift = new DriveLift(joystick, lift);
     private final Command move_lift_low = new MoveLift("Low Pos", lift, 15.5);
     private final Command move_lift_middle = new MoveLift("Mid Pos", lift, 30.0);
     private final Command move_lift_high = new MoveLift("Hi Pos", lift, 75.0);
-
+    private final Command open = new OpenGrabber(grabber);
+    private final Command close = new CloseGrabber(grabber);
     @Override
     public void robotInit()
     {
@@ -92,18 +95,14 @@ public class DeepspaceRobot extends BasicRobot
     @Override
     public void teleopPeriodic()
     {
-        if (joystick.getRawButtonPressed(PDPController.Y_BUTTON))
-            move_lift_middle.start();
+        if (joystick.getRawButtonPressed(PDPController.B_BUTTON))
+            open.start();
         if (joystick.getRawButtonPressed(PDPController.A_BUTTON))
-            move_lift_high.start();
+            close.start();
     }
 
     @Override
     public void autonomousPeriodic()
     {
-        // if ((System.currentTimeMillis() / 3000) % 2 == 0)
-        //     lift.setposition(0.0);
-        // else
-        //     lift.setposition(30*4096.0);
     }
 }
