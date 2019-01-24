@@ -53,6 +53,7 @@ public class CameraHandler
             // Configure
 			camera.setResolution(width, height);
             camera.setFPS(fps);
+            // TODO Set these from dashboard.
             // camera.setBrightness(brightness);
             // camera.setExposureManual(value);
             // camera.setWhiteBalanceManual(value);

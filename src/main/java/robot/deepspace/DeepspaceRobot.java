@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package robot.deepspace;
 
 import edu.wpi.cscore.UsbCamera;
@@ -19,6 +12,7 @@ import robot.parts.PDPController;
  *  TODO:
  *  Camera & Vision: Show video from front of robot,
  *  with overlay when target markers are detected.
+ *  Check if exposure etc. need to be controlled from dashboard instead of 'auto'.
  * 
  *  Lift: 1 motor, encoder, limit switch, button box to move lift to ~4 predertermined heights
  *  -> Talon PID & motion magic.
@@ -29,11 +23,11 @@ import robot.parts.PDPController;
  * 
  *  Drive motors: Left and right, 2 Talons each side, one follows the other, 1 encoder per side, gyro
  *  -> Need to program PID for movement with gyro to keep heading for autonomous moves
- * 
- *  Prepare autonomous moves from start N positions to M initial disk placements.
- *  Maybe leave last leg of route to driver, using vision, but get them close.
- * 
+ *
  *  Gearbox Shifter: 1 or 2 Solenoids, button to shift high <-> low, indicate current gear on dashboard
+ * 
+ *  Prepare autonomous moves from N start positions to M initial disk placements.
+ *  Maybe leave last leg of route to driver, using vision, but get them close. 
  *
  *  Disk grabber: 1 solenoid to hold/release disk, button to toggle
  *  -> Commands open/close? Automatically close when disk is detected?
