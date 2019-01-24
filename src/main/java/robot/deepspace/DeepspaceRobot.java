@@ -3,23 +3,24 @@ package robot.deepspace;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
 import robot.parts.PDPController;
 
 /**
  *  Main robot class for deep space 2019
  * 
- *  TODO:
- *  Camera & Vision: Show video from front of robot,
- *  with overlay when target markers are detected.
- *  Check if exposure etc. need to be controlled from dashboard instead of 'auto'.
- * 
  *  Lift: 1 motor, encoder, limit switch, button box to move lift to ~4 predertermined heights
  *  -> Talon PID & motion magic.
  *     Commands to drive with joystick, drive up, drive down, move to position.
- *     The latter should be something like
- *       new SetLiftPositionCommand(lift, "Middle Pos", 49000)
- *     to set the lift position to 49000 but allow adjusting that pos via dashboard.
+ * 
+ *  TODO:
+ * 
+ *  Camera & Vision: Show video from front of robot,
+ *  with overlay when target markers are detected.
+ *  Check if exposure etc. need to be controlled from dashboard instead of 'auto'.
  * 
  *  Drive motors: Left and right, 2 Talons each side, one follows the other, 1 encoder per side, gyro
  *  -> Need to program PID for movement with gyro to keep heading for autonomous moves.
@@ -46,6 +47,12 @@ public class DeepspaceRobot extends BasicRobot
     private final Lift lift = new Lift();
     private final Joystick joystick = new Joystick(0);
 
+    private final Command home_lift = new HomeLift(lift);
+    private final Command drive_lift = new DriveLift(joystick, lift);
+    private final Command move_lift_low = new MoveLift("Low Pos", lift, 15.5);
+    private final Command move_lift_middle = new MoveLift("Mid Pos", lift, 30.0);
+    private final Command move_lift_high = new MoveLift("Hi Pos", lift, 75.0);
+
     @Override
     public void robotInit()
     {
@@ -59,20 +66,41 @@ public class DeepspaceRobot extends BasicRobot
         //610 by 450 at 15fps - 3.4mbs
         camera.setResolution(600, 440);
         camera.setFPS(10);
+
+        SmartDashboard.putData("Home Lift", home_lift);
+        SmartDashboard.putData("Drive Lift", drive_lift);
+        SmartDashboard.putData("Lift Low", move_lift_low);
+        SmartDashboard.putData("Lift Middle", move_lift_middle);
+        SmartDashboard.putData("Lift High", move_lift_high);
+    }
+
+    @Override
+    public void robotPeriodic()
+    {
+        Scheduler.getInstance().run();
+    }
+
+    @Override
+    public void teleopInit()
+    {
+        super.teleopInit();
     }
 
     @Override
     public void teleopPeriodic()
     {
-        lift.drive(-joystick.getRawAxis(PDPController.LEFT_STICK_VERTICAL));
+        if (joystick.getRawButtonPressed(PDPController.Y_BUTTON))
+            move_lift_middle.start();
+        if (joystick.getRawButtonPressed(PDPController.A_BUTTON))
+            move_lift_high.start();
     }
 
     @Override
     public void autonomousPeriodic()
     {
-        if ((System.currentTimeMillis() / 3000) % 2 == 0)
-            lift.setposition(0.0);
-        else
-            lift.setposition(30*4096.0);
+        // if ((System.currentTimeMillis() / 3000) % 2 == 0)
+        //     lift.setposition(0.0);
+        // else
+        //     lift.setposition(30*4096.0);
     }
 }

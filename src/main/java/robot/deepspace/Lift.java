@@ -5,13 +5,16 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class handles our lift
  */
-public class Lift 
+public class Lift extends Subsystem
 {
+    // TODO Measure how many inches lift moves per count
+    private final double COUNTS_PER_INCH = 4096.0;
     private final TalonSRX motor = new TalonSRX(3);
     private final DigitalInput limit_switch = new DigitalInput(4);
 
@@ -39,6 +42,12 @@ public class Lift
         motor.configMotionCruiseVelocity(max_speed*3/4);
         // Accelerate twice as fast to reach cruise velocity in half a second
         motor.configMotionAcceleration(2*max_speed*3/4);
+    }
+
+    @Override
+    protected void initDefaultCommand()
+    {
+        // We have no default command, yet
     }
 
     /** Drive the lift up and down
@@ -75,7 +84,14 @@ public class Lift
         // To Tune PID, use
         // motor.set(ControlMode.Position, position);
         motor.set(ControlMode.MotionMagic, position);
-        SmartDashboard.putNumber("Lift Position", motor.getSelectedSensorPosition());
+        int pos = motor.getSelectedSensorPosition();
+        SmartDashboard.putNumber("Lift Position", pos);
         SmartDashboard.putNumber("Lift Pos Error", motor.getClosedLoopError());
+        SmartDashboard.putNumber("Lift Height", pos / COUNTS_PER_INCH);
+    }
+
+    public void setheight(double inches)
+    {
+         setposition(inches *COUNTS_PER_INCH);
     }
 }
