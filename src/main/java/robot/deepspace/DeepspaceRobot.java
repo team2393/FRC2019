@@ -22,7 +22,9 @@ import robot.parts.PDPController;
  *     to set the lift position to 49000 but allow adjusting that pos via dashboard.
  * 
  *  Drive motors: Left and right, 2 Talons each side, one follows the other, 1 encoder per side, gyro
- *  -> Need to program PID for movement with gyro to keep heading for autonomous moves
+ *  -> Need to program PID for movement with gyro to keep heading for autonomous moves.
+ *  Use PIDCommand or PIDSubsystem.
+ *  Check https://frc-pdr.readthedocs.io/en/latest/control/using_WPILIB's_pid_controller.html#adding-ramping-for-motors
  *
  *  Gearbox Shifter: 1 or 2 Solenoids, button to shift high <-> low, indicate current gear on dashboard
  * 
