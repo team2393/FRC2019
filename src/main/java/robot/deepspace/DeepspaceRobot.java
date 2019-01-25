@@ -53,19 +53,18 @@ import robot.parts.PDPController;
 public class DeepspaceRobot extends BasicRobot
 {
     private final Lift lift = new Lift();
-    private final Joystick joystick = new Joystick(0);
-    // TODO private final Joystick buttonboard = new Joystick(1);
 
     private CameraHandler camera;
     private PanelGrabber grabber = new PanelGrabber();
 
     private final Command home_lift = new HomeLift(lift);
-    private final Command drive_lift = new DriveLift(joystick, lift);
+    private final Command drive_lift = new DriveLift(lift);
     private final Command move_lift_low = new MoveLift("Low Pos", lift, 15.5);
     private final Command move_lift_middle = new MoveLift("Mid Pos", lift, 30.0);
     private final Command move_lift_high = new MoveLift("Hi Pos", lift, 75.0);
     private final Command open = new OpenGrabber(grabber);
     private final Command close = new CloseGrabber(grabber);
+    private final Command toggle = new ToggleGrabber(grabber);
     @Override
     public void robotInit()
     {
@@ -100,10 +99,8 @@ public class DeepspaceRobot extends BasicRobot
     @Override
     public void teleopPeriodic()
     {
-        if (joystick.getRawButtonPressed(PDPController.B_BUTTON))
-            open.start();
-        if (joystick.getRawButtonPressed(PDPController.A_BUTTON))
-            close.start();
+        if (OI.isGrabberOpenPushed())
+            toggle.start();
     }
 
     @Override

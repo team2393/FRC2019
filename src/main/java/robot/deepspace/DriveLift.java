@@ -7,12 +7,10 @@ import robot.parts.PDPController;
 /** Command to drive Lift with joystick */
 public class DriveLift extends Command 
 {
-    private final Joystick joystick;
     private final Lift lift;
 
-    public DriveLift(final Joystick joystick, final Lift lift)
+    public DriveLift(final Lift lift)
     {
-        this.joystick = joystick;
         this.lift = lift;
         requires(lift);
     }
@@ -20,7 +18,7 @@ public class DriveLift extends Command
     @Override
     protected void execute() 
     {
-        lift.drive(- joystick.getRawAxis(PDPController.LEFT_STICK_VERTICAL));
+        lift.drive(OI.getLiftUpDown());
     }
 
     @Override
