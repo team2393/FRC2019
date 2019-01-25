@@ -7,10 +7,10 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import robot.BasicRobot;
-import robot.commands.DriveByJoystick;
-import robot.commands.HoldHeading;
+import robot.demos.commands.DriveByJoystick;
+import robot.demos.commands.HoldHeading;
+import robot.demos.subsystems.DriveSubsystem;
 import robot.parts.ContinuousRotationServo;
-import robot.subsystems.DriveSubsystem;
 
 public class JoystickDemo4 extends BasicRobot
 {

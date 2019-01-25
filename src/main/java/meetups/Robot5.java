@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 import robot.BasicRobot;
-import robot.commands.Blink;
+import robot.demos.commands.Blink;
 
 // Command demo: Blink
 public class Robot5 extends BasicRobot

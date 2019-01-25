@@ -10,10 +10,10 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
-import robot.commands.DriveByJoystick;
+import robot.demos.commands.DriveByJoystick;
+import robot.demos.subsystems.DriveSubsystem;
 import robot.parts.ContinuousRotationServo;
 import robot.parts.PDPController;
-import robot.subsystems.DriveSubsystem;
 
 public class Robot9 extends BasicRobot
 {

@@ -2,7 +2,7 @@ package meetups;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Command;
-import robot.subsystems.DriveSubsystem;
+import robot.demos.subsystems.DriveSubsystem;
 
 public class EncoderMoveCommandExample extends Command
 {

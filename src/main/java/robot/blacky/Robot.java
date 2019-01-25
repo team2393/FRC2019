@@ -8,19 +8,19 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
-import robot.commands.Blink;
-import robot.commands.DriveByJoystick;
-import robot.commands.HoldHeading;
-import robot.commands.HoldHeadingPID;
-import robot.commands.HoldHeadingPID2;
-import robot.commands.Move;
-import robot.commands.POVHeading;
-import robot.commands.RocknRoll;
-import robot.commands.SmoothMove;
-import robot.commands.Turn;
-import robot.commands.Wiggle;
+import robot.demos.commands.Blink;
+import robot.demos.commands.DriveByJoystick;
+import robot.demos.commands.HoldHeading;
+import robot.demos.commands.HoldHeadingPID;
+import robot.demos.commands.HoldHeadingPID2;
+import robot.demos.commands.Move;
+import robot.demos.commands.POVHeading;
+import robot.demos.commands.RocknRoll;
+import robot.demos.commands.SmoothMove;
+import robot.demos.commands.Turn;
+import robot.demos.commands.Wiggle;
+import robot.demos.subsystems.DriveSubsystem;
 import robot.parts.USERButton;
-import robot.subsystems.DriveSubsystem;
 
 public class Robot extends BasicRobot
 {

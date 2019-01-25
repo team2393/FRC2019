@@ -11,12 +11,12 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
-import robot.commands.DriveByJoystick;
-import robot.commands.HoldHeadingPID;
-import robot.commands.SmoothMove;
+import robot.demos.commands.DriveByJoystick;
+import robot.demos.commands.HoldHeadingPID;
+import robot.demos.commands.SmoothMove;
+import robot.demos.subsystems.DriveSubsystem;
 import robot.parts.ContinuousRotationServo;
 import robot.parts.PDPController;
-import robot.subsystems.DriveSubsystem;
 
 public class Robot10 extends BasicRobot
 {

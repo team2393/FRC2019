@@ -1,7 +1,7 @@
 package meetups;
 
 import edu.wpi.first.wpilibj.command.TimedCommand;
-import robot.subsystems.DriveSubsystem;
+import robot.demos.subsystems.DriveSubsystem;
 
 public class JogCommand extends TimedCommand
 {

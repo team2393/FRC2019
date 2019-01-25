@@ -3,7 +3,7 @@ package meetups;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import robot.subsystems.DriveSubsystem;
+import robot.demos.subsystems.DriveSubsystem;
 
 public class EncoderMoveCommand extends Command
 {
