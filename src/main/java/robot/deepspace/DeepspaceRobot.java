@@ -30,6 +30,8 @@ import robot.parts.PDPController;
  *  TODO: Implement initial version
  * 
  *  Use OI
+ * 
+ *  Documentation: PPT for OI, vision, ..
  *
  *  Drive motors: Left and right, 2 Talons each side, one follows the other, 1 encoder per side, gyro
  *  -> Need to program PID for movement with gyro to keep heading for autonomous moves.

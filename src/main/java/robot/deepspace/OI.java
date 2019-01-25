@@ -6,6 +6,12 @@ package robot.deepspace;
  */
 public class OI
 {
-    // Joystick stick = new Joystick(port);
-    // Button button = new JoystickButton(stick, buttonNumber);
+    // private static final Joystick stick = new Joystick(port);
+
+
+    // public static final Button button = new JoystickButton(stick, buttonNumber);
+
+    // public static final double getLiftUpDown()
+    // {
+    // }
 }
