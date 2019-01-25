@@ -8,8 +8,12 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- * This class handles our lift
+/** This class handles our lift
+ * 
+ *  Motor to drive up and down,
+ *  encoder to know about position,
+ *  limit switch at lower end to calibrate encoder,
+ *  PID to move to specific position.
  */
 public class Lift extends Subsystem
 {
@@ -20,6 +24,7 @@ public class Lift extends Subsystem
 
     public Lift()
     {
+        // Basic motor configuration
         motor.configFactoryDefault();
         motor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
 
@@ -51,8 +56,8 @@ public class Lift extends Subsystem
     }
 
     /** Drive the lift up and down
-     * @param speed -1 to 1, positive is up
-     * @return true if OK, false if we hit the limit switch
+     *  @param speed -1 to 1, positive is up
+     *  @return true if OK, false if we hit the limit switch
      */
     public boolean drive(double speed)
     {
@@ -67,19 +72,13 @@ public class Lift extends Subsystem
         }
         motor.set(ControlMode.PercentOutput, speed);
  
-        // if (speed >= 0)
-        //     motor.set(ControlMode.PercentOutput, speed);
-        // else if (limit_switch.get() == true)
-        //     motor.set(ControlMode.PercentOutput, 0);
-        // else 
-        //     motor.set(ControlMode.PercentOutput, speed);
-
         SmartDashboard.putNumber("Lift Position", motor.getSelectedSensorPosition());
 
         return ! at_limit;
     }
 
-    public void setposition(double position)
+    /** @param position Desired position in encoder counts */
+    public void setposition(final double position)
     {
         // To Tune PID, use
         // motor.set(ControlMode.Position, position);
@@ -90,8 +89,9 @@ public class Lift extends Subsystem
         SmartDashboard.putNumber("Lift Height", pos / COUNTS_PER_INCH);
     }
 
-    public void setheight(double inches)
+    /** @param inches Desired position */
+    public void setheight(final double inches)
     {
-         setposition(inches *COUNTS_PER_INCH);
+         setposition(inches * COUNTS_PER_INCH);
     }
 }

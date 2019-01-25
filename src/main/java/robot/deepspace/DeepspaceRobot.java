@@ -12,22 +12,25 @@ import robot.camera.Crosshair;
 import robot.camera.MarkerDetector;
 import robot.parts.PDPController;
 
-/**
- *  Main robot class for deep space 2019
+/** Main robot class for deep space 2019
  * 
+ *  TODO: Test & tweak
  *  Lift: 1 motor, encoder, limit switch, button box to move lift to ~4 predertermined heights
  *  -> Talon PID & motion magic.
  *     Commands to drive with joystick, drive up, drive down, move to position.
+ *   Can/should the robot automatically start HomeLift at startup?
  * 
  *  Camera & Vision: Show video from front of robot,
  *  with overlay when target markers are detected.
  *  Check if exposure etc. need to be controlled from dashboard instead of 'auto'.
  * 
- *  TODO:
- * 
  *  Disk grabber: 1 solenoid to hold/release disk, button to toggle
  *  -> Commands open/close? Automatically close when disk is detected?
  * 
+ *  TODO: Implement initial version
+ * 
+ *  Use OI
+ *
  *  Drive motors: Left and right, 2 Talons each side, one follows the other, 1 encoder per side, gyro
  *  -> Need to program PID for movement with gyro to keep heading for autonomous moves.
  *  Use PIDCommand or PIDSubsystem.

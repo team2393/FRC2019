@@ -1,9 +1,9 @@
-
 package robot.deepspace;
 
-/**
- * Add your docs here.
- */
+/** Hardware Mappings
+ *  
+ * One place to find what's connected how
+ */ 
 public class RobotMap
 {
     // Solenoid

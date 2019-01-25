@@ -2,21 +2,19 @@ package robot.deepspace;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
 
-/**
- * Add your docs here.
- */
+/** Command to open grabber */
 public class OpenGrabber extends InstantCommand
 {
-  private PanelGrabber grabber;
+    private final PanelGrabber grabber;
 
-  public OpenGrabber(PanelGrabber grabber)
-  {
-    this.grabber = grabber;
-  }
+    public OpenGrabber(final PanelGrabber grabber)
+    {
+        this.grabber = grabber;
+    }
 
-  @Override
-  protected void execute()
-  {
-    grabber.open(true);
-  }
+    @Override
+    protected void execute()
+    {
+        grabber.open(true);
+    }
 }
