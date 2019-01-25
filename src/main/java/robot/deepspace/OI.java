@@ -18,12 +18,23 @@ public class OI
 
     public static final double getSpeed()
     {
-        return -joystick.getRawAxis(PDPController.LEFT_STICK_VERTICAL);
+        double raw = joystick.getRawAxis(PDPController.LEFT_STICK_VERTICAL);
+        return -square(raw);
     }
 
-    public static final double getTurn()
+    //sqare velae to be mor sensitive around 0
+    private static double square(double raw) 
     {
-        return -joystick.getRawAxis(PDPController.RIGHT_STICK_HORIZONTAL);
+		double squareded = raw*raw;
+        if (raw >= 0)
+            return squareded;
+        else
+            return -squareded;
+    }
+
+    public static final double getTurn() 
+    {
+        return square (joystick.getRawAxis(PDPController.RIGHT_STICK_HORIZONTAL));
     }
 
     public static final double getLiftUpDown()

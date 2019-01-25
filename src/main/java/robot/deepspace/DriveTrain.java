@@ -7,14 +7,18 @@
 
 package robot.deepspace;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Add your docs here.
  */
-public class DriveTrain
+public class DriveTrain extends Subsystem
 {
     private final WPI_TalonSRX left = new WPI_TalonSRX(RobotMap.LEFT_MOTOR_FRONT);
     private final WPI_TalonSRX left_slave = new WPI_TalonSRX(RobotMap.LEFT_MOTOR_BACK);
@@ -32,20 +36,46 @@ public class DriveTrain
         right_slave.configFactoryDefault();
         right.configFactoryDefault();
 
-        //Tie Slaves To Master
+        //TODO See if motor or sensor need to be inverted
+        left.setInverted(false);
+        left.setSensorPhase(true);
+
+        left.setNeutralMode(NeutralMode.Brake);
+        right.setNeutralMode(NeutralMode.Brake);
+
+         // Use quad (relative) encoder
+         left.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+         right.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+       
+         //Tie Slaves To Master
         left_slave.follow(left);
         right_slave.follow(right);
+    }
+
+    @Override
+    protected void initDefaultCommand() 
+    {
+        //Does nothing YETTTT
     }
 
     public void setSpeed (double speed)
     {
         this.speed = speed;
-        drive.arcadeDrive(speed, rotation);
     }
 
     public void setRotation (double new_rotation)
     {
         rotation = new_rotation;
-        drive.arcadeDrive(speed, rotation);
+    }
+    
+    @Override
+    public void periodic()
+    {
+        drive.arcadeDrive(speed, rotation, false);
+
+        //TODO Get average with right encoder
+        int position = left.getSelectedSensorPosition();
+
+        SmartDashboard.putNumber("Position", position);
     }
 }
