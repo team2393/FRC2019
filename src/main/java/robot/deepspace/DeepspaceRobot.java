@@ -20,6 +20,7 @@ import robot.parts.PDPController;
  *     Commands to drive with joystick, drive up, drive down, move to position.
  *   Can/should the robot automatically start HomeLift at startup?
  * 
+ *  Use OI
  *  Camera & Vision: Show video from front of robot,
  *  with overlay when target markers are detected.
  *  Check if exposure etc. need to be controlled from dashboard instead of 'auto'.
@@ -29,7 +30,6 @@ import robot.parts.PDPController;
  * 
  *  TODO: Implement initial version
  * 
- *  Use OI
  * 
  *  Documentation: PPT for OI, vision, ..
  *
@@ -57,6 +57,7 @@ public class DeepspaceRobot extends BasicRobot
     private CameraHandler camera;
     private PanelGrabber grabber = new PanelGrabber();
 
+    private final DriveTrain drivetrain = new DriveTrain();
     private final Command home_lift = new HomeLift(lift);
     private final Command drive_lift = new DriveLift(lift);
     private final Command move_lift_low = new MoveLift("Low Pos", lift, 15.5);
@@ -101,6 +102,8 @@ public class DeepspaceRobot extends BasicRobot
     {
         if (OI.isGrabberOpenPushed())
             toggle.start();
+        drivetrain.setSpeed(OI.getSpeed());
+        drivetrain.setRotation(OI.getTurn());
     }
 
     @Override
