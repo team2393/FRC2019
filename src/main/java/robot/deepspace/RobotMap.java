@@ -7,8 +7,9 @@ package robot.deepspace;
 public class RobotMap
 {
     // Solenoid
-    public final static int GEARBOX_SOLENOID = 6;
-    public final static int GRABBER_SOLENOID = 7;
+    public final static int GEARBOX_SOLENOID = 5;
+    public final static int GRABBER_SOLENOID = 6;
+    public final static int EXTEND_SOLENOID = 7;
     
     // Talon ID
     public final static int LIFT_MOTOR = 1;
@@ -20,4 +21,5 @@ public class RobotMap
     
     // DIO
     public final static int LIMIT_SWITCH = 4;
+    public final static int HATCH_SENSOR = 3;
 }

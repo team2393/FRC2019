@@ -1,16 +1,12 @@
 package robot.deepspace;
 
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
 import robot.camera.CameraHandler;
-import robot.camera.Crosshair;
 import robot.camera.MarkerDetector;
-import robot.parts.PDPController;
 
 /** Main robot class for deep space 2019
  * 
@@ -68,15 +64,22 @@ public class DeepspaceRobot extends BasicRobot
     private final Command move_lift_middle = new MoveLift("Mid Pos", lift, 30.0);
     private final Command move_lift_high = new MoveLift("Hi Pos", lift, 75.0);
     // .. Grabber
-    private final Command open = new OpenGrabber(grabber);
-    private final Command close = new CloseGrabber(grabber);
     private final Command toggle = new ToggleGrabber(grabber);
+    private final CommandGroup get_hatch = new CommandGroup();
+    private final CommandGroup release_hatch = new CommandGroup();
 
     @Override
     public void robotInit()
     {
         super.robotInit();
 		camera = new CameraHandler(320, 240, 10, new MarkerDetector());
+
+        // Fill command groups
+        get_hatch.addSequential(new OpenGrabber(grabber));
+        get_hatch.addSequential(new WaitForHatch(grabber));
+        get_hatch.addSequential(new CloseGrabber(grabber));
+
+        release_hatch.addSequential(new Extend(grabber));
 
         // Bind Buttons to commands ..
         OI.gearshift.whenPressed(toggle_gear);
@@ -88,6 +91,8 @@ public class DeepspaceRobot extends BasicRobot
         SmartDashboard.putData("Lift Low", move_lift_low);
         SmartDashboard.putData("Lift Middle", move_lift_middle);
         SmartDashboard.putData("Lift High", move_lift_high);
+        SmartDashboard.putData("Get Hatch", get_hatch);
+        SmartDashboard.putData("Release Hatch", release_hatch);
     }
 
     @Override
@@ -106,7 +111,7 @@ public class DeepspaceRobot extends BasicRobot
     @Override
     public void teleopPeriodic()
     {
-        if (OI.isGrabberOpenPushed())
+        if (OI.isGrabberToggled())
             toggle.start();
     }
 

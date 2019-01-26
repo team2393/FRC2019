@@ -17,10 +17,9 @@ public class OI
     
     public static final Button gearshift = new JoystickButton(joystick, PDPController.LEFT_FRONT_BUTTON);
 
-    public static boolean isGrabberOpenPushed()
+    public static boolean isGrabberToggled()
     {
         return joystick.getRawButtonPressed(PDPController.A_BUTTON);
-
         //return buttonboard.getRawButtonPressed(1);
     }
 
