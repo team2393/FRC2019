@@ -7,6 +7,7 @@ package robot.deepspace;
 public class RobotMap
 {
     // Solenoid
+    public final static int GEARBOX_SOLENOID = 6;
     public final static int GRABBER_SOLENOID = 7;
     
     // Talon ID

@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 /** Command to open grabber */
 public class OpenGrabber extends InstantCommand
 {
-    private final PanelGrabber grabber;
+    private final Grabber grabber;
 
-    public OpenGrabber(final PanelGrabber grabber)
+    public OpenGrabber(final Grabber grabber)
     {
         this.grabber = grabber;
     }

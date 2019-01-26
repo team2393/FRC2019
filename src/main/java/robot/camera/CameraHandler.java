@@ -28,6 +28,12 @@ public class CameraHandler
      *  In case there is no image, we call the pipeline
      *  with 'null'.
      * 
+     *  160 by 120 at 10fps - 0.3mbs
+     *  320 by 240 at 10fps - 0.9mbs  <--- Using this for now
+     *  640 by 480 at 10fps - 3.1mbs
+     *  640 by 480 at 15fps - 4.1mbs
+     *  610 by 450 at 15fps - 3.4mbs
+     *
      *  @param width
      *  @param height
      *  @param fps

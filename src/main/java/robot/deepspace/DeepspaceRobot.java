@@ -52,32 +52,37 @@ import robot.parts.PDPController;
  */
 public class DeepspaceRobot extends BasicRobot
 {
-    private final Lift lift = new Lift();
-
-    private CameraHandler camera;
-    private PanelGrabber grabber = new PanelGrabber();
-
+    // Components, subsystems
     private final DriveTrain drivetrain = new DriveTrain();
+    private final Lift lift = new Lift();
+    private CameraHandler camera;
+    private Grabber grabber = new Grabber();
+
+    // Commands for drivetrain
+    private final Command toggle_gear = new ToggleGear(drivetrain);
+    private final Command joydrive = new Joydrive(drivetrain);
+    // .. Lift
     private final Command home_lift = new HomeLift(lift);
-    private final Command drive_lift = new DriveLift(lift);
+    private final Command drive_lift = new MoveList(lift);
     private final Command move_lift_low = new MoveLift("Low Pos", lift, 15.5);
     private final Command move_lift_middle = new MoveLift("Mid Pos", lift, 30.0);
     private final Command move_lift_high = new MoveLift("Hi Pos", lift, 75.0);
+    // .. Grabber
     private final Command open = new OpenGrabber(grabber);
     private final Command close = new CloseGrabber(grabber);
     private final Command toggle = new ToggleGrabber(grabber);
+
     @Override
     public void robotInit()
     {
         super.robotInit();
-		// Run USB camera
-        //160 by 120 at 10fps - 0.3mbs
-        //320 by 240 at 10fps - 0.9mbs  <--- Using this for now
-        //640 by 480 at 10fps - 3.1mbs
-        //640 by 480 at 15fps - 4.1mbs
-        //610 by 450 at 15fps - 3.4mbs
 		camera = new CameraHandler(320, 240, 10, new MarkerDetector());
 
+        // Bind Buttons to commands ..
+        OI.gearshift.whenPressed(toggle_gear);
+
+        // .. or place them on dashboard
+        SmartDashboard.putData("Drive", joydrive);
         SmartDashboard.putData("Home Lift", home_lift);
         SmartDashboard.putData("Drive Lift", drive_lift);
         SmartDashboard.putData("Lift Low", move_lift_low);
@@ -95,6 +100,7 @@ public class DeepspaceRobot extends BasicRobot
     public void teleopInit()
     {
         super.teleopInit();
+        joydrive.start();
     }
 
     @Override
@@ -102,8 +108,12 @@ public class DeepspaceRobot extends BasicRobot
     {
         if (OI.isGrabberOpenPushed())
             toggle.start();
-        drivetrain.setSpeed(OI.getSpeed());
-        drivetrain.setRotation(OI.getTurn());
+    }
+
+    @Override
+    public void autonomousInit()
+    {
+        super.autonomousInit();
     }
 
     @Override

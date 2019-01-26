@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 /** Command to open grabber */
 public class ToggleGrabber extends InstantCommand
 {
-    private final PanelGrabber grabber;
+    private final Grabber grabber;
 
-    public ToggleGrabber(final PanelGrabber grabber)
+    public ToggleGrabber(final Grabber grabber)
     {
         this.grabber = grabber;
     }
@@ -15,14 +15,6 @@ public class ToggleGrabber extends InstantCommand
     @Override
     protected void execute()
     {
-        if (grabber.isOpen())
-        {
-            grabber.open(false);
-        }
-
-        else
-        {
-            grabber.open(true);
-        }
+        grabber.open(! grabber.isOpen());
     }
 }

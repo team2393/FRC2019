@@ -1,15 +1,13 @@
 package robot.deepspace;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
-import robot.parts.PDPController;
 
-/** Command to drive Lift with joystick */
-public class DriveLift extends Command 
+/** Command to move Lift with joystick */
+public class MoveList extends Command 
 {
     private final Lift lift;
 
-    public DriveLift(final Lift lift)
+    public MoveList(final Lift lift)
     {
         this.lift = lift;
         requires(lift);
@@ -31,6 +29,7 @@ public class DriveLift extends Command
     @Override
     protected void end() 
     {
+        // Stop movement
         lift.drive(0);
     }
 }
