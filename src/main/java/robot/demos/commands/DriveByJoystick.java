@@ -13,6 +13,7 @@ import robot.demos.subsystems.DriveSubsystem;
  *  Small values are ignored to avoid moving based on
  *  noise around the 'stick center' of the joystick.
  */
+@SuppressWarnings("all")
 public class DriveByJoystick extends Command
 {
     private final DriveSubsystem drive_subsys;

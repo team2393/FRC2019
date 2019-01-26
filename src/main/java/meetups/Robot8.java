@@ -13,6 +13,7 @@ import robot.demos.subsystems.DriveSubsystem;
 import robot.parts.ContinuousRotationServo;
 import robot.parts.USERButton;
 
+@SuppressWarnings("all")
 public class Robot8 extends BasicRobot
 {
     // Beeper or LED

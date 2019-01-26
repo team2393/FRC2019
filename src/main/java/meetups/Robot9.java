@@ -15,6 +15,7 @@ import robot.demos.subsystems.DriveSubsystem;
 import robot.parts.ContinuousRotationServo;
 import robot.parts.PDPController;
 
+@SuppressWarnings("all")
 public class Robot9 extends BasicRobot
 {
     // Beeper or LED

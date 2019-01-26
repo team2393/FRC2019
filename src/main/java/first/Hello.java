@@ -9,6 +9,7 @@ import java.util.Scanner;
  *  enter a name like "Hello" or "Welcome",
  *  check the option to create a stub for main().
  */
+@SuppressWarnings("all")
 public class Hello
 {
     public static void main(String[] args) throws Exception

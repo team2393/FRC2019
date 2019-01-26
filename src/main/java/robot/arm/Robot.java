@@ -31,14 +31,14 @@ public class Robot extends BasicRobot
     {
         super.robotInit();
 
-        auto_options.addDefault("Back & Forth", back_and_forth);
-        auto_options.addObject("Stack Two", stack_two);
-        auto_options.addObject("Stack Two 2", stack_two2);
-        auto_options.addObject("Home", home);
-        auto_options.addObject("Tony", tony);
-        auto_options.addObject("Devon", devon);
-        auto_options.addObject("Anna", anna);
-        auto_options.addObject("Bella", bella);
+        auto_options.setDefaultOption("Back & Forth", back_and_forth);
+        auto_options.addOption("Stack Two", stack_two);
+        auto_options.addOption("Stack Two 2", stack_two2);
+        auto_options.addOption("Home", home);
+        auto_options.addOption("Tony", tony);
+        auto_options.addOption("Devon", devon);
+        auto_options.addOption("Anna", anna);
+        auto_options.addOption("Bella", bella);
         SmartDashboard.putData(auto_options);
     }
 

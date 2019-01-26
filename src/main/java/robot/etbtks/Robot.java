@@ -17,10 +17,11 @@ import robot.parts.PDPController;
  *  Commands to drive certain distances
  *  Read gyro
  *  Commands to hold heading
- *  TODO Use Commands
- *  NOT TODO beep
+ *  Should Use Commands
+ *  Should NOT beep
  *  @author Anna
  */
+@SuppressWarnings("all")
 public class Robot extends BasicRobot
 {
 	ContinuousRotationServo left = new ContinuousRotationServo(0);
@@ -41,7 +42,7 @@ public class Robot extends BasicRobot
 	{
 		left.setInverted(true);
 		right.setInverted(false);
-		// TODO it's about 10 cm per 190 pulses/ticks, but need to measure
+		// It's about 10 cm per 190 pulses/ticks, but need to measure
 		encoder.setDistancePerPulse(100.0/190.0);
 	}
 	

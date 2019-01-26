@@ -26,6 +26,7 @@ import robot.parts.PDPController;
  *  NOT TODO beep
  *  @author Anna
  */
+@SuppressWarnings("all")
 public class CommandRobot extends BasicRobot
 {
 	ContinuousRotationServo left = new ContinuousRotationServo(0);

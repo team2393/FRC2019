@@ -64,10 +64,10 @@ public class Robot extends BasicRobot
         moves.addSequential(new RocknRoll(drive_subsys, 0.3, 3.0));
 
         // List options for auto
-        auto_options.addObject("Moves", moves);
-        auto_options.addObject("Blink", blink);
-        auto_options.addObject("Rock'n'Roll", rock);
-        auto_options.addDefault("Wiggle", wiggle);
+        auto_options.addOption("Moves", moves);
+        auto_options.addOption("Blink", blink);
+        auto_options.addOption("Rock'n'Roll", rock);
+        auto_options.setDefaultOption("Wiggle", wiggle);
 
         // Bind blinking to the User button
         user.toggleWhenPressed(blink);

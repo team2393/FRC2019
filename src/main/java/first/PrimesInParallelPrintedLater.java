@@ -3,7 +3,6 @@ package first;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -17,6 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  *  nobody is idle, and all numbers are printed later
  *  to remove the comparably slow printing from the timing.
  */
+@SuppressWarnings("all")
 public class PrimesInParallelPrintedLater
 {    
     /** @param number Number to test for being prime
