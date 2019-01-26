@@ -129,7 +129,7 @@ public class DeepspaceRobot extends BasicRobot
     public void autonomousPeriodic()
     {
         // Test drive PID
-        if ((System.currentTimeMillis() / 2000) % 2 == 1)
+        if ((System.currentTimeMillis() / 5000) % 2 == 1)
             drivetrain.setPosition(2*4096);
         else
             drivetrain.setPosition(0);

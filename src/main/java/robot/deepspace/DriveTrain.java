@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
@@ -11,6 +12,7 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /** Drive train
@@ -22,21 +24,28 @@ public class DriveTrain extends Subsystem
     // TODO Support units like inch 
     // private final static double INCH_PER_COUNTS = 123124;
     private final WPI_TalonSRX left = new WPI_TalonSRX(RobotMap.LEFT_MOTOR_FRONT);
-    // private final WPI_TalonSRX left_slave = new WPI_TalonSRX(RobotMap.LEFT_MOTOR_BACK);
+    private final WPI_TalonSRX left_slave = new WPI_TalonSRX(RobotMap.LEFT_MOTOR_BACK);
+
     private final WPI_TalonSRX right = new WPI_TalonSRX(RobotMap.RIGHT_MOTOR_FRONT);
-    // private final WPI_TalonSRX right_slave = new WPI_TalonSRX(RobotMap.RIGHT_MOTOR_BACK);
+    private final WPI_TalonSRX right_slave = new WPI_TalonSRX(RobotMap.RIGHT_MOTOR_BACK);
+    
     private final DifferentialDrive drive = new DifferentialDrive(left, right);
     private final Solenoid gearbox = new Solenoid(RobotMap.GEARBOX_SOLENOID);
     private double speed = 0;
     private double rotation = 0;
 
+    private final Gyro gyro = new ADXRS450_Gyro();
+
+    private PIDController position_pid;
+    private PIDController heading_pid;
+
     public DriveTrain()
     {
         // Resets Everything To Default
         left.configFactoryDefault();
-        // left_slave.configFactoryDefault();
-        // right_slave.configFactoryDefault();
         right.configFactoryDefault();
+        left_slave.configFactoryDefault();
+        right_slave.configFactoryDefault();
 
         // TODO See if motor or sensor need to be inverted
         left.setInverted(false);
@@ -50,19 +59,64 @@ public class DriveTrain extends Subsystem
         right.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
        
         // Tie Slaves To Master
-        // left_slave.follow(left);
-        // right_slave.follow(right);
+        left_slave.follow(left);
+        right_slave.follow(right);
+
+        drive.setDeadband(0.0);
 
         setGear(true);
 
-        // TODO Create PID controller for position,
+        // Create PID controller for position,
         // controlling speed based on encoder
-        PIDSource source = null;
-        PIDOutput output = null;
-        // PIDController position_pid = new PIDController(0, 0, 0, source, output);
+        PIDSource pos_source = new PIDSource()
+        {
+            @Override
+            public void setPIDSourceType(PIDSourceType pidSource)
+            {
+                // Ignore                
+            }
 
-        // TODO Create PID controller for heading,
+            @Override
+            public PIDSourceType getPIDSourceType()
+            {
+                return PIDSourceType.kDisplacement;
+            }
+        
+            @Override
+            public double pidGet()
+            {
+                return getPosition();
+            }        
+        };
+        position_pid = new PIDController(5e-5, 3e-6, 0, pos_source, this::setSpeed);
+        SmartDashboard.putData("Pos. PID", position_pid);
+
+        // Create PID controller for heading,
         // controlling rotation based on gyro
+        // Create PID controller for position,
+        // controlling speed based on encoder
+        PIDSource heading_source = new PIDSource()
+        {
+            @Override
+            public void setPIDSourceType(PIDSourceType pidSource)
+            {
+                // Ignore                
+            }
+
+            @Override
+            public PIDSourceType getPIDSourceType()
+            {
+                return PIDSourceType.kDisplacement;
+            }
+        
+            @Override
+            public double pidGet()
+            {
+                return getHeading();
+            }        
+        };
+        heading_pid = new PIDController(0.02, 0, 0, heading_source, this::setRotation);
+        SmartDashboard.putData("Heading PID", heading_pid);
     }
 
     @Override
@@ -108,10 +162,30 @@ public class DriveTrain extends Subsystem
         return position;
     }
 
+    public void setPosition(double position)
+    {
+        position_pid.setSetpoint(position);
+        if (! position_pid.isEnabled())
+            position_pid.setEnabled(true);
+    }
+
+    public double getHeading()
+    {
+        return gyro.getAngle();
+    }
+
+    public void setHeading(double heading)
+    {
+        heading_pid.setSetpoint(heading);
+        if (! heading_pid.isEnabled())
+        heading_pid.setEnabled(true);
+    }
+
     @Override
     public void periodic()
     {
         drive.arcadeDrive(speed, rotation, false);
         SmartDashboard.putNumber("Position", getPosition());
+        SmartDashboard.putNumber("Heading", getHeading());
     }
 }
