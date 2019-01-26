@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveTrain extends Subsystem
 {
+    // TODO Support units like inch 
+    // private final static double INCH_PER_COUNTS = 123124;
     private final WPI_TalonSRX left = new WPI_TalonSRX(RobotMap.LEFT_MOTOR_FRONT);
     private final WPI_TalonSRX left_slave = new WPI_TalonSRX(RobotMap.LEFT_MOTOR_BACK);
     private final WPI_TalonSRX right = new WPI_TalonSRX(RobotMap.RIGHT_MOTOR_FRONT);
@@ -84,20 +86,19 @@ public class DriveTrain extends Subsystem
         right.setSelectedSensorPosition(0);
     }
 
-    /** @param position Position to reach via PID */ 
-    public void setPosition(final double position)
+    /** @return position Position in encoder counts */ 
+    public int getPosition()
     {
-        // TODO 
+        // TODO Command to control the position
+        // TODO Get average with right encoder
+        final int position = left.getSelectedSensorPosition();
+        return position;
     }
 
     @Override
     public void periodic()
     {
         drive.arcadeDrive(speed, rotation, false);
-
-        // TODO Get average with right encoder
-        final int position = left.getSelectedSensorPosition();
-
-        SmartDashboard.putNumber("Position", position);
+        SmartDashboard.putNumber("Position", getPosition());
     }
 }
