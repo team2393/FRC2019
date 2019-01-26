@@ -55,7 +55,7 @@ public class DeepspaceRobot extends BasicRobot
     private Grabber grabber = new Grabber();
 
     // Commands for drivetrain
-    // private final Command toggle_gear = new ToggleGear(drivetrain);
+    private final Command toggle_gear = new ToggleGear(drivetrain);
     private final Command joydrive = new Joydrive(drivetrain);
     // .. Lift
     private final Command home_lift = new HomeLift(lift);
@@ -75,6 +75,7 @@ public class DeepspaceRobot extends BasicRobot
 		camera = new CameraHandler(320, 240, 10, new MarkerDetector());
 
         // // Fill command groups
+        get_hatch.addSequential(new Retract(grabber));
         get_hatch.addSequential(new OpenGrabber(grabber));
         get_hatch.addSequential(new WaitForHatch(grabber));
         get_hatch.addSequential(new CloseGrabber(grabber));
@@ -82,7 +83,7 @@ public class DeepspaceRobot extends BasicRobot
         release_hatch.addSequential(new Extend(grabber));
 
         // // Bind Buttons to commands ..
-        // OI.gearshift.whenPressed(toggle_gear);
+        OI.gearshift.whenPressed(toggle_gear);
 
         // .. or place them on dashboard
         SmartDashboard.putData("Drive", joydrive);
