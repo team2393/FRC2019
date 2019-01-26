@@ -130,7 +130,7 @@ public class DeepspaceRobot extends BasicRobot
     {
         // Test drive PID
         if ((System.currentTimeMillis() / 5000) % 2 == 1)
-            drivetrain.setPosition(2*4096);
+            drivetrain.setPosition(2*409.6);
         else
             drivetrain.setPosition(0);
     }

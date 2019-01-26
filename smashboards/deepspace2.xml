@@ -1,5 +1,8 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="Grabber Extended" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="900" y="472"/>
+	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
 		<location x="312" y="108"/>
 		<width>556</width>
@@ -76,18 +79,54 @@
 		<location x="157" y="68"/>
 	</widget>
 	<widget field="Release Hatch" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="84" y="434"/>
+		<location x="912" y="430"/>
 	</widget>
 	<widget field="Get Hatch" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="95" y="401"/>
+		<location x="932" y="395"/>
 	</widget>
 	<widget field="Gear" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="100" y="501"/>
 	</widget>
 	<widget field="Grabber Is Open" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="66" y="470"/>
+		<location x="908" y="503"/>
 	</widget>
 </dashboard>
 <live-window>
+	<widget field="Ungrouped" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<widget field="Solenoid[0,7]" type="Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
+			<location x="6" y="16"/>
+			<height>23</height>
+			<width>122</width>
+		</widget>
+		<widget field="Solenoid[0,5]" type="Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
+			<location x="6" y="39"/>
+			<height>23</height>
+			<width>122</width>
+		</widget>
+		<widget field="DigitalInput[3]" type="Digital Input" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalInputDisplay">
+			<location x="6" y="62"/>
+			<height>20</height>
+			<width>122</width>
+		</widget>
+		<widget field="DigitalInput[4]" type="Digital Input" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalInputDisplay">
+			<location x="6" y="82"/>
+			<height>20</height>
+			<width>122</width>
+		</widget>
+		<widget field="Solenoid[0,6]" type="Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
+			<location x="6" y="102"/>
+			<height>23</height>
+			<width>122</width>
+		</widget>
+		<location x="2" y="4"/>
+		<width>134</width>
+		<height>131</height>
+	</widget>
+	<widget field="Lift" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="7" y="31"/>
+	</widget>
+	<widget field="DriveTrain" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="21" y="11"/>
+	</widget>
 </live-window>
 </xml>

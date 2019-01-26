@@ -6,7 +6,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -21,8 +20,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveTrain extends Subsystem
 {
-    // TODO Support units like inch 
-    // private final static double INCH_PER_COUNTS = 123124;
+    // Support units 
+    private final static double COUNTS_PER_INCH = 10;
     private final WPI_TalonSRX left = new WPI_TalonSRX(RobotMap.LEFT_MOTOR_FRONT);
     private final WPI_TalonSRX left_slave = new WPI_TalonSRX(RobotMap.LEFT_MOTOR_BACK);
 
@@ -153,20 +152,26 @@ public class DriveTrain extends Subsystem
         right.setSelectedSensorPosition(0);
     }
 
-    /** @return position Position in encoder counts */ 
-    public int getPosition()
+    /** @return position Position in inches */ 
+    public double getPosition()
     {
         // TODO Command to control the position
         // TODO Get average with right encoder
         final int position = left.getSelectedSensorPosition();
-        return position;
+        return position / COUNTS_PER_INCH;
     }
 
-    public void setPosition(double position)
+    /** @param inches Desired position in inches or NaN to disable PID */
+    public void setPosition(double inches)
     {
-        position_pid.setSetpoint(position);
-        if (! position_pid.isEnabled())
-            position_pid.setEnabled(true);
+        if (Double.isNaN(inches))
+            position_pid.setEnabled(false);
+        else
+        {
+            position_pid.setSetpoint(inches);
+            if (! position_pid.isEnabled())
+                position_pid.setEnabled(true);
+        }
     }
 
     public double getHeading()
@@ -176,9 +181,14 @@ public class DriveTrain extends Subsystem
 
     public void setHeading(double heading)
     {
-        heading_pid.setSetpoint(heading);
-        if (! heading_pid.isEnabled())
-        heading_pid.setEnabled(true);
+        if (Double.isNaN(heading))
+            heading_pid.setEnabled(false);
+        else
+        {
+            heading_pid.setSetpoint(heading);
+            if (! heading_pid.isEnabled())
+                heading_pid.setEnabled(true);
+        }
     }
 
     @Override
