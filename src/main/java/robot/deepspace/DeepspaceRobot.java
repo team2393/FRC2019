@@ -24,10 +24,7 @@ import robot.camera.MarkerDetector;
  *  Disk grabber: 1 solenoid to hold/release disk, button to toggle
  *  -> Commands open/close? Automatically close when disk is detected?
  * 
- *  TODO: Implement initial version
- * 
- * 
- *  Documentation: PPT for OI, vision, ..
+ *  TODO Documentation: PPT for OI, vision, ..
  *
  *  Drive motors: Left and right, 2 Talons each side, one follows the other, 1 encoder per side, gyro
  *  -> Need to program PID for movement with gyro to keep heading for autonomous moves.
@@ -39,7 +36,7 @@ import robot.camera.MarkerDetector;
  *  Prepare autonomous moves from N start positions to M initial disk placements.
  *  Maybe leave last leg of route to driver, using vision, but get them close. 
  *
- *  Push-up mechanism: 1 solenoid for 2 front cylinders, 1 solenoid for back cylinder, 1 drive motor controller.
+ *  TODO Push-up mechanism: 1 solenoid for 2 front cylinders, 1 solenoid for back cylinder, 1 drive motor controller.
  *  Idea:
  *  Push button to lower 2 front and 1 back cylinder,
  *  and now bottom drive will move with other wheels forward/backward.

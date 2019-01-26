@@ -47,8 +47,12 @@ public class DriveTrain extends Subsystem
         right_slave.configFactoryDefault();
 
         // TODO See if motor or sensor need to be inverted
-        left.setInverted(false);
-        left.setSensorPhase(true);
+        left.setInverted(true);
+        right.setInverted(true);
+        left.setSensorPhase(false);
+
+        left_slave.setInverted(true);
+        right_slave.setInverted(true);
 
         left.setNeutralMode(NeutralMode.Brake);
         right.setNeutralMode(NeutralMode.Brake);

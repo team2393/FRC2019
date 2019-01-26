@@ -15,7 +15,7 @@ public class OI
     
     private static final Joystick buttonboard = new Joystick(1);
     
-    public static final Button gearshift = new JoystickButton(joystick, PDPController.LEFT_FRONT_BUTTON);
+    public static final Button gearshift = new JoystickButton(joystick, PDPController.RIGHT_FRONT_BUTTON);
 
     public static boolean isGrabberToggled()
     {

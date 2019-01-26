@@ -17,7 +17,7 @@ public class TalonCheck extends BasicRobot
     // TalonSRX offers full access to the controller.
     // WPI_TalonSRX wraps that to add the basic set(speed)
     // necessary for DifferentialDrive, in case we need that later.
-    private final WPI_TalonSRX tal = new WPI_TalonSRX(3);
+    private final WPI_TalonSRX tal = new WPI_TalonSRX(4);
 
     private final Joystick joystick = new Joystick(0);
 
@@ -50,7 +50,7 @@ public class TalonCheck extends BasicRobot
     @Override
     public void teleopPeriodic()
     {
-        // If joystick in in centerish, don't move
+        // If joystick in centerish, don't move
         double speed = - joystick.getRawAxis(PDPController.RIGHT_STICK_VERTICAL);
         if (Math.abs(speed) < 0.1)
             speed = 0;
