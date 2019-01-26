@@ -9,6 +9,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class PanelGrabber 
 {
     private final Solenoid grabber = new Solenoid(RobotMap.GRABBER_SOLENOID);
+    // TODO Solenoid for pushing panel against rocket
+    // TODO Sensor to tell if a hatch is on the grabber, should automtically close
+
+    //TODO 2 motors for intake wheels 
+    //TODO One sensor in intake, should stop motors once cargo is detected
+    //TODO Eject motor
 
     public PanelGrabber() 
     {
