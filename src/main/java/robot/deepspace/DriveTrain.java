@@ -4,6 +4,10 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -18,9 +22,9 @@ public class DriveTrain extends Subsystem
     // TODO Support units like inch 
     // private final static double INCH_PER_COUNTS = 123124;
     private final WPI_TalonSRX left = new WPI_TalonSRX(RobotMap.LEFT_MOTOR_FRONT);
-    private final WPI_TalonSRX left_slave = new WPI_TalonSRX(RobotMap.LEFT_MOTOR_BACK);
+    // private final WPI_TalonSRX left_slave = new WPI_TalonSRX(RobotMap.LEFT_MOTOR_BACK);
     private final WPI_TalonSRX right = new WPI_TalonSRX(RobotMap.RIGHT_MOTOR_FRONT);
-    private final WPI_TalonSRX right_slave = new WPI_TalonSRX(RobotMap.RIGHT_MOTOR_BACK);
+    // private final WPI_TalonSRX right_slave = new WPI_TalonSRX(RobotMap.RIGHT_MOTOR_BACK);
     private final DifferentialDrive drive = new DifferentialDrive(left, right);
     private final Solenoid gearbox = new Solenoid(RobotMap.GEARBOX_SOLENOID);
     private double speed = 0;
@@ -30,8 +34,8 @@ public class DriveTrain extends Subsystem
     {
         // Resets Everything To Default
         left.configFactoryDefault();
-        left_slave.configFactoryDefault();
-        right_slave.configFactoryDefault();
+        // left_slave.configFactoryDefault();
+        // right_slave.configFactoryDefault();
         right.configFactoryDefault();
 
         // TODO See if motor or sensor need to be inverted
@@ -46,10 +50,19 @@ public class DriveTrain extends Subsystem
         right.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
        
         // Tie Slaves To Master
-        left_slave.follow(left);
-        right_slave.follow(right);
+        // left_slave.follow(left);
+        // right_slave.follow(right);
 
         setGear(true);
+
+        // TODO Create PID controller for position,
+        // controlling speed based on encoder
+        PIDSource source = null;
+        PIDOutput output = null;
+        // PIDController position_pid = new PIDController(0, 0, 0, source, output);
+
+        // TODO Create PID controller for heading,
+        // controlling rotation based on gyro
     }
 
     @Override

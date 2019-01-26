@@ -1,9 +1,10 @@
 package robot.deepspace;
 
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 
 /** Command to drive with joysick */
-public class Joydrive extends InstantCommand
+public class Joydrive extends Command
 {
     private final DriveTrain drivetrain;
 
@@ -18,6 +19,13 @@ public class Joydrive extends InstantCommand
     {
         drivetrain.setSpeed(OI.getSpeed());
         drivetrain.setRotation(OI.getTurn());
+    }
+
+    @Override
+    protected boolean isFinished()
+    {
+        // Keep running until cancelled
+        return false;
     }
 
     @Override

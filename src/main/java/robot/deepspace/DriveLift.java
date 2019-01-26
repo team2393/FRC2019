@@ -3,11 +3,11 @@ package robot.deepspace;
 import edu.wpi.first.wpilibj.command.Command;
 
 /** Command to move Lift with joystick */
-public class MoveList extends Command 
+public class DriveLift extends Command 
 {
     private final Lift lift;
 
-    public MoveList(final Lift lift)
+    public DriveLift(final Lift lift)
     {
         this.lift = lift;
         requires(lift);

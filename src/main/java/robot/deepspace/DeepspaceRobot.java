@@ -55,15 +55,15 @@ public class DeepspaceRobot extends BasicRobot
     private Grabber grabber = new Grabber();
 
     // Commands for drivetrain
-    private final Command toggle_gear = new ToggleGear(drivetrain);
+    // private final Command toggle_gear = new ToggleGear(drivetrain);
     private final Command joydrive = new Joydrive(drivetrain);
     // .. Lift
     private final Command home_lift = new HomeLift(lift);
-    private final Command drive_lift = new MoveList(lift);
+    private final Command drive_lift = new DriveLift(lift);
     private final Command move_lift_low = new MoveLift("Low Pos", lift, 15.5);
     private final Command move_lift_middle = new MoveLift("Mid Pos", lift, 30.0);
     private final Command move_lift_high = new MoveLift("Hi Pos", lift, 75.0);
-    // .. Grabber
+    // // .. Grabber
     private final Command toggle = new ToggleGrabber(grabber);
     private final CommandGroup get_hatch = new CommandGroup();
     private final CommandGroup release_hatch = new CommandGroup();
@@ -74,23 +74,25 @@ public class DeepspaceRobot extends BasicRobot
         super.robotInit();
 		camera = new CameraHandler(320, 240, 10, new MarkerDetector());
 
-        // Fill command groups
+        // // Fill command groups
         get_hatch.addSequential(new OpenGrabber(grabber));
         get_hatch.addSequential(new WaitForHatch(grabber));
         get_hatch.addSequential(new CloseGrabber(grabber));
 
         release_hatch.addSequential(new Extend(grabber));
 
-        // Bind Buttons to commands ..
-        OI.gearshift.whenPressed(toggle_gear);
+        // // Bind Buttons to commands ..
+        // OI.gearshift.whenPressed(toggle_gear);
 
         // .. or place them on dashboard
         SmartDashboard.putData("Drive", joydrive);
+
         SmartDashboard.putData("Home Lift", home_lift);
         SmartDashboard.putData("Drive Lift", drive_lift);
         SmartDashboard.putData("Lift Low", move_lift_low);
         SmartDashboard.putData("Lift Middle", move_lift_middle);
         SmartDashboard.putData("Lift High", move_lift_high);
+
         SmartDashboard.putData("Get Hatch", get_hatch);
         SmartDashboard.putData("Release Hatch", release_hatch);
     }
