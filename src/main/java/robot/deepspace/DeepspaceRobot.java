@@ -81,6 +81,7 @@ public class DeepspaceRobot extends BasicRobot
         get_hatch.addSequential(new CloseGrabber(grabber));
 
         release_hatch.addSequential(new Extend(grabber));
+        // release_hatch.addSequential(new OpenGrabber(grabber));
 
         // // Bind Buttons to commands ..
         OI.gearshift.whenPressed(toggle_gear);
@@ -127,5 +128,10 @@ public class DeepspaceRobot extends BasicRobot
     @Override
     public void autonomousPeriodic()
     {
+        // Test drive PID
+        if ((System.currentTimeMillis() / 2000) % 2 == 1)
+            drivetrain.setPosition(2*4096);
+        else
+            drivetrain.setPosition(0);
     }
 }
