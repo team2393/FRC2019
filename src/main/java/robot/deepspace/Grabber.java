@@ -25,6 +25,7 @@ public class Grabber
     public Grabber() 
     {
         open(false);
+        extend(false);
     }
 
     public boolean isOpen()
@@ -46,6 +47,7 @@ public class Grabber
     public void extend(final boolean do_extend)
     {
         extender.set(do_extend);
+        SmartDashboard.putBoolean("Grabber Extended", do_extend);
     }
 
     /** @return true when hatch detected */
