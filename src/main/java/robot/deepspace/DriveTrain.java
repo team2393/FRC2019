@@ -47,13 +47,17 @@ public class DriveTrain extends Subsystem
         right_slave.configFactoryDefault();
 
         // TODO See if motor or sensor need to be inverted
+        // On 2018 chassis, all drive motors need to be inverted
+        // so that positive speed results in "forward" move
         left.setInverted(true);
         right.setInverted(true);
-        left.setSensorPhase(false);
-
         left_slave.setInverted(true);
         right_slave.setInverted(true);
 
+        left.setSensorPhase(false);
+        right.setSensorPhase(false);
+
+        // Coast or break when speed is set to 0.0?
         left.setNeutralMode(NeutralMode.Brake);
         right.setNeutralMode(NeutralMode.Brake);
 
@@ -64,10 +68,16 @@ public class DriveTrain extends Subsystem
         // Tie Slaves To Master
         left_slave.follow(left);
         right_slave.follow(right);
+        left_slave.setSafetyEnabled(false);
+        right_slave.setSafetyEnabled(false);
 
+        // No deadband on differential drive to allow
+        // even small PID-driven moves.
+        // If joystick needs dead zone, put that into OI.
         drive.setDeadband(0.0);
 
-        setGear(true);
+        // Initially, set low gear
+        setGear(false);
 
         // Create PID controller for position,
         // controlling speed based on encoder
