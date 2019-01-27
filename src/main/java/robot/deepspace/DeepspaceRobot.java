@@ -75,7 +75,8 @@ public class DeepspaceRobot extends BasicRobot
         super.robotInit();
 		camera = new CameraHandler(320, 240, 10, new MarkerDetector());
 
-        // Fill command groups
+        // Fill command groups =======================================
+        // Auto moves
         auto_demo.addSequential(new ResetDrivetrain(drivetrain));
         auto_demo.addSequential(new MoveToPosition(drivetrain, 3*12));
         auto_demo.addSequential(new RotateToHeading(drivetrain, 90));
@@ -83,15 +84,24 @@ public class DeepspaceRobot extends BasicRobot
         auto_demo.addSequential(new RotateToHeading(drivetrain, 180));
         auto_demo.addSequential(new MoveToPosition(drivetrain, 7*12));
 
+        // Get hatch panel
+        // TODO Maybe start by moving lift to loading station height
+        // get_hatch.addSequential(new MoveLift("Loading Station Pos", lift, 15.5));
         get_hatch.addSequential(new Retract(grabber));
         get_hatch.addSequential(new OpenGrabber(grabber));
         get_hatch.addSequential(new WaitForHatch(grabber));
         get_hatch.addSequential(new CloseGrabber(grabber));
+        // TODO Maybe add command to lift the hatch panel
+        // off the lower brush in the loading station
+        // get_hatch.addSequential(new MoveLift("Loading Station Get Out", lift, 18));
+        // Then drivers need to move robot away from loading station,
+        // to spaceship or rocket, and push low/mid/high position buttons.
 
+        // Release hatch panel
         release_hatch.addSequential(new Extend(grabber));
         // release_hatch.addSequential(new OpenGrabber(grabber));
 
-        // // Bind Buttons to commands ..
+        // Bind Buttons to commands ..
         OI.gearshift.whenPressed(toggle_gear);
 
         // .. or place them on dashboard
@@ -110,7 +120,7 @@ public class DeepspaceRobot extends BasicRobot
 
         // Allow "Reset" even when not in teleop or periodic
         reset.setRunWhenDisabled(true);
-        // .. and ni fact do it right now
+        // .. and in fact do it right now
         reset.start();
 
         // TODO ALlow home_list when disabled, and do that right now?
