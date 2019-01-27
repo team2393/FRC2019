@@ -30,6 +30,7 @@ public class Joydrive extends Command
     @Override
     protected void end()
     {
+        // When command is cancelled, stop the drivetrain
         drivetrain.setSpeed(0);
         drivetrain.setRotation(0);
     }

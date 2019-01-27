@@ -9,6 +9,8 @@ public class OpenGrabber extends InstantCommand
 
     public OpenGrabber(final Grabber grabber)
     {
+        // Would be shorter with lambda:
+        //     super(() -> grabber.open(true));
         this.grabber = grabber;
     }
 

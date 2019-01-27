@@ -52,15 +52,19 @@ public class DeepspaceRobot extends BasicRobot
     private Grabber grabber = new Grabber();
 
     // Commands for drivetrain
+    private final Command reset = new ResetDrivetrain(drivetrain);
     private final Command toggle_gear = new ToggleGear(drivetrain);
     private final Command joydrive = new Joydrive(drivetrain);
+    private final CommandGroup auto_demo = new CommandGroup();
+
     // .. Lift
     private final Command home_lift = new HomeLift(lift);
     private final Command drive_lift = new DriveLift(lift);
     private final Command move_lift_low = new MoveLift("Low Pos", lift, 15.5);
     private final Command move_lift_middle = new MoveLift("Mid Pos", lift, 30.0);
     private final Command move_lift_high = new MoveLift("Hi Pos", lift, 75.0);
-    // // .. Grabber
+
+    // .. Grabber
     private final Command toggle = new ToggleGrabber(grabber);
     private final CommandGroup get_hatch = new CommandGroup();
     private final CommandGroup release_hatch = new CommandGroup();
@@ -71,7 +75,14 @@ public class DeepspaceRobot extends BasicRobot
         super.robotInit();
 		camera = new CameraHandler(320, 240, 10, new MarkerDetector());
 
-        // // Fill command groups
+        // Fill command groups
+        auto_demo.addSequential(new ResetDrivetrain(drivetrain));
+        auto_demo.addSequential(new MoveToPosition(drivetrain, 3*12));
+        auto_demo.addSequential(new RotateToHeading(drivetrain, 90));
+        auto_demo.addSequential(new MoveToPosition(drivetrain, 4*12));
+        auto_demo.addSequential(new RotateToHeading(drivetrain, 180));
+        auto_demo.addSequential(new MoveToPosition(drivetrain, 7*12));
+
         get_hatch.addSequential(new Retract(grabber));
         get_hatch.addSequential(new OpenGrabber(grabber));
         get_hatch.addSequential(new WaitForHatch(grabber));
@@ -85,6 +96,8 @@ public class DeepspaceRobot extends BasicRobot
 
         // .. or place them on dashboard
         SmartDashboard.putData("Drive", joydrive);
+        SmartDashboard.putData("Reset", reset);
+        SmartDashboard.putData("Auto Demo", auto_demo);
 
         SmartDashboard.putData("Home Lift", home_lift);
         SmartDashboard.putData("Drive Lift", drive_lift);
@@ -94,6 +107,13 @@ public class DeepspaceRobot extends BasicRobot
 
         SmartDashboard.putData("Get Hatch", get_hatch);
         SmartDashboard.putData("Release Hatch", release_hatch);
+
+        // Allow "Reset" even when not in teleop or periodic
+        reset.setRunWhenDisabled(true);
+        // .. and ni fact do it right now
+        reset.start();
+
+        // TODO ALlow home_list when disabled, and do that right now?
     }
 
     @Override

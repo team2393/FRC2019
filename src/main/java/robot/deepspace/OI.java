@@ -25,7 +25,8 @@ public class OI
 
     public static final double getSpeed()
     {
-        double raw = joystick.getRawAxis(PDPController.LEFT_STICK_VERTICAL);
+        final double raw = joystick.getRawAxis(PDPController.LEFT_STICK_VERTICAL);
+        // "Forward" should be positive
         return -square(raw);
     }
 
@@ -46,6 +47,7 @@ public class OI
 
     public static final double getLiftUpDown()
     {
+        // "Up" should be positive
         return -joystick.getRawAxis(PDPController.RIGHT_STICK_VERTICAL);
     }
 }

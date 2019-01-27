@@ -159,11 +159,12 @@ public class DriveTrain extends Subsystem
         rotation = new_rotation;
     }
 
-    /** Zero encoder positions */
-    public void resetPosition()
+    /** Zero encoder positions and heading to zero */
+    public void resetEncoders()
     {
         left.setSelectedSensorPosition(0);
         right.setSelectedSensorPosition(0);
+        gyro.reset();
     }
 
     /** @return position Position in inches */ 
@@ -175,7 +176,7 @@ public class DriveTrain extends Subsystem
     }
 
     /** @param inches Desired position in inches or NaN to disable PID */
-    public void setPosition(double inches)
+    public void setPosition(final double inches)
     {
         if (Double.isNaN(inches))
             position_pid.setEnabled(false);
@@ -192,13 +193,25 @@ public class DriveTrain extends Subsystem
         return gyro.getAngle();
     }
 
-    public void setHeading(double heading)
+    /** Set desired angle for PID control of heading
+     *  or NaN to disable heading PID.
+     * 
+     *  Angle does not reset at 0 or 360, meaning:
+     *  Assume you are at 350 degrees.
+     *  Requesting 370 degrees will turn clockwise
+     *  by another 20 degrees.
+     *  On the other hand, requesting 10 degrees would
+     *  rotate counter-clockwise by 340.
+     * 
+     * @param degrees Desired heading in degrees
+     */
+    public void setHeading(final double degrees)
     {
-        if (Double.isNaN(heading))
+        if (Double.isNaN(degrees))
             heading_pid.setEnabled(false);
         else
         {
-            heading_pid.setSetpoint(heading);
+            heading_pid.setSetpoint(degrees);
             if (! heading_pid.isEnabled())
                 heading_pid.setEnabled(true);
         }

@@ -2,32 +2,37 @@ package robot.deepspace;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/** Rotate drivetrain to a desired heading */
 public class RotateToHeading extends Command
 {
     private final DriveTrain drivetrain;
-    private final double heading;
+    private final double degrees;
 
-    public RotateToHeading(DriveTrain drivetrain, double heading)
+    public RotateToHeading(final DriveTrain drivetrain, final double degrees)
     {
         this.drivetrain = drivetrain;
-        this.heading = heading;
+        this.degrees = degrees;
+        requires(drivetrain);
     }
 
     @Override
     protected void execute() 
     {
-        drivetrain.setHeading(heading);
+        drivetrain.setHeading(degrees);
     }
 
     @Override
     protected boolean isFinished()
     {
-        return Math.abs(drivetrain.getHeading() - heading) < 2;
+        // Stop when we're close enough to desired heading
+        final double close_enough = 2;
+        return Math.abs(drivetrain.getHeading() - degrees)  <  close_enough;
     }
 
     @Override
     protected void end()
     {
+        // Disable heading PID
         drivetrain.setHeading(Double.NaN);
     }
 }
