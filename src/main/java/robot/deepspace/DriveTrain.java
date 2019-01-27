@@ -169,7 +169,6 @@ public class DriveTrain extends Subsystem
     /** @return position Position in inches */ 
     public double getPosition()
     {
-        // TODO Command to control the position
         // TODO Get average with right encoder
         final int position = left.getSelectedSensorPosition();
         return position / COUNTS_PER_INCH;

@@ -1,7 +1,6 @@
 package robot.deepspace;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.InstantCommand;
 
 /** Command to drive with joysick */
 public class Joydrive extends Command
