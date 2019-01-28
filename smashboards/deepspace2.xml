@@ -76,16 +76,17 @@
 		<location x="157" y="68"/>
 	</widget>
 	<widget field="Release Hatch" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="84" y="434"/>
+		<location x="27" y="448"/>
 	</widget>
 	<widget field="Get Hatch" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="95" y="401"/>
+		<location x="48" y="415"/>
 	</widget>
 	<widget field="Gear" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="100" y="501"/>
+		<location x="185" y="422"/>
 	</widget>
 	<widget field="Grabber Is Open" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="66" y="470"/>
+		<location x="0" y="486"/>
+		<width>171</width>
 	</widget>
 </dashboard>
 <live-window>
