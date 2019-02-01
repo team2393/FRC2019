@@ -188,6 +188,7 @@ public class DriveTrain extends Subsystem
         }
     }
 
+    /** @return Current heading in degrees */
     public double getHeading()
     {
         return gyro.getAngle();

@@ -55,6 +55,7 @@ public class DeepspaceRobot extends BasicRobot
     private final Command reset = new ResetDrivetrain(drivetrain);
     private final Command toggle_gear = new ToggleGear(drivetrain);
     private final Command joydrive = new Joydrive(drivetrain);
+    private final Command hhdrive = new HeadingHoldJoydrive(drivetrain);
     private final CommandGroup auto_demo = new CommandGroup();
 
     // .. Lift
@@ -65,7 +66,7 @@ public class DeepspaceRobot extends BasicRobot
     private final Command move_lift_high = new MoveLift("Hi Pos", lift, 75.0);
 
     // .. Grabber
-    private final Command toggle = new ToggleGrabber(grabber);
+    private final Command toggle_grabber = new ToggleGrabber(grabber);
     private final CommandGroup get_hatch = new CommandGroup();
     private final CommandGroup release_hatch = new CommandGroup();
 
@@ -103,9 +104,12 @@ public class DeepspaceRobot extends BasicRobot
 
         // Bind Buttons to commands ..
         OI.gearshift.whenPressed(toggle_gear);
+        OI.togglegrabber.whenPressed(toggle_grabber);
+
 
         // .. or place them on dashboard
         SmartDashboard.putData("Drive", joydrive);
+        SmartDashboard.putData("HH Drive", hhdrive);
         SmartDashboard.putData("Reset", reset);
         SmartDashboard.putData("Auto Demo", auto_demo);
 
@@ -123,7 +127,9 @@ public class DeepspaceRobot extends BasicRobot
         // .. and in fact do it right now
         reset.start();
 
-        // TODO ALlow home_list when disabled, and do that right now?
+        // TODO Allow home_lift when disabled, and do that right now?
+        // home_lift.setRunWhenDisabled(true);
+        // home_lift.start();
     }
 
     @Override
@@ -142,8 +148,6 @@ public class DeepspaceRobot extends BasicRobot
     @Override
     public void teleopPeriodic()
     {
-        if (OI.isGrabberToggled())
-            toggle.start();
     }
 
     @Override

@@ -25,8 +25,8 @@ public class MoveToPosition extends Command
     protected boolean isFinished()
     {
         // Stop when we're close enough to desired position
-         final double close_enough = 2;
-         return Math.abs(drivetrain.getPosition() - inches) < close_enough;
+        final double close_enough = 2;
+        return Math.abs(drivetrain.getPosition() - inches) < close_enough;
     }
 
     @Override
