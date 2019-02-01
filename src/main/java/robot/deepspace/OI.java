@@ -15,7 +15,6 @@ public class OI
     
     private static final Joystick buttonboard = new Joystick(1);
     
-<<<<<<< HEAD
     public static final Button gearshift = new JoystickButton(joystick, PDPController.LEFT_FRONT_BUTTON);
 
     public static boolean isGrabberToggled()
@@ -23,10 +22,6 @@ public class OI
         return joystick.getRawButtonPressed(PDPController.A_BUTTON);
         //return buttonboard.getRawButtonPressed(1);
     }
-=======
-    public static final Button gearshift = new JoystickButton(joystick, PDPController.RIGHT_FRONT_BUTTON);
-    public static final Button togglegrabber = new JoystickButton(joystick, PDPController.A_BUTTON);
->>>>>>> 36578c8b7d8d8d7642a40d04f43a8e076da672e2
 
     public static final double getSpeed()
     {
