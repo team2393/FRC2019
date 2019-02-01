@@ -68,7 +68,7 @@ public class DriveTrain extends Subsystem
     @Override
     protected void initDefaultCommand() 
     {
-        // Does nothing YETTTT
+        // Does nothing YET
     }
     
     public boolean isHighGear()
