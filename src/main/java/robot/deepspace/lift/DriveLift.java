@@ -1,6 +1,7 @@
-package robot.deepspace;
+package robot.deepspace.lift;
 
 import edu.wpi.first.wpilibj.command.Command;
+import robot.deepspace.OI;
 
 /** Command to move Lift with joystick */
 public class DriveLift extends Command 

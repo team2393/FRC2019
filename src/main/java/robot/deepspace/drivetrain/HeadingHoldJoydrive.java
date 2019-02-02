@@ -1,6 +1,7 @@
-package robot.deepspace;
+package robot.deepspace.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
+import robot.deepspace.OI;
 
 /** Command to drive for/back with joysick but hold heading */
 public class HeadingHoldJoydrive extends Command

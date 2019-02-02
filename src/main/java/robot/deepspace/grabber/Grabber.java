@@ -1,8 +1,9 @@
-package robot.deepspace;
+package robot.deepspace.grabber;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import robot.deepspace.RobotMap;
 
 /** Grabber for the hatch panel (disk)
  *  with solenoid to open/close.

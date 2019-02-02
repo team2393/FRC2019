@@ -8,6 +8,24 @@ import robot.BasicRobot;
 import robot.camera.CameraHandler;
 import robot.camera.CameraInfo;
 import robot.camera.MarkerDetector;
+import robot.deepspace.drivetrain.DriveTrain;
+import robot.deepspace.drivetrain.HeadingHoldJoydrive;
+import robot.deepspace.drivetrain.Joydrive;
+import robot.deepspace.drivetrain.MoveToPosition;
+import robot.deepspace.drivetrain.ResetDrivetrain;
+import robot.deepspace.drivetrain.RotateToHeading;
+import robot.deepspace.drivetrain.ToggleGear;
+import robot.deepspace.grabber.CloseGrabber;
+import robot.deepspace.grabber.Extend;
+import robot.deepspace.grabber.Grabber;
+import robot.deepspace.grabber.OpenGrabber;
+import robot.deepspace.grabber.Retract;
+import robot.deepspace.grabber.ToggleGrabber;
+import robot.deepspace.grabber.WaitForHatch;
+import robot.deepspace.lift.DriveLift;
+import robot.deepspace.lift.HomeLift;
+import robot.deepspace.lift.Lift;
+import robot.deepspace.lift.MoveLift;
 
 /** Main robot class for deep space 2019
  * 

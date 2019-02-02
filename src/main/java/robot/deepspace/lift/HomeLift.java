@@ -1,4 +1,4 @@
-package robot.deepspace;
+package robot.deepspace.lift;
 
 import edu.wpi.first.wpilibj.command.Command;
 

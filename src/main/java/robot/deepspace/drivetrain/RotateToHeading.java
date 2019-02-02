@@ -1,4 +1,4 @@
-package robot.deepspace;
+package robot.deepspace.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 

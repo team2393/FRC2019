@@ -1,4 +1,4 @@
-package robot.deepspace;
+package robot.deepspace.grabber;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
 
