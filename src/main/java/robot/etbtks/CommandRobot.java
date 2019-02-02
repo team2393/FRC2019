@@ -23,7 +23,7 @@ import robot.parts.PDPController;
  *  Read gyro
  *  Commands to hold heading
  *  Use Commands
- *  NOT TODO beep
+ *  NOT TO DO beep
  *  @author Anna
  */
 @SuppressWarnings("all")
@@ -50,7 +50,7 @@ public class CommandRobot extends BasicRobot
 	{
 		left.setInverted(true);
 		right.setInverted(false);
-		// TODO it's about 10 cm per 190 pulses/ticks, but need to measure
+		// It's about 10 cm per 190 pulses/ticks, but need to measure
 		encoder.setDistancePerPulse(100.0/190.0);
 		
 		moves.addSequential(new MoveAndTurnCommand(0, 300, encoder, gyro, drive));
