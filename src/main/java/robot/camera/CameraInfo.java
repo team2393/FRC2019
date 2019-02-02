@@ -15,6 +15,9 @@ public class CameraInfo
 	 */
     public static boolean show(final UsbCamera camera)
     {
+		// Another option to check for camera:
+		// if (! new File("/dev/video0").exists())
+		//    return false;	
 		try
 		{
 			final VideoMode[] modes = camera.enumerateVideoModes();
