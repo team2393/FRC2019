@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
 import robot.camera.CameraHandler;
+import robot.camera.CameraInfo;
 import robot.camera.MarkerDetector;
 
 /** Main robot class for deep space 2019
@@ -74,8 +75,10 @@ public class DeepspaceRobot extends BasicRobot
     public void robotInit()
     {
         super.robotInit();
-		camera = new CameraHandler(320, 240, 10, new MarkerDetector());
 
+        if (CameraInfo.haveCamera())
+            camera = new CameraHandler(320, 240, 10, new MarkerDetector());
+        
         // Fill command groups =======================================
         // Auto moves
         auto_demo.addSequential(new ResetDrivetrain(drivetrain));
