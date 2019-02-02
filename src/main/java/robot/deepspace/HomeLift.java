@@ -30,4 +30,11 @@ public class HomeLift extends Command
     {
         return done;
     }
+
+    @Override
+    protected void end() 
+    {
+        // Stop movement
+        lift.drive(0);
+    }
 }

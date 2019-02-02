@@ -42,4 +42,11 @@ public class MoveLift extends Command
     {
         return false;
     }
+
+    @Override
+    protected void end() 
+    {
+        // Stop movement
+        lift.drive(0);
+    }
 }
