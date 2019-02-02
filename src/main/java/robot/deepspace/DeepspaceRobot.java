@@ -190,6 +190,21 @@ public class DeepspaceRobot extends BasicRobot
     @Override
     public void teleopPeriodic()
     {
+        // Toggle between plain drive
+        // and heading-hold mode
+        if (OI.isToggleHeadingholdPressed())
+        {
+            if (joydrive.isRunning())
+            {
+                joydrive.cancel();
+                hhdrive.start();
+            }
+            else
+            {
+                hhdrive.cancel();
+                joydrive.start();
+            }
+        }
     }
 
     @Override

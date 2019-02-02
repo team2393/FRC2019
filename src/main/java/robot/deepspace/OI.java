@@ -16,7 +16,12 @@ public class OI
     private static final Joystick buttonboard = new Joystick(1);
     
     public static final Button gearshift = new JoystickButton(joystick, PDPController.RIGHT_FRONT_BUTTON);
-    public static final Button togglegrabber = new JoystickButton(joystick, PDPController.A_BUTTON);
+    public static final boolean isToggleHeadingholdPressed()
+    {
+        return joystick.getRawButtonPressed(PDPController.A_BUTTON);
+    }
+    
+    public static final Button togglegrabber = new JoystickButton(joystick, PDPController.LEFT_FRONT_BUTTON);
 
     public static final Button set_lift_home = new JoystickButton(joystick, PDPController.LEFT_TOP_BUTTON);
     public static final Button set_lift_low = new JoystickButton(joystick, PDPController.X_BUTTON);
@@ -32,7 +37,10 @@ public class OI
 
     public static final double getTurn() 
     {
-        return square (joystick.getRawAxis(PDPController.RIGHT_STICK_HORIZONTAL));
+        // Full turn speed tends to be too much
+        // TODO Have a button that toggles between full turn speed
+        //      and reduced speed?
+        return square (0.5 * joystick.getRawAxis(PDPController.RIGHT_STICK_HORIZONTAL));
     }
 
     // sqare velae to be mor sensitive around 0

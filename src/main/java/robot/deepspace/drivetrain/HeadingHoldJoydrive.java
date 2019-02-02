@@ -26,6 +26,12 @@ public class HeadingHoldJoydrive extends Command
     protected void execute()
     {
         drivetrain.setSpeed(OI.getSpeed());
+
+        // Allow slow adjustment of PID setpoint
+        // via left/right joystick axis
+        double turn = OI.getTurn();
+        if (Math.abs(turn) > 0.03)
+            heading += turn;
         drivetrain.setHeading(heading);
     }
 

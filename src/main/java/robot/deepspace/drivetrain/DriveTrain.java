@@ -129,7 +129,7 @@ public class DriveTrain extends Subsystem
                 return getHeading();
             }        
         };
-        heading_pid = new PIDController(0.02, 0, 0, heading_source, this::setRotation);
+        heading_pid = new PIDController(0.03, 0.0005, 0, heading_source, this::setRotation);
         SmartDashboard.putData("Heading PID", heading_pid);
     }
 
@@ -215,7 +215,10 @@ public class DriveTrain extends Subsystem
         {
             heading_pid.setSetpoint(degrees);
             if (! heading_pid.isEnabled())
+            {
+                heading_pid.reset();
                 heading_pid.setEnabled(true);
+            }
         }
     }
 
