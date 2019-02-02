@@ -108,7 +108,11 @@ public class DriveTrain extends Subsystem
         // Create PID controller for heading,
         // controlling rotation based on gyro
         // Create PID controller for position,
-        // controlling speed based on encoder
+        // controlling speed based on encoder.
+        // In principle this could use the 'continuous' mode
+        // so 350 degrees + 10 = 0 degrees, wrapping at 360 degrees.
+        // But gyro keeps going up/down across the 0 and 360 range,
+        // so stay with range used by gyro.
         PIDSource heading_source = new PIDSource()
         {
             @Override
@@ -129,17 +133,9 @@ public class DriveTrain extends Subsystem
                 return getHeading();
             }        
         };
-        heading_pid = new PIDController(0.02, 0.0005, 0.01, heading_source,
-           output ->
-        { 
-            final double heading_pid_limit = 0.4;
-            if (output > heading_pid_limit)
-                setRotation(heading_pid_limit);
-            else if (output < -heading_pid_limit)
-              setRotation(-heading_pid_limit);
-            else
-                setRotation(output);
-        });
+        heading_pid = new PIDController(0.02, 0.0005, 0.01, heading_source, this::setRotation);
+        // Limit output, otherwise robot is too agressive
+        heading_pid.setOutputRange(-0.4, 0.4);
         SmartDashboard.putData("Heading PID", heading_pid);
     }
 
