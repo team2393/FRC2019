@@ -3,6 +3,8 @@ package robot.deepspace;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.WaitCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
 import robot.camera.CameraHandler;
@@ -42,6 +44,7 @@ import robot.deepspace.lift.MoveLift;
  * 
  *  Disk grabber: 1 solenoid to hold/release disk, button to toggle
  *  -> Commands open/close? Automatically close when disk is detected?
+ *  TODO Motors to pull ball/cargo in, sensor to detect it, button to push cargo back out
  * 
  *  TODO Documentation: PPT for OI, vision, ..
  *
@@ -50,7 +53,7 @@ import robot.deepspace.lift.MoveLift;
  *  Use PIDCommand or PIDSubsystem.
  *  Check https://frc-pdr.readthedocs.io/en/latest/control/using_WPILIB's_pid_controller.html#adding-ramping-for-motors
  *
- *  Gearbox Shifter: 1 or 2 Solenoids, button to shift high <-> low, indicate current gear on dashboard
+ *  Gearbox Shifter: Solenoid, button to shift high <-> low, indicate current gear on dashboard
  * 
  *  Prepare autonomous moves from N start positions to M initial disk placements.
  *  Maybe leave last leg of route to driver, using vision, but get them close. 
@@ -75,7 +78,6 @@ public class DeepspaceRobot extends BasicRobot
     private final Command toggle_gear = new ToggleGear(drivetrain);
     private final Command joydrive = new Joydrive(drivetrain);
     private final Command hhdrive = new HeadingHoldJoydrive(drivetrain);
-    private final CommandGroup auto_demo = new CommandGroup();
 
     // .. Lift
     private final Command home_lift = new HomeLift(lift);
@@ -89,6 +91,9 @@ public class DeepspaceRobot extends BasicRobot
     private final CommandGroup get_hatch = new CommandGroup();
     private final CommandGroup release_hatch = new CommandGroup();
 
+    // What to start in autonomous mode
+    private final SendableChooser<Command> auto_options = new SendableChooser<>();
+
     @Override
     public void robotInit()
     {
@@ -96,15 +101,8 @@ public class DeepspaceRobot extends BasicRobot
 
         if (CameraInfo.haveCamera())
             camera = new CameraHandler(320, 240, 10, new MarkerDetector());
-        
+
         // Fill command groups =======================================
-        // Auto moves
-        auto_demo.addSequential(new ResetDrivetrain(drivetrain));
-        auto_demo.addSequential(new MoveToPosition(drivetrain, 3*12));
-        auto_demo.addSequential(new RotateToHeading(drivetrain, 90));
-        auto_demo.addSequential(new MoveToPosition(drivetrain, 4*12));
-        auto_demo.addSequential(new RotateToHeading(drivetrain, 180));
-        auto_demo.addSequential(new MoveToPosition(drivetrain, 7*12));
 
         // Get hatch panel
         // TODO Maybe start by moving lift to loading station height
@@ -123,6 +121,9 @@ public class DeepspaceRobot extends BasicRobot
         release_hatch.addSequential(new Extend(grabber));
         // release_hatch.addSequential(new OpenGrabber(grabber));
 
+        // Auto moves
+        createAutoMoves();
+
         // Bind Buttons to commands ..
         OI.gearshift.whenPressed(toggle_gear);
         OI.togglegrabber.whenPressed(toggle_grabber);
@@ -132,11 +133,10 @@ public class DeepspaceRobot extends BasicRobot
         OI.set_lift_med.whenPressed(move_lift_middle);
         OI.set_lift_high.whenPressed(move_lift_high);
 
-        // .. or place them on dashboard
+        // .. and/or place them on dashboard
         SmartDashboard.putData("Drive", joydrive);
         SmartDashboard.putData("HH Drive", hhdrive);
         SmartDashboard.putData("Reset", reset);
-        SmartDashboard.putData("Auto Demo", auto_demo);
 
         SmartDashboard.putData("Home Lift", home_lift);
         SmartDashboard.putData("Drive Lift", drive_lift);
@@ -155,6 +155,23 @@ public class DeepspaceRobot extends BasicRobot
         // TODO Allow home_lift when disabled, and do that right now?
         // home_lift.setRunWhenDisabled(true);
         // home_lift.start();
+    }
+
+    /** Create auto moves */
+    private void createAutoMoves()
+    {
+        // Demo
+        final CommandGroup demo = new CommandGroup();
+        demo.addSequential(new ResetDrivetrain(drivetrain));
+        demo.addSequential(new MoveToPosition(drivetrain, 3*12));
+        demo.addSequential(new RotateToHeading(drivetrain, 90));
+        demo.addSequential(new MoveToPosition(drivetrain, 4*12));
+        demo.addSequential(new RotateToHeading(drivetrain, 180));
+        demo.addSequential(new MoveToPosition(drivetrain, 7*12));
+        auto_options.addOption("Demo", demo);
+
+        // Also allow "Nothing"
+        auto_options.addDefault("Nothing", new WaitCommand(0.1));
     }
 
     @Override
@@ -179,6 +196,9 @@ public class DeepspaceRobot extends BasicRobot
     public void autonomousInit()
     {
         super.autonomousInit();
+
+        // Start the selected option
+        auto_options.getSelected().start();
     }
 
     @Override
