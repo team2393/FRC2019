@@ -134,6 +134,8 @@ public class DeepspaceRobot extends BasicRobot
         OI.set_lift_high.whenPressed(move_lift_high);
 
         // .. and/or place them on dashboard
+        SmartDashboard.putData("Auto Options", auto_options);
+   
         SmartDashboard.putData("Drive", joydrive);
         SmartDashboard.putData("HH Drive", hhdrive);
         SmartDashboard.putData("Reset", reset);
@@ -161,14 +163,37 @@ public class DeepspaceRobot extends BasicRobot
     private void createAutoMoves()
     {
         // Demo
-        final CommandGroup demo = new CommandGroup();
+        CommandGroup demo = new CommandGroup();
         demo.addSequential(new ResetDrivetrain(drivetrain));
-        demo.addSequential(new MoveToPosition(drivetrain, 3*12));
+        
         demo.addSequential(new RotateToHeading(drivetrain, 90));
-        demo.addSequential(new MoveToPosition(drivetrain, 4*12));
+        demo.addSequential(new WaitCommand(3));
+        demo.addSequential(new RotateToHeading(drivetrain, 0));
+        demo.addSequential(new WaitCommand(3));
+        demo.addSequential(new RotateToHeading(drivetrain, 90));
+        demo.addSequential(new WaitCommand(3));
+        demo.addSequential(new RotateToHeading(drivetrain, 0));
+        demo.addSequential(new WaitCommand(3));
+        auto_options.addOption("0 90", demo);
+        
+        demo = new CommandGroup();
+        demo.addSequential(new ResetDrivetrain(drivetrain));
+        // demo.addSequential(new MoveToPosition(drivetrain, 4*12));
+        // demo.addSequential(new WaitCommand(3));
+        // demo.addSequential(new MoveToPosition(drivetrain, 6*12));
+        // demo.addSequential(new WaitCommand(3));
+        // demo.addSequential(new MoveToPosition(drivetrain, 4*12));
+        // demo.addSequential(new WaitCommand(3));
+        // demo.addSequential(new MoveToPosition(drivetrain, 0));
+
+        demo.addSequential(new RotateToHeading(drivetrain, 90));
+        demo.addSequential(new MoveToPosition(drivetrain, 6*12));
         demo.addSequential(new RotateToHeading(drivetrain, 180));
-        demo.addSequential(new MoveToPosition(drivetrain, 7*12));
-        auto_options.addOption("Demo", demo);
+        demo.addSequential(new MoveToPosition(drivetrain, 10*12));
+        demo.addSequential(new RotateToHeading(drivetrain, 270));
+        demo.addSequential(new MoveToPosition(drivetrain, 12*12));
+        demo.addSequential(new RotateToHeading(drivetrain, 360));
+        auto_options.addOption("Circle", demo);
 
         // Also allow "Nothing"
         auto_options.setDefaultOption("Nothing", new WaitCommand(0.1));
@@ -220,9 +245,9 @@ public class DeepspaceRobot extends BasicRobot
     public void autonomousPeriodic()
     {
         // Test drive PID
-        if ((System.currentTimeMillis() / 5000) % 2 == 1)
-            drivetrain.setPosition(2*409.6);
-        else
-            drivetrain.setPosition(0);
+        // if ((System.currentTimeMillis() / 5000) % 2 == 1)
+        //     drivetrain.setPosition(24);
+        // else
+        //     drivetrain.setPosition(0);
     }
 }

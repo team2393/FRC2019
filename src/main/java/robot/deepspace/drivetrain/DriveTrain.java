@@ -102,7 +102,7 @@ public class DriveTrain extends Subsystem
                 return getPosition();
             }        
         };
-        position_pid = new PIDController(5e-5, 3e-6, 0, pos_source, this::setSpeed);
+        position_pid = new PIDController(0.02, 1e-5, 0, pos_source, this::setSpeed);
         SmartDashboard.putData("Pos. PID", position_pid);
 
         // Create PID controller for heading,
@@ -129,7 +129,17 @@ public class DriveTrain extends Subsystem
                 return getHeading();
             }        
         };
-        heading_pid = new PIDController(0.03, 0.0005, 0, heading_source, this::setRotation);
+        heading_pid = new PIDController(0.02, 0.0005, 0.01, heading_source,
+           output ->
+        { 
+            final double heading_pid_limit = 0.4;
+            if (output > heading_pid_limit)
+                setRotation(heading_pid_limit);
+            else if (output < -heading_pid_limit)
+              setRotation(-heading_pid_limit);
+            else
+                setRotation(output);
+        });
         SmartDashboard.putData("Heading PID", heading_pid);
     }
 

@@ -7,6 +7,7 @@ public class RotateToHeading extends Command
 {
     private final DriveTrain drivetrain;
     private final double degrees;
+    private long ms_since_ok = 0;
 
     public RotateToHeading(final DriveTrain drivetrain, final double degrees)
     {
@@ -24,9 +25,21 @@ public class RotateToHeading extends Command
     @Override
     protected boolean isFinished()
     {
-        // Stop when we're close enough to desired heading
+        // Close enough to desired heading?
         final double close_enough = 2;
-        return Math.abs(drivetrain.getHeading() - degrees)  <  close_enough;
+        if (Math.abs(drivetrain.getHeading() - degrees)  <  close_enough)
+        {
+            // How long have we been at the desired heading?
+            final long now = System.currentTimeMillis();
+            if (ms_since_ok == 0)
+                ms_since_ok = now;
+            else
+                if (now > ms_since_ok + 1000)
+                    return true;
+        }
+        else
+            ms_since_ok = 0;
+        return false;
     }
 
     @Override
