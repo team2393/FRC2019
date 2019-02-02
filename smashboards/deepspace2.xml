@@ -1,92 +1,104 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="Lift High" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="160" y="347"/>
+	</widget>
+	<widget field="Reset" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="160" y="288"/>
+	</widget>
+	<widget field="HH Drive" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="160" y="318"/>
+	</widget>
+	<widget field="Lift Middle" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="160" y="375"/>
+	</widget>
+	<widget field="Lift Low" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="161" y="407"/>
+	</widget>
+	<widget field="Drive" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="160" y="464"/>
+	</widget>
+	<widget field="Home Lift" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="160" y="435"/>
+	</widget>
+	<widget field="Release Hatch" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="161" y="492"/>
+	</widget>
+	<widget field="Heading PID" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+		<location x="189" y="32"/>
+	</widget>
+	<widget field="Auto Demo" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="178" y="-1"/>
+	</widget>
+	<widget field="Drive Lift" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="484"/>
+	</widget>
+	<widget field="Get Hatch" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="450"/>
+	</widget>
+	<widget field="Pos. PID" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+		<location x="0" y="294"/>
+	</widget>
+	<widget field="Gear" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="273"/>
+	</widget>
+	<widget field="Low Pos" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="252"/>
+	</widget>
+	<widget field="Position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="231"/>
+	</widget>
+	<widget field="Length Threshold" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="210"/>
+	</widget>
+	<widget field="Saturation" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="189"/>
+	</widget>
+	<widget field="Luminance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="168"/>
+	</widget>
+	<widget field="Heading" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="147"/>
+	</widget>
+	<widget field="Hi Pos" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="126"/>
+	</widget>
+	<widget field="Mid Pos" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="105"/>
+	</widget>
+	<widget field="Grabber Extended" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="84"/>
+	</widget>
+	<widget field="Hue" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="63"/>
+	</widget>
+	<widget field="Angle Width" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="42"/>
+	</widget>
+	<widget field="Grabber Is Open" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="21"/>
+	</widget>
+	<widget field="Hue Width" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="0"/>
+	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
-		<location x="312" y="108"/>
-		<width>556</width>
-		<height>415</height>
+		<location x="382" y="13"/>
+		<width>679</width>
+		<height>523</height>
 		<property name="Camera Choice" value="Processed"/>
 	</static-widget>
 	<widget field="Lift Height" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="128" y="278"/>
-		<width>160</width>
-		<height>20</height>
+		<location x="184" y="208"/>
+		<width>184</width>
+		<height>21</height>
 	</widget>
 	<widget field="Lift Pos Error" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="10" y="338"/>
-		<width>278</width>
+		<location x="182" y="256"/>
+		<width>186</width>
 	</widget>
 	<widget field="Lift Position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="135" y="246"/>
-	</widget>
-	<widget field="Lift High" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="9" y="144"/>
-	</widget>
-	<widget field="Lift Middle" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="-1" y="176"/>
-	</widget>
-	<widget field="Lift Low" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="11" y="208"/>
-	</widget>
-	<widget field="Drive Lift" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="5" y="272"/>
-	</widget>
-	<widget field="Home Lift" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="3" y="240"/>
-	</widget>
-	<widget field="Angle Width" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="901" y="140"/>
-	</widget>
-	<widget field="Length Threshold" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="875" y="236"/>
-	</widget>
-	<widget field="Luminance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="907" y="268"/>
-	</widget>
-	<widget field="Saturation" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="909" y="300"/>
-		<height>20</height>
-	</widget>
-	<widget field="Hue Width" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="909" y="172"/>
-	</widget>
-	<widget field="Hue" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="941" y="204"/>
-	</widget>
-	<widget field="Hi Pos" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="144" y="150"/>
-		<width>144</width>
-		<height>20</height>
-	</widget>
-	<widget field="Mid Pos" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="137" y="184"/>
-		<width>150</width>
-	</widget>
-	<widget field="Low Pos" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="135" y="214"/>
-		<width>152</width>
-	</widget>
-	<widget field="Position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="155" y="310"/>
-		<width>133</width>
-	</widget>
-	<widget field="Heading" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="11" y="311"/>
-	</widget>
-	<widget field="Drive" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="157" y="68"/>
-	</widget>
-	<widget field="Release Hatch" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="27" y="448"/>
-	</widget>
-	<widget field="Get Hatch" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="48" y="415"/>
-	</widget>
-	<widget field="Gear" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="185" y="422"/>
-	</widget>
-	<widget field="Grabber Is Open" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="486"/>
-		<width>171</width>
+		<location x="183" y="233"/>
+		<width>185</width>
 	</widget>
 </dashboard>
 <live-window>
