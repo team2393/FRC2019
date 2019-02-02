@@ -22,7 +22,7 @@ import robot.deepspace.RobotMap;
 public class DriveTrain extends Subsystem
 {
     // Support units 
-    private final static double COUNTS_PER_INCH = 10;
+    private final static double COUNTS_PER_INCH = 10 * 3122.0/ 144.0;
     private final WPI_TalonSRX left = new WPI_TalonSRX(RobotMap.LEFT_MOTOR_FRONT);
     private final WPI_TalonSRX left_slave = new WPI_TalonSRX(RobotMap.LEFT_MOTOR_BACK);
 
@@ -55,7 +55,7 @@ public class DriveTrain extends Subsystem
         left_slave.setInverted(false);
         right_slave.setInverted(false);
 
-        left.setSensorPhase(false);
+        left.setSensorPhase(true);
         right.setSensorPhase(false);
 
         // Coast or break when speed is set to 0.0?
@@ -171,8 +171,9 @@ public class DriveTrain extends Subsystem
     /** @return position Position in inches */ 
     public double getPosition()
     {
-        // TODO Get average with right encoder
-        final int position = left.getSelectedSensorPosition();
+        // Get average with right encoder
+        final int position = (left.getSelectedSensorPosition() +
+                              right.getSelectedSensorPosition()) / 2;
         return position / COUNTS_PER_INCH;
     }
 
@@ -226,6 +227,10 @@ public class DriveTrain extends Subsystem
     public void periodic()
     {
         drive.arcadeDrive(speed, rotation, false);
+
+        SmartDashboard.putNumber("Left Encoder", left.getSelectedSensorPosition());
+        SmartDashboard.putNumber("RightEncoder", right.getSelectedSensorPosition());
+
         SmartDashboard.putNumber("Position", getPosition());
         SmartDashboard.putNumber("Heading", getHeading());
     }
