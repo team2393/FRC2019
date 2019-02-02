@@ -78,7 +78,7 @@ public class Lift extends Subsystem
     }
 
     /** @param position Desired position in encoder counts */
-    public void setposition(final double position)
+    public void setPosition(final double position)
     {
         // To Tune PID, use
         // motor.set(ControlMode.Position, position);
@@ -90,8 +90,8 @@ public class Lift extends Subsystem
     }
 
     /** @param inches Desired position */
-    public void setheight(final double inches)
+    public void setHeight(final double inches)
     {
-         setposition(inches * COUNTS_PER_INCH);
+         setPosition(inches * COUNTS_PER_INCH);
     }
 }

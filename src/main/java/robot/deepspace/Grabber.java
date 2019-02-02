@@ -25,6 +25,7 @@ public class Grabber
     public Grabber() 
     {
         open(false);
+        extend(false);
     }
 
     public boolean isOpen()
@@ -33,24 +34,25 @@ public class Grabber
     }
 
     /** Open/close
-     *  @param is_open true to open, false to close
+     *  @param should_open true to open, false to close
      */
-    public void open(final boolean is_open)
+    public void open(final boolean should_open)
     {
-        grabber.set(is_open);
-
-        SmartDashboard.putBoolean("Grabber Is Open", isOpen());
+        grabber.set(should_open);
+        SmartDashboard.putBoolean("Grabber Is Open", should_open);
     }
 
     /** @param do_extend true to extend, false to pull in */
     public void extend(final boolean do_extend)
     {
         extender.set(do_extend);
+        SmartDashboard.putBoolean("Grabber Extended", do_extend);
     }
 
     /** @return true when hatch detected */
     public boolean isHatchDetected()
     {
+        // TODO Maybe this needs to return ! ... to invert
         return hatch_sensor.get();
     }
 }

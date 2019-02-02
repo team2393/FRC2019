@@ -2,7 +2,7 @@ package robot.deepspace;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
 
-/** Command to open grabber */
+/** Command to toggle grabber open/close */
 public class ToggleGrabber extends InstantCommand
 {
     private final Grabber grabber;

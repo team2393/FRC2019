@@ -1,7 +1,6 @@
 package robot.deepspace;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.InstantCommand;
 
 /** Command to drive with joysick */
 public class Joydrive extends Command
@@ -31,6 +30,7 @@ public class Joydrive extends Command
     @Override
     protected void end()
     {
+        // When command is cancelled, stop the drivetrain
         drivetrain.setSpeed(0);
         drivetrain.setRotation(0);
     }

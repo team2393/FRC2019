@@ -3,7 +3,14 @@ package robot.deepspace;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/** Command to move lift to specific position */
+/** Command to move lift to specific position
+ * 
+ *  Publishes the requested position on dashboard
+ *  to allow adjustments in the field.
+ *  Such changes then need to be updated in the code,
+ *  because they are otherwise lost when the robot
+ *  is restarted.
+ */
 public class MoveLift extends Command
 {
     private final String name;
@@ -27,7 +34,7 @@ public class MoveLift extends Command
     @Override
     protected void execute()
     {
-        lift.setheight(SmartDashboard.getNumber(name, height));
+        lift.setHeight(SmartDashboard.getNumber(name, height));
     }
 
     @Override

@@ -24,10 +24,7 @@ import robot.camera.MarkerDetector;
  *  Disk grabber: 1 solenoid to hold/release disk, button to toggle
  *  -> Commands open/close? Automatically close when disk is detected?
  * 
- *  TODO: Implement initial version
- * 
- * 
- *  Documentation: PPT for OI, vision, ..
+ *  TODO Documentation: PPT for OI, vision, ..
  *
  *  Drive motors: Left and right, 2 Talons each side, one follows the other, 1 encoder per side, gyro
  *  -> Need to program PID for movement with gyro to keep heading for autonomous moves.
@@ -39,7 +36,7 @@ import robot.camera.MarkerDetector;
  *  Prepare autonomous moves from N start positions to M initial disk placements.
  *  Maybe leave last leg of route to driver, using vision, but get them close. 
  *
- *  Push-up mechanism: 1 solenoid for 2 front cylinders, 1 solenoid for back cylinder, 1 drive motor controller.
+ *  TODO Push-up mechanism: 1 solenoid for 2 front cylinders, 1 solenoid for back cylinder, 1 drive motor controller.
  *  Idea:
  *  Push button to lower 2 front and 1 back cylinder,
  *  and now bottom drive will move with other wheels forward/backward.
@@ -55,16 +52,21 @@ public class DeepspaceRobot extends BasicRobot
     private Grabber grabber = new Grabber();
 
     // Commands for drivetrain
+    private final Command reset = new ResetDrivetrain(drivetrain);
     private final Command toggle_gear = new ToggleGear(drivetrain);
     private final Command joydrive = new Joydrive(drivetrain);
+    private final Command hhdrive = new HeadingHoldJoydrive(drivetrain);
+    private final CommandGroup auto_demo = new CommandGroup();
+
     // .. Lift
     private final Command home_lift = new HomeLift(lift);
     private final Command drive_lift = new DriveLift(lift);
     private final Command move_lift_low = new MoveLift("Low Pos", lift, 15.5);
     private final Command move_lift_middle = new MoveLift("Mid Pos", lift, 30.0);
     private final Command move_lift_high = new MoveLift("Hi Pos", lift, 75.0);
-    // // .. Grabber
-    private final Command toggle = new ToggleGrabber(grabber);
+
+    // .. Grabber
+    private final Command toggle_grabber = new ToggleGrabber(grabber);
     private final CommandGroup get_hatch = new CommandGroup();
     private final CommandGroup release_hatch = new CommandGroup();
 
@@ -74,15 +76,36 @@ public class DeepspaceRobot extends BasicRobot
         super.robotInit();
 		camera = new CameraHandler(320, 240, 10, new MarkerDetector());
 
-        // // Fill command groups
+        // Fill command groups =======================================
+        // Auto moves
+        auto_demo.addSequential(new ResetDrivetrain(drivetrain));
+        auto_demo.addSequential(new MoveToPosition(drivetrain, 3*12));
+        auto_demo.addSequential(new RotateToHeading(drivetrain, 90));
+        auto_demo.addSequential(new MoveToPosition(drivetrain, 4*12));
+        auto_demo.addSequential(new RotateToHeading(drivetrain, 180));
+        auto_demo.addSequential(new MoveToPosition(drivetrain, 7*12));
+
+        // Get hatch panel
+        // TODO Maybe start by moving lift to loading station height
+        // get_hatch.addSequential(new MoveLift("Loading Station Pos", lift, 15.5));
+        get_hatch.addSequential(new Retract(grabber));
         get_hatch.addSequential(new OpenGrabber(grabber));
         get_hatch.addSequential(new WaitForHatch(grabber));
         get_hatch.addSequential(new CloseGrabber(grabber));
+        // TODO Maybe add command to lift the hatch panel
+        // off the lower brush in the loading station
+        // get_hatch.addSequential(new MoveLift("Loading Station Get Out", lift, 18));
+        // Then drivers need to move robot away from loading station,
+        // to spaceship or rocket, and push low/mid/high position buttons.
 
+        // Release hatch panel
         release_hatch.addSequential(new Extend(grabber));
+        // release_hatch.addSequential(new OpenGrabber(grabber));
 
-        // // Bind Buttons to commands ..
+        // Bind Buttons to commands ..
         OI.gearshift.whenPressed(toggle_gear);
+        OI.togglegrabber.whenPressed(toggle_grabber);
+
         OI.set_lift_home.whenPressed(home_lift);
         OI.set_lift_low.whenPressed(move_lift_low);
         OI.set_lift_med.whenPressed(move_lift_middle);
@@ -90,6 +113,9 @@ public class DeepspaceRobot extends BasicRobot
 
         // .. or place them on dashboard
         SmartDashboard.putData("Drive", joydrive);
+        SmartDashboard.putData("HH Drive", hhdrive);
+        SmartDashboard.putData("Reset", reset);
+        SmartDashboard.putData("Auto Demo", auto_demo);
 
         SmartDashboard.putData("Home Lift", home_lift);
         SmartDashboard.putData("Drive Lift", drive_lift);
@@ -99,6 +125,15 @@ public class DeepspaceRobot extends BasicRobot
 
         SmartDashboard.putData("Get Hatch", get_hatch);
         SmartDashboard.putData("Release Hatch", release_hatch);
+
+        // Allow "Reset" even when not in teleop or periodic
+        reset.setRunWhenDisabled(true);
+        // .. and in fact do it right now
+        reset.start();
+
+        // TODO Allow home_lift when disabled, and do that right now?
+        // home_lift.setRunWhenDisabled(true);
+        // home_lift.start();
     }
 
     @Override
@@ -117,8 +152,6 @@ public class DeepspaceRobot extends BasicRobot
     @Override
     public void teleopPeriodic()
     {
-        if (OI.isGrabberToggled())
-            toggle.start();
     }
 
     @Override
@@ -130,5 +163,10 @@ public class DeepspaceRobot extends BasicRobot
     @Override
     public void autonomousPeriodic()
     {
+        // Test drive PID
+        if ((System.currentTimeMillis() / 5000) % 2 == 1)
+            drivetrain.setPosition(2*409.6);
+        else
+            drivetrain.setPosition(0);
     }
 }

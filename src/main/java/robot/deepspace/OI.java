@@ -15,25 +15,18 @@ public class OI
     
     private static final Joystick buttonboard = new Joystick(1);
     
-    public static final Button gearshift = new JoystickButton(joystick, PDPController.LEFT_FRONT_BUTTON);
+    public static final Button gearshift = new JoystickButton(joystick, PDPController.RIGHT_FRONT_BUTTON);
+    public static final Button togglegrabber = new JoystickButton(joystick, PDPController.A_BUTTON);
 
     public static final Button set_lift_home = new JoystickButton(joystick, PDPController.LEFT_TOP_BUTTON);
-
     public static final Button set_lift_low = new JoystickButton(joystick, PDPController.X_BUTTON);
-
     public static final Button set_lift_med = new JoystickButton(joystick, PDPController.Y_BUTTON);
-
     public static final Button set_lift_high = new JoystickButton(joystick, PDPController.B_BUTTON);
-
-    public static boolean isGrabberToggled()
-    {
-        return joystick.getRawButtonPressed(PDPController.A_BUTTON);
-        //return buttonboard.getRawButtonPressed(1);
-    }
 
     public static final double getSpeed()
     {
-        double raw = joystick.getRawAxis(PDPController.LEFT_STICK_VERTICAL);
+        final double raw = joystick.getRawAxis(PDPController.LEFT_STICK_VERTICAL);
+        // "Forward" should be positive
         return -square(raw);
     }
 
@@ -54,6 +47,7 @@ public class OI
 
     public static final double getLiftUpDown()
     {
+        // "Up" should be positive
         return -joystick.getRawAxis(PDPController.RIGHT_STICK_VERTICAL);
     }
 }
