@@ -90,7 +90,7 @@ public class DeepspaceRobot extends BasicRobot
 
         // Get hatch panel
         // TODO Maybe start by moving lift to loading station height
-        // get_hatch.addSequential(new MoveLift("Loading Station Pos", lift, 15.5));
+        // get_hatch.addSequential(new StartCommand(move_lift_low));
         get_hatch.addSequential(new Retract(grabber));
         get_hatch.addSequential(new OpenGrabber(grabber));
         get_hatch.addSequential(new WaitForHatch(grabber));
