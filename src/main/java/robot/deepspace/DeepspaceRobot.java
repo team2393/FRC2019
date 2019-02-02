@@ -171,7 +171,7 @@ public class DeepspaceRobot extends BasicRobot
         auto_options.addOption("Demo", demo);
 
         // Also allow "Nothing"
-        auto_options.addDefault("Nothing", new WaitCommand(0.1));
+        auto_options.setDefaultOption("Nothing", new WaitCommand(0.1));
     }
 
     @Override
