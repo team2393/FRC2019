@@ -106,9 +106,7 @@ public class DriveTrain extends Subsystem
         SmartDashboard.putData("Pos. PID", position_pid);
 
         // Create PID controller for heading,
-        // controlling rotation based on gyro
-        // Create PID controller for position,
-        // controlling speed based on encoder.
+        // controlling rotation based on gyro.
         // In principle this could use the 'continuous' mode
         // so 350 degrees + 10 = 0 degrees, wrapping at 360 degrees.
         // But gyro keeps going up/down across the 0 and 360 range,
@@ -202,6 +200,12 @@ public class DriveTrain extends Subsystem
         return gyro.getAngle();
     }
 
+    /** @return Current turn rate in degrees per second */
+    public double getTurnRate()
+    {
+        return gyro.getRate();
+    }
+
     /** Set desired angle for PID control of heading
      *  or NaN to disable heading PID.
      * 
@@ -236,8 +240,8 @@ public class DriveTrain extends Subsystem
 
         SmartDashboard.putNumber("Left Encoder", left.getSelectedSensorPosition());
         SmartDashboard.putNumber("RightEncoder", right.getSelectedSensorPosition());
-
         SmartDashboard.putNumber("Position", getPosition());
         SmartDashboard.putNumber("Heading", getHeading());
+        SmartDashboard.putNumber("Turn Rate", getTurnRate());
     }
 }

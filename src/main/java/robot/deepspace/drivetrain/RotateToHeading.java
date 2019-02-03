@@ -36,6 +36,7 @@ public class RotateToHeading extends Command
         // TODO Could also use a combination of
         //      gyro.getAngle()     - close to desired position, as done now
         //      and gyro.getRate()  - still turning??
+        // drivetrain.getTurnRate()
         return check.isFinished(degrees, drivetrain.getHeading());
     }
 
