@@ -23,6 +23,11 @@ public class RobotMap
     
     public static  Gyro gyro = new ADXRS450_Gyro();
 
+    public RobotMap()
+    {
+        drive.setRightSideInverted(false);
+    }
+
     /** Print info about all the connections */
     public static void describe()
     {

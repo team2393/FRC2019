@@ -90,6 +90,7 @@ public class Robot extends BasicRobot
     public void robotPeriodic()
     {
         Scheduler.getInstance().run();
+        SmartDashboard.putNumber("Gyro", RobotMap.gyro.getAngle());
     }
 
     @Override

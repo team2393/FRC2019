@@ -20,7 +20,7 @@ public class HoldHeadingPID2 extends PIDCommand
 
     public HoldHeadingPID2(DriveSubsystem drive_subsys, Gyro gyro)
     {
-        super(0.01, 0.003, 0.001);
+        super(0.017, 0.00, 0.07);
         this.drive_subsys = drive_subsys;
         this.gyro = gyro;
 

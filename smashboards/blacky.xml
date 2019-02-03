@@ -1,0 +1,86 @@
+<xml version="1.0">
+<dashboard>
+	<widget field="Gyro" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.LinePlot">
+		<location x="462" y="14"/>
+	</widget>
+	<widget field="Left" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="136" y="89"/>
+	</widget>
+	<widget field="POV Heading" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="252" y="68"/>
+	</widget>
+	<widget field="Jog" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="121" y="55"/>
+	</widget>
+	<widget field="Hold Heading PID" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="252" y="34"/>
+	</widget>
+	<widget field="Hold Heading" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="252" y="0"/>
+	</widget>
+	<widget field="Rock'n'Roll" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="121" y="21"/>
+	</widget>
+	<widget field="PIDController[1]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+		<location x="170" y="126"/>
+	</widget>
+	<widget field="Forward" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="338" y="133"/>
+	</widget>
+	<widget field="Auto Options" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="0" y="228"/>
+	</widget>
+	<widget field="Hold Heading PID2" type="PIDCommand" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="194"/>
+	</widget>
+	<widget field="Wiggle" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="160"/>
+	</widget>
+	<widget field="Joystick" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="126"/>
+	</widget>
+	<widget field="rotation" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="105"/>
+	</widget>
+	<widget field="P" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="84"/>
+	</widget>
+	<widget field="error" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="63"/>
+	</widget>
+	<widget field="I" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="42"/>
+	</widget>
+	<widget field="Imax" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="21"/>
+	</widget>
+	<widget field="speed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="0"/>
+	</widget>
+</dashboard>
+<live-window>
+	<widget field="DriveSubsystem" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="0" y="0"/>
+	</widget>
+	<widget field="Ungrouped" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<widget field="DigitalOutput[9]" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
+			<location x="0" y="0"/>
+			<height>0</height>
+			<width>0</width>
+		</widget>
+		<widget field="DigitalOutput[9]" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
+			<location x="0" y="0"/>
+			<height>0</height>
+			<width>0</width>
+		</widget>
+		<widget field="ADXRS450_Gyro[0]" type="Gyro" class="edu.wpi.first.smartdashboard.gui.elements.Compass">
+			<location x="6" y="16"/>
+			<height>150</height>
+			<width>250</width>
+		</widget>
+		<location x="13" y="20"/>
+		<width>262</width>
+		<height>172</height>
+	</widget>
+</live-window>
+</xml>
