@@ -14,6 +14,7 @@ public class RotateToHeading extends Command
     {
         this.drivetrain = drivetrain;
         this.degrees = degrees;
+        setTimeout(10.0);
         requires(drivetrain);
     }
 
@@ -32,6 +33,9 @@ public class RotateToHeading extends Command
     @Override
     protected boolean isFinished()
     {
+        // Give up after timeout
+        if (isTimedOut())
+            return true;
         // Close enough to desired heading?
         // TODO Could also use a combination of
         //      gyro.getAngle()     - close to desired position, as done now
