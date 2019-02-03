@@ -131,7 +131,11 @@ public class DriveTrain extends Subsystem
                 return getHeading();
             }        
         };
+        // TODO Control heading via P gain, but limit output dampen
         heading_pid = new PIDController(0.02, 0.0005, 0.01, heading_source, this::setRotation);
+        // TODO Try continuous mode?
+        // heading_pid.setInputRange(-180, 180);
+        // heading_pid.setContinuous();
         // Limit output, otherwise robot is too agressive
         heading_pid.setOutputRange(-0.4, 0.4);
         SmartDashboard.putData("Heading PID", heading_pid);
