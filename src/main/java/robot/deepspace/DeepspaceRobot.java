@@ -1,5 +1,6 @@
 package robot.deepspace;
 
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -67,6 +68,9 @@ import robot.deepspace.lift.MoveLift;
  */
 public class DeepspaceRobot extends BasicRobot
 {
+    // TODO Use PDP
+    // private final PowerDistributionPanel pdp = new PowerDistributionPanel();
+    
     // Components, subsystems
     private final DriveTrain drivetrain = new DriveTrain();
     private final Lift lift = new Lift();
@@ -205,6 +209,10 @@ public class DeepspaceRobot extends BasicRobot
     public void robotPeriodic()
     {
         Scheduler.getInstance().run();
+
+        // TODO Publish energy info
+        // SmartDashboard.putNumber("Current [A]", pdp.getTotalCurrent());
+        // SmartDashboard.putNumber("Capacity [Ws]", pdp.getTotalEnergy());
     }
 
     @Override
