@@ -33,6 +33,9 @@ public class RotateToHeading extends Command
     protected boolean isFinished()
     {
         // Close enough to desired heading?
+        // TODO Could also use a combination of
+        //      gyro.getAngle()     - close to desired position, as done now
+        //      and gyro.getRate()  - still turning??
         return check.isFinished(degrees, drivetrain.getHeading());
     }
 
