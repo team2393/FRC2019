@@ -20,6 +20,9 @@ It's an open-source project on GitHub where anybody can
 make suggestions and contributions,
 see https://github.com/wpilibsuite/allwpilib/issues/954
 
+In addition, we use the CTR Phoenix API to communicate
+with CAN devices, see separate CAN.md 
+
 ![Java Duke](duke.png)
 
 Git Clone & Open in VS Code
