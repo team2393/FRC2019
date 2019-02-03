@@ -165,35 +165,37 @@ public class DeepspaceRobot extends BasicRobot
         // Demo
         CommandGroup demo = new CommandGroup();
         demo.addSequential(new ResetDrivetrain(drivetrain));
-        
-        demo.addSequential(new RotateToHeading(drivetrain, 90));
-        demo.addSequential(new WaitCommand(3));
-        demo.addSequential(new RotateToHeading(drivetrain, 0));
-        demo.addSequential(new WaitCommand(3));
-        demo.addSequential(new RotateToHeading(drivetrain, 90));
-        demo.addSequential(new WaitCommand(3));
-        demo.addSequential(new RotateToHeading(drivetrain, 0));
-        demo.addSequential(new WaitCommand(3));
-        auto_options.addOption("0 90", demo);
-        
+        for (int i=0; i<10; ++i)
+        {
+            demo.addSequential(new RotateToHeading(drivetrain, 90));
+            demo.addSequential(new WaitCommand(3));
+            demo.addSequential(new RotateToHeading(drivetrain, 0));
+            demo.addSequential(new WaitCommand(3));
+        }
+        auto_options.addOption("0deg 90deg", demo);
+
         demo = new CommandGroup();
         demo.addSequential(new ResetDrivetrain(drivetrain));
-        // demo.addSequential(new MoveToPosition(drivetrain, 4*12));
-        // demo.addSequential(new WaitCommand(3));
-        // demo.addSequential(new MoveToPosition(drivetrain, 6*12));
-        // demo.addSequential(new WaitCommand(3));
-        // demo.addSequential(new MoveToPosition(drivetrain, 4*12));
-        // demo.addSequential(new WaitCommand(3));
-        // demo.addSequential(new MoveToPosition(drivetrain, 0));
+        for (int i=0; i<10; ++i)
+        {
+            demo.addSequential(new MoveToPosition(drivetrain, 2*12));
+            demo.addSequential(new WaitCommand(3));
+            demo.addSequential(new MoveToPosition(drivetrain, 0*12));
+            demo.addSequential(new WaitCommand(3));
+        }
+        auto_options.addOption("2ft and back", demo);
 
+        demo = new CommandGroup();
+        demo.addSequential(new ResetDrivetrain(drivetrain));
+        demo.addSequential(new MoveToPosition(drivetrain, 4*12));
         demo.addSequential(new RotateToHeading(drivetrain, 90));
-        demo.addSequential(new MoveToPosition(drivetrain, 6*12));
+        demo.addSequential(new MoveToPosition(drivetrain, (4+2)*12));
         demo.addSequential(new RotateToHeading(drivetrain, 180));
-        demo.addSequential(new MoveToPosition(drivetrain, 10*12));
+        demo.addSequential(new MoveToPosition(drivetrain, (4+2+4)*12));
         demo.addSequential(new RotateToHeading(drivetrain, 270));
-        demo.addSequential(new MoveToPosition(drivetrain, 12*12));
+        demo.addSequential(new MoveToPosition(drivetrain, (4+2+4+2)*12));
         demo.addSequential(new RotateToHeading(drivetrain, 360));
-        auto_options.addOption("Circle", demo);
+        auto_options.addOption("Rectangle", demo);
 
         // Also allow "Nothing"
         auto_options.setDefaultOption("Nothing", new WaitCommand(0.1));
