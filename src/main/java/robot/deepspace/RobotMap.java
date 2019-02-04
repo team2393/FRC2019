@@ -7,6 +7,9 @@ package robot.deepspace;
 public class RobotMap
 {
     // Solenoids =================================
+    //Riser Solenoid
+    public final static int FRONT_RISER_SOLENOID = 5;
+    public final static int BACK_RISER_SOLENOID = 4;
     // High/low speed gear
     public final static int GEARBOX_SOLENOID = 1;
     // Hatch grabber open/close
@@ -24,6 +27,7 @@ public class RobotMap
     public final static int RIGHT_MOTOR_BACK = 5;
 
     // PWM ports =================================
+    public final static int RISER_MOTOR = 0;
     // Ball grabber
     // TODO public final static int CARGO_SPINNER1 = 1;
     // TODO public final static int CARGO_SPINNER2 = 2;

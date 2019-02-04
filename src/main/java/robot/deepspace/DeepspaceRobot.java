@@ -29,6 +29,10 @@ import robot.deepspace.lift.DriveLift;
 import robot.deepspace.lift.HomeLift;
 import robot.deepspace.lift.Lift;
 import robot.deepspace.lift.MoveLift;
+import robot.deepspace.riser.DropAll;
+import robot.deepspace.riser.ResetRiser;
+import robot.deepspace.riser.RiseFront;
+import robot.deepspace.riser.Riser;
 
 /** Main robot class for deep space 2019
  * 
@@ -76,9 +80,10 @@ public class DeepspaceRobot extends BasicRobot
     private final Lift lift = new Lift();
     private CameraHandler camera;
     private Grabber grabber = new Grabber();
+    private Riser riser = new Riser();
 
     // Commands for drivetrain
-    private final Command reset = new ResetDrivetrain(drivetrain);
+    private final Command reset_drivetrain = new ResetDrivetrain(drivetrain);
     private final Command toggle_gear = new ToggleGear(drivetrain);
     private final Command joydrive = new Joydrive(drivetrain);
     private final Command hhdrive = new HeadingHoldJoydrive(drivetrain);
@@ -94,6 +99,11 @@ public class DeepspaceRobot extends BasicRobot
     private final Command toggle_grabber = new ToggleGrabber(grabber);
     private final CommandGroup get_hatch = new CommandGroup();
     private final CommandGroup release_hatch = new CommandGroup();
+
+    // .. Riser
+    private final Command reset_riser = new ResetRiser(riser);
+    private final Command drop_all = new DropAll(riser);
+    private final Command rise_front = new RiseFront(riser);
 
     // What to start in autonomous mode
     private final SendableChooser<Command> auto_options = new SendableChooser<>();
@@ -142,7 +152,7 @@ public class DeepspaceRobot extends BasicRobot
    
         SmartDashboard.putData("Drive", joydrive);
         SmartDashboard.putData("HH Drive", hhdrive);
-        SmartDashboard.putData("Reset", reset);
+        SmartDashboard.putData("Reset", reset_drivetrain);
 
         SmartDashboard.putData("Home Lift", home_lift);
         SmartDashboard.putData("Drive Lift", drive_lift);
@@ -153,14 +163,21 @@ public class DeepspaceRobot extends BasicRobot
         SmartDashboard.putData("Get Hatch", get_hatch);
         SmartDashboard.putData("Release Hatch", release_hatch);
 
+        SmartDashboard.putData("Reset Riser", reset_riser);
+        SmartDashboard.putData("Drop All", drop_all);
+        SmartDashboard.putData("Rise Front", rise_front);
         // Allow "Reset" even when not in teleop or periodic
-        reset.setRunWhenDisabled(true);
+        reset_drivetrain.setRunWhenDisabled(true);
         // .. and in fact do it right now
-        reset.start();
+        reset_drivetrain.start();
 
         // TODO Allow home_lift when disabled, and do that right now?
         // home_lift.setRunWhenDisabled(true);
         // home_lift.start();
+
+        //TODO Make sure risers are retracted
+        // reset_riser.setRunWhenDisabled(true);
+        //     reset_riser.start();
     }
 
     /** Create auto moves */
