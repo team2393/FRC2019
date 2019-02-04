@@ -8,7 +8,7 @@ public class RotateToHeading extends Command
 {
     private final DriveTrain drivetrain;
     private final double degrees;
-    private final OnTargetCheck check = new OnTargetCheck(2.0, 1.0);
+    private final OnTargetCheck check = new OnTargetCheck(2.5, 0.5);
     
     public RotateToHeading(final DriveTrain drivetrain, final double degrees)
     {

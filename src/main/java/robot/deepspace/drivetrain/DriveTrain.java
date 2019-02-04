@@ -102,7 +102,9 @@ public class DriveTrain extends Subsystem
                 return getPosition();
             }        
         };
-        position_pid = new PIDController(0.02, 1e-5, 0, pos_source, this::setSpeed);
+        position_pid = new PIDController(0.03, 0, 0.05  , pos_source, this::setSpeed);
+        position_pid.setOutputRange(-0.5, 0.5);
+
         SmartDashboard.putData("Pos. PID", position_pid);
 
         // Create PID controller for heading,
@@ -132,7 +134,7 @@ public class DriveTrain extends Subsystem
             }        
         };
         // TODO Control heading via P gain, but limit output dampen
-        heading_pid = new PIDController(0.02, 0.0005, 0.01, heading_source, this::setRotation);
+        heading_pid = new PIDController(0.03, 0.000, 0.05, heading_source, this::setRotation);
         // TODO Try continuous mode?
         // heading_pid.setInputRange(-180, 180);
         // heading_pid.setContinuous();

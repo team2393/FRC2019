@@ -1,17 +1,20 @@
 package robot.deepspace.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
+import robot.util.OnTargetCheck;
 
 /** Move drivetrain to a desired position */
 public class MoveToPosition extends Command
 {
     private final DriveTrain drivetrain;
     private final double inches;
+    private final OnTargetCheck check = new OnTargetCheck(2, 0.5);
 
     public MoveToPosition(final DriveTrain drivetrain, final double inches)
     {
         this.drivetrain = drivetrain;
         this.inches = inches;
+        setTimeout(10);
         requires(drivetrain);
     }
 
@@ -24,9 +27,9 @@ public class MoveToPosition extends Command
     @Override
     protected boolean isFinished()
     {
-        // Stop when we're close enough to desired position
-        final double close_enough = 2;
-        return Math.abs(drivetrain.getPosition() - inches) < close_enough;
+        if (isTimedOut())
+        return true;
+        return check.isFinished(inches, drivetrain.getPosition());
     }
 
     @Override
