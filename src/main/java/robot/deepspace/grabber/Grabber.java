@@ -1,7 +1,10 @@
 package robot.deepspace.grabber;
 
+import edu.wpi.first.hal.sim.mockdata.AnalogOutDataJNI;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.deepspace.RobotMap;
 
@@ -13,11 +16,13 @@ import robot.deepspace.RobotMap;
  *  ball in or push out.
  *  Sensor to detect ball.
  */
-public class Grabber 
+public class Grabber extends Subsystem
 {
     private final Solenoid grabber = new Solenoid(RobotMap.GRABBER_SOLENOID);
     private final Solenoid extender = new Solenoid(RobotMap.EXTEND_SOLENOID);
     private final DigitalInput hatch_sensor = new DigitalInput(RobotMap.HATCH_SENSOR);
+    private final DigitalInput cargo_sensor = new DigitalInput(RobotMap.CARGO_SENSOR);
+    private final AnalogInput sonic_test = new AnalogInput(RobotMap.USONIC_TEST);
 
     //TODO 2 motors for intake wheels 
     //TODO One sensor in intake, should stop motors once cargo is detected
@@ -27,6 +32,12 @@ public class Grabber
     {
         open(false);
         extend(false);
+    }
+
+    @Override
+    protected void initDefaultCommand()
+    {
+        //Nothing To Do Here
     }
 
     public boolean isOpen()
@@ -53,7 +64,19 @@ public class Grabber
     /** @return true when hatch detected */
     public boolean isHatchDetected()
     {
-        // TODO Maybe this needs to return ! ... to invert
-        return hatch_sensor.get();
+        return !hatch_sensor.get();
     }
+
+    public boolean isCargoDetected()
+    {
+        return !cargo_sensor.get();
+    }
+
+    @Override
+    public void periodic()
+    {
+        SmartDashboard.putNumber("Sonic Test", sonic_test.getVoltage());
+        SmartDashboard.putBoolean("Cargo Sensor", isCargoDetected());
+        SmartDashboard.putBoolean("Hatch Sensor", isHatchDetected());
+    }   
 }
