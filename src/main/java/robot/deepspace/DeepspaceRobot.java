@@ -23,7 +23,9 @@ import robot.deepspace.grabber.Extend;
 import robot.deepspace.grabber.Grabber;
 import robot.deepspace.grabber.OpenGrabber;
 import robot.deepspace.grabber.Retract;
+import robot.deepspace.grabber.SetSpinnerSpeed;
 import robot.deepspace.grabber.ToggleGrabber;
+import robot.deepspace.grabber.WaitForCargo;
 import robot.deepspace.grabber.WaitForHatch;
 import robot.deepspace.lift.DriveLift;
 import robot.deepspace.lift.HomeLift;
@@ -72,6 +74,8 @@ public class DeepspaceRobot extends BasicRobot
     private final Command toggle_grabber = new ToggleGrabber(grabber);
     private final CommandGroup get_hatch = new CommandGroup();
     private final CommandGroup release_hatch = new CommandGroup();
+    private final CommandGroup get_cargo = new CommandGroup();
+    private final CommandGroup deposit_cargo = new CommandGroup();
 
     // .. Riser
     private final Command reset_riser = new ResetRiser(riser);
@@ -108,6 +112,17 @@ public class DeepspaceRobot extends BasicRobot
         release_hatch.addSequential(new Extend(grabber));
         // release_hatch.addSequential(new OpenGrabber(grabber));
 
+        //Get Cargo
+        get_cargo.addSequential(new SetSpinnerSpeed(grabber, -0.5));
+        get_cargo.addSequential(new WaitForCargo(grabber));
+        //Maybe we use -0.1 to make sure cargo isn't dropped
+        get_cargo.addSequential(new SetSpinnerSpeed(grabber, 0));
+
+        //Deposit Cargo
+        deposit_cargo.addSequential(new SetSpinnerSpeed(grabber, 1));
+        deposit_cargo.addSequential(new WaitCommand(1));
+        deposit_cargo.addSequential(new SetSpinnerSpeed(grabber, 0));
+
         // Auto moves
         createAutoMoves();
 
@@ -142,6 +157,8 @@ public class DeepspaceRobot extends BasicRobot
 
         SmartDashboard.putData("Get Hatch", get_hatch);
         SmartDashboard.putData("Release Hatch", release_hatch);
+        SmartDashboard.putData("Get Cargo", get_cargo);
+        SmartDashboard.putData("Deposit Cargo", deposit_cargo);
 
         SmartDashboard.putData("Reset Riser", reset_riser);
         SmartDashboard.putData("Drop All", drop_all);

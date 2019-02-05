@@ -33,8 +33,8 @@ public class RobotMap
     public final static int RISER_MOTOR = 0;
 
     // Ball grabber
-    // TODO public final static int CARGO_SPINNER1 = 1;
-    // TODO public final static int CARGO_SPINNER2 = 2;
+    public final static int CARGO_SPINNER1 = 1;
+    public final static int CARGO_SPINNER2 = 2;
 
     // DIO ports =================================
     public final static int CARGO_SENSOR = 1;
