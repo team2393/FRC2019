@@ -36,39 +36,12 @@ import robot.deepspace.riser.Riser;
 
 /** Main robot class for deep space 2019
  * 
- *  TODO: Test & tweak
- *  Lift: 1 motor, encoder, limit switch, button box to move lift to ~4 predertermined heights
- *  -> Talon PID & motion magic.
- *     Commands to drive with joystick, drive up, drive down, move to position.
- *   Can/should the robot automatically start HomeLift at startup?
- * 
- *  Use OI
- *  Camera & Vision: Show video from front of robot,
- *  with overlay when target markers are detected.
- *  Check if exposure etc. need to be controlled from dashboard instead of 'auto'.
- * 
- *  Disk grabber: 1 solenoid to hold/release disk, button to toggle
- *  -> Commands open/close? Automatically close when disk is detected?
- *  TODO Motors to pull ball/cargo in, sensor to detect it, button to push cargo back out
+ *  TODO Grabber motors to pull ball/cargo in, sensor to detect it, button to push cargo back out
  * 
  *  TODO Documentation: PPT for OI, vision, ..
  *
- *  Drive motors: Left and right, 2 Talons each side, one follows the other, 1 encoder per side, gyro
- *  -> Need to program PID for movement with gyro to keep heading for autonomous moves.
- *  Use PIDCommand or PIDSubsystem.
- *  Check https://frc-pdr.readthedocs.io/en/latest/control/using_WPILIB's_pid_controller.html#adding-ramping-for-motors
- *
- *  Gearbox Shifter: Solenoid, button to shift high <-> low, indicate current gear on dashboard
- * 
- *  Prepare autonomous moves from N start positions to M initial disk placements.
- *  Maybe leave last leg of route to driver, using vision, but get them close. 
- *
- *  TODO Push-up mechanism: 1 solenoid for 2 front cylinders, 1 solenoid for back cylinder, 1 drive motor controller.
- *  Idea:
- *  Push button to lower 2 front and 1 back cylinder,
- *  and now bottom drive will move with other wheels forward/backward.
- *  Push button to raise 2 front cylinders back up, bottom drive still follows main wheels.
- *  Push button to raise back cylinder, bottom drive off.
+ *  TODO Prepare autonomous moves from N start positions to M initial disk placements.
+ *  Maybe leave last leg of route to driver, using vision, but get them close.
  */
 public class DeepspaceRobot extends BasicRobot
 {
@@ -147,6 +120,13 @@ public class DeepspaceRobot extends BasicRobot
         OI.set_lift_med.whenPressed(move_lift_middle);
         OI.set_lift_high.whenPressed(move_lift_high);
 
+        // TODO Buttons to
+        // move lift to the rocket's low/mid/high cargo openings,
+        // move lift to space ship cargo opening,
+        // get_hatch,
+        // release_hatch,
+        // drop_all, rise_front, reset_riser
+
         // .. and/or place them on dashboard
         SmartDashboard.putData("Auto Options", auto_options);
    
@@ -166,6 +146,7 @@ public class DeepspaceRobot extends BasicRobot
         SmartDashboard.putData("Reset Riser", reset_riser);
         SmartDashboard.putData("Drop All", drop_all);
         SmartDashboard.putData("Rise Front", rise_front);
+
         // Allow "Reset" even when not in teleop or periodic
         reset_drivetrain.setRunWhenDisabled(true);
         // .. and in fact do it right now
@@ -175,9 +156,9 @@ public class DeepspaceRobot extends BasicRobot
         // home_lift.setRunWhenDisabled(true);
         // home_lift.start();
 
-        //TODO Make sure risers are retracted
+        // TODO Make sure risers are retracted
         // reset_riser.setRunWhenDisabled(true);
-        //     reset_riser.start();
+        // reset_riser.start();
     }
 
     /** Create auto moves */

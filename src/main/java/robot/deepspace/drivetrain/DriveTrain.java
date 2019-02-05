@@ -104,7 +104,9 @@ public class DriveTrain extends Subsystem
         };
         position_pid = new PIDController(0.03, 0, 0.05  , pos_source, this::setSpeed);
         position_pid.setOutputRange(-0.5, 0.5);
-
+        // Check https://frc-pdr.readthedocs.io/en/latest/control/using_WPILIB's_pid_controller.html#adding-ramping-for-motors
+        // for more ideas on damping motor speed changes
+   
         SmartDashboard.putData("Pos. PID", position_pid);
 
         // Create PID controller for heading,
@@ -133,7 +135,6 @@ public class DriveTrain extends Subsystem
                 return getHeading();
             }        
         };
-        // TODO Control heading via P gain, but limit output dampen
         heading_pid = new PIDController(0.03, 0.000, 0.05, heading_source, this::setRotation);
         // TODO Try continuous mode?
         // heading_pid.setInputRange(-180, 180);

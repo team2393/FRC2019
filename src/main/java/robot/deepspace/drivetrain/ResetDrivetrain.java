@@ -12,6 +12,12 @@ public class ResetDrivetrain extends InstantCommand
     public ResetDrivetrain(final DriveTrain drivetrain)
     {
         this.drivetrain = drivetrain;
+        // To be on the safe side,
+        // require drivetrain and thus stop other drivetrain
+        // commands when resetting encoders.
+        // Would be OK to reset while driving manually,
+        // but auto moves would be very confused when
+        // resetting while they're trying to control position or heading.
         requires(drivetrain);
     }
 

@@ -1,20 +1,19 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package robot.deepspace.riser;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
 import robot.deepspace.RobotMap;
 
-/**
- * Add your docs here.
+/** Riser, Push-up mechanism
+ * 
+ *  Idea:
+ *  Command to lower 2 front and 1 back cylinder,
+ *  and now bottom drive will move with other wheels forward/backward.
+ *  Next command raises 2 front cylinders back up, bottom drive still follows main wheels.
+ *  Finally, raise back cylinder, bottom drive off.
  */
-public class Riser {
+public class Riser
+{
     private final Solenoid front_riser = new Solenoid(RobotMap.FRONT_RISER_SOLENOID);
     private final Solenoid back_riser = new Solenoid(RobotMap.BACK_RISER_SOLENOID);
     private final Victor drive = new Victor(RobotMap.RISER_MOTOR);
