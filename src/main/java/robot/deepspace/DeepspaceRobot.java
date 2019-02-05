@@ -199,6 +199,18 @@ public class DeepspaceRobot extends BasicRobot
         demo.addSequential(new RotateToHeading(drivetrain, 360));
         auto_options.addOption("Rectangle", demo);
 
+        // Left start position to Rocket port 1
+        demo = new CommandGroup();
+        demo.addSequential(new ResetDrivetrain(drivetrain));
+        demo.addSequential(new MoveToPosition(drivetrain, 6*12));
+        demo.addSequential(new RotateToHeading(drivetrain, -20));
+        demo.addSequential(new MoveToPosition(drivetrain, (6+3)*12));
+        // .. and back for testing
+        demo.addSequential(new MoveToPosition(drivetrain, 6*12));
+        demo.addSequential(new RotateToHeading(drivetrain, 0));
+        demo.addSequential(new MoveToPosition(drivetrain, 0));
+        auto_options.addOption("L to R1", demo);
+
         // Also allow "Nothing"
         auto_options.setDefaultOption("Nothing", new WaitCommand(0.1));
     }
