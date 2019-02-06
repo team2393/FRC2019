@@ -47,6 +47,19 @@ public class Types
         // Integer means whole numbers:
         System.out.println("3 divided by 2 is " + (3 / 2));
         System.out.println(".. with a remainder of " + (3 % 2));
+
+        // Integers can be quite large, but there is a maximum
+        // value. It's around 2 billion.
+        // If you try to add 1 to that largest number,
+        // the value wraps around to the largest negative integer value.
+        int next = counter + 1;
+        while (counter < next)
+        {
+            ++counter;
+            ++next;
+        }
+        System.out.println("The largest int is " + counter);
+        System.out.println("If I try to get the next number, the result is " + next);
         
         // There are data types byte, short, long which are similar
         // to int but for smaller respectively larger value ranges.
