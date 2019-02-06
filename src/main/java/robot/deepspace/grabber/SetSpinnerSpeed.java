@@ -5,11 +5,12 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 /** Command to set speed of cargo spinners */
 public class SetSpinnerSpeed extends InstantCommand
 {
-    private Grabber grabber;
-    private double speed;
+    private final Grabber grabber;
+    private final double speed;
 
-    public SetSpinnerSpeed(final Grabber grabber, double speed)
+    public SetSpinnerSpeed(final Grabber grabber, final double speed)
     {
+        requires(grabber);
         this.grabber = grabber;
         this.speed = speed;
     }

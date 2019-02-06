@@ -1,13 +1,13 @@
 package robot.deepspace.riser;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 
-import edu.wpi.first.wpilibj.command.Command;
-
-public class ResetRiser extends Command
+public class ResetRiser extends InstantCommand
 {
     private final Riser riser;
 
     public ResetRiser(Riser riser) 
     { 
+        requires(riser);
         this.riser = riser;
     }
 
@@ -17,12 +17,5 @@ public class ResetRiser extends Command
         riser.dropBack(false);
         riser.dropFront(false);
         riser.setSpeed(0);
-    }
-
-    // Make this return true when this Command no longer needs to run execute()
-    @Override
-    protected boolean isFinished()
-    {
-        return true;
     }
 }

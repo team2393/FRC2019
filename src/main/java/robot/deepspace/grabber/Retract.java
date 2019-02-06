@@ -9,6 +9,7 @@ public class Retract extends InstantCommand
 
     public Retract(final Grabber grabber)
     {
+        requires(grabber);
         this.grabber = grabber;
     }
 

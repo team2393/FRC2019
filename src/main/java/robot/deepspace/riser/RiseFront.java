@@ -9,6 +9,7 @@ public class RiseFront extends Command
 
     public RiseFront(Riser riser) 
     { 
+        requires(riser);
         this.riser = riser;
     }
 
@@ -24,6 +25,6 @@ public class RiseFront extends Command
     @Override
     protected boolean isFinished()
     {
-        return true;
+        return false;
     }
 }

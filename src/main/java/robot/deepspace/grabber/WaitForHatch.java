@@ -9,6 +9,7 @@ public class WaitForHatch extends Command
 
     public WaitForHatch(final Grabber grabber)
     {
+        requires(grabber);
         this.grabber = grabber;
     }
 

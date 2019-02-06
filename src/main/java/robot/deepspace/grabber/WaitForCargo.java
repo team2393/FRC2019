@@ -9,6 +9,7 @@ public class WaitForCargo extends Command
 
     public WaitForCargo(final Grabber grabber)
     {
+        requires(grabber);
         this.grabber = grabber;
     }
 

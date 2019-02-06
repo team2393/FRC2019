@@ -9,6 +9,7 @@ public class ToggleGrabber extends InstantCommand
 
     public ToggleGrabber(final Grabber grabber)
     {
+        requires(grabber);
         this.grabber = grabber;
     }
 

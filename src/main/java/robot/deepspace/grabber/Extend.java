@@ -9,6 +9,7 @@ public class Extend extends InstantCommand
 
     public Extend(final Grabber grabber)
     {
+        requires(grabber);
         this.grabber = grabber;
     }
 

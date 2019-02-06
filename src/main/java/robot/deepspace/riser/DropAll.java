@@ -9,6 +9,7 @@ public class DropAll extends Command
 
     public DropAll(Riser riser) 
     { 
+        requires(riser);
         this.riser = riser;
     }
 

@@ -9,6 +9,7 @@ public class CloseGrabber extends InstantCommand
 
     public CloseGrabber(final Grabber grabber)
     {
+        requires(grabber);
         this.grabber = grabber;
     }
 
