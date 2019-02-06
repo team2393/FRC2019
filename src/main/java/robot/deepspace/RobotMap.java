@@ -2,7 +2,7 @@ package robot.deepspace;
 
 /** Hardware Mappings
  *  
- * One place to find what's connected how
+ *  One place to find what's connected how
  */ 
 public class RobotMap
 {
@@ -26,22 +26,20 @@ public class RobotMap
     public final static int RIGHT_MOTOR_FRONT = 4;
     public final static int RIGHT_MOTOR_BACK = 5;
 
-    //ANALOG INPUTS
+    // ANALOG INPUTS
     public final static int USONIC_TEST = 0;
 
     // PWM ports =================================
     public final static int RISER_MOTOR = 0;
-
     // Ball grabber
     public final static int CARGO_SPINNER1 = 1;
     public final static int CARGO_SPINNER2 = 2;
 
     // DIO ports =================================
-    public final static int CARGO_SENSOR = 1;
     // Lift at bottom limit
     public final static int LIMIT_SWITCH = 4;
+    // Ball detected
+    public final static int CARGO_SENSOR = 1;
     // Hatch panel detected
     public final static int HATCH_SENSOR = 3;
-    // Ball detected
-    // TODO public final static int CARGO_SENSOR = 2;
 }

@@ -26,10 +26,12 @@ public class Grabber extends Subsystem
     private final AnalogInput sonic_test = new AnalogInput(RobotMap.USONIC_TEST);
     private final Victor intake_spinner1 = new Victor(RobotMap.CARGO_SPINNER1);
     private final Victor intake_spinner2 = new Victor(RobotMap.CARGO_SPINNER2);
+    
+    /** Desired speed for the 2 intake spinners
+     *  setSpinnerSpeed() updates this value,
+     *  and in periodic() we keep sending it to the motors.
+     */
     private double speed = 0;
-    //TODO 2 motors for intake wheels 
-    //TODO One sensor in intake, should stop motors once cargo is detected
-    //TODO Eject motor
 
     public Grabber() 
     {
@@ -40,7 +42,7 @@ public class Grabber extends Subsystem
     @Override
     protected void initDefaultCommand()
     {
-        //Nothing To Do Here
+        // Nothing To Do Here
     }
 
     public boolean isOpen()
@@ -70,11 +72,18 @@ public class Grabber extends Subsystem
         return !hatch_sensor.get();
     }
 
+    /** @return true when cargo detected */
     public boolean isCargoDetected()
     {
         return !cargo_sensor.get();
     }
 
+    /** Set spinner speed
+     *  
+     *  Motors then keep running at that speed,
+     *  no need to continuously call this method.
+     *  @param speed Desired speed
+     */
     public void setSpinnerSpeed(double speed)
     {
         this.speed = speed;
@@ -83,10 +92,10 @@ public class Grabber extends Subsystem
     @Override
     public void periodic()
     {
-            intake_spinner1.set(speed);
-            intake_spinner2.set(speed);
-            SmartDashboard.putNumber("Sonic Test", sonic_test.getVoltage());
-            SmartDashboard.putBoolean("Cargo Sensor", isCargoDetected());
-            SmartDashboard.putBoolean("Hatch Sensor", isHatchDetected());
+        intake_spinner1.set(speed);
+        intake_spinner2.set(speed);
+        SmartDashboard.putNumber("Sonic Test", sonic_test.getVoltage());
+        SmartDashboard.putBoolean("Cargo Sensor", isCargoDetected());
+        SmartDashboard.putBoolean("Hatch Sensor", isHatchDetected());
     }   
 }

@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class WaitForHatch extends Command
 {
     private final Grabber grabber;
-    private boolean done;
 
     public WaitForHatch(final Grabber grabber)
     {
@@ -14,14 +13,8 @@ public class WaitForHatch extends Command
     }
 
     @Override
-    protected void execute()
-    {
-        done = grabber.isHatchDetected();
-    }
-
-    @Override
     protected boolean isFinished()
     {
-        return done;
+        return grabber.isHatchDetected();
     }
 }
