@@ -23,14 +23,15 @@ public class DriveTrain extends Subsystem
 {
     // Support units 
     private final static double COUNTS_PER_INCH = 10 * 3122.0/ 144.0;
-    private final WPI_TalonSRX left = new WPI_TalonSRX(RobotMap.LEFT_MOTOR_FRONT);
-    private final WPI_TalonSRX left_slave = new WPI_TalonSRX(RobotMap.LEFT_MOTOR_BACK);
+    private final WPI_TalonSRX left = new WPI_TalonSRX(RobotMap.LEFT_MOTOR_MAIN);
+    private final WPI_TalonSRX left_slave = new WPI_TalonSRX(RobotMap.LEFT_MOTOR_SLAVE);
 
-    private final WPI_TalonSRX right = new WPI_TalonSRX(RobotMap.RIGHT_MOTOR_FRONT);
-    private final WPI_TalonSRX right_slave = new WPI_TalonSRX(RobotMap.RIGHT_MOTOR_BACK);
+    private final WPI_TalonSRX right = new WPI_TalonSRX(RobotMap.RIGHT_MOTOR_MAIN);
+    private final WPI_TalonSRX right_slave = new WPI_TalonSRX(RobotMap.RIGHT_MOTOR_SLAVE);
     
     private final DifferentialDrive drive = new DifferentialDrive(left, right);
-    private final Solenoid gearbox = new Solenoid(RobotMap.GEARBOX_SOLENOID);
+    private final Solenoid gearbox1 = new Solenoid(RobotMap.GEARBOX_SOLENOID1);
+    private final Solenoid gearbox2 = new Solenoid(RobotMap.GEARBOX_SOLENOID2);
     private double speed = 0;
     private double rotation = 0;
 
@@ -50,13 +51,13 @@ public class DriveTrain extends Subsystem
         // TODO See if motor or sensor need to be inverted
         // On 2018 chassis, all drive motors need to be inverted
         // so that positive speed results in "forward" move
-        left.setInverted(false);
-        right.setInverted(false);
-        left_slave.setInverted(false);
-        right_slave.setInverted(false);
+        left.setInverted(true);
+        right.setInverted(true);
+        left_slave.setInverted(true);
+        right_slave.setInverted(true);
 
-        left.setSensorPhase(true);
-        right.setSensorPhase(false);
+        left.setSensorPhase(false);
+        right.setSensorPhase(true);
 
         // Coast or break when speed is set to 0.0?
         left.setNeutralMode(NeutralMode.Brake);
@@ -152,12 +153,13 @@ public class DriveTrain extends Subsystem
     
     public boolean isHighGear()
     {
-        return gearbox.get();
+        return gearbox1.get();
     }
 
     public void setGear(final boolean high)
     {
-        gearbox.set(high);
+        gearbox1.set(high);
+        gearbox2.set(high);
         SmartDashboard.putBoolean("Gear", high);
     }
     
