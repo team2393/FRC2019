@@ -38,7 +38,7 @@ import robot.deepspace.riser.Riser;
 
 /** Main robot class for deep space 2019
  * 
- *  TODO Grabber motors to pull ball/cargo in, sensor to detect it, button to push cargo back out
+ *  TODO Make all grabber commands require the Grabber
  * 
  *  TODO Documentation: PPT for OI, vision, ..
  *
@@ -163,6 +163,9 @@ public class DeepspaceRobot extends BasicRobot
         SmartDashboard.putData("Reset Riser", reset_riser);
         SmartDashboard.putData("Drop All", drop_all);
         SmartDashboard.putData("Rise Front", rise_front);
+
+        // Publish scheduler to see active command
+        SmartDashboard.putData(Scheduler.getInstance());
 
         // Allow "Reset" even when not in teleop or periodic
         reset_drivetrain.setRunWhenDisabled(true);
