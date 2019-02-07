@@ -47,8 +47,7 @@ import robot.deepspace.riser.Riser;
  */
 public class DeepspaceRobot extends BasicRobot
 {
-    // TODO Use PDP
-    // private final PowerDistributionPanel pdp = new PowerDistributionPanel();
+    private final PowerDistributionPanel pdp = new PowerDistributionPanel();
     
     // Components, subsystems
     private final DriveTrain drivetrain = new DriveTrain();
@@ -240,9 +239,8 @@ public class DeepspaceRobot extends BasicRobot
     {
         Scheduler.getInstance().run();
 
-        // TODO Publish energy info
-        // SmartDashboard.putNumber("Current [A]", pdp.getTotalCurrent());
-        // SmartDashboard.putNumber("Capacity [Ws]", pdp.getTotalEnergy());
+        SmartDashboard.putNumber("Current [A]", pdp.getTotalCurrent());
+        SmartDashboard.putNumber("Capacity [KWh]", pdp.getTotalEnergy()/60/60/1000);
     }
 
     @Override
