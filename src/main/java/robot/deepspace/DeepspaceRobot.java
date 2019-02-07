@@ -38,8 +38,6 @@ import robot.deepspace.riser.Riser;
 
 /** Main robot class for deep space 2019
  * 
- *  TODO Make all grabber commands require the Grabber
- * 
  *  TODO Documentation: PPT for OI, vision, ..
  *
  *  TODO Prepare autonomous moves from N start positions to M initial disk placements.
