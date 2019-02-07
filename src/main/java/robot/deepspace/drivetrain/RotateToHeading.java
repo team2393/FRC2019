@@ -8,7 +8,6 @@ public class RotateToHeading extends Command
 {
     private final DriveTrain drivetrain;
     private final double degrees;
-    private final OnTargetCheck check = new OnTargetCheck(2.5, 0.5);
     
     public RotateToHeading(final DriveTrain drivetrain, final double degrees)
     {
@@ -16,12 +15,6 @@ public class RotateToHeading extends Command
         this.degrees = degrees;
         setTimeout(10.0);
         requires(drivetrain);
-    }
-
-    @Override
-    protected void initialize()
-    {
-        check.reset();
     }
 
     @Override
@@ -36,12 +29,9 @@ public class RotateToHeading extends Command
         // Give up after timeout
         if (isTimedOut())
             return true;
-        // Close enough to desired heading?
-        // TODO Could also use a combination of
-        //      gyro.getAngle()     - close to desired position, as done now
-        //      and gyro.getRate()  - still turning??
-        // drivetrain.getTurnRate()
-        return check.isFinished(degrees, drivetrain.getHeading());
+        // Close enough to desired heading and no longer turning?
+        return Math.abs(degrees - drivetrain.getHeading()) < 2  &&
+               drivetrain.getTurnRate() < 5.0;
     }
 
     @Override

@@ -46,8 +46,13 @@ public class MoveToPosition extends Command
     {
         if (isTimedOut())
             return true;
-        return check.isFinished(inches, drivetrain.getPosition());
+       // return check.isFinished(inches, drivetrain.getPosition());
+        return Math.abs(inches-drivetrain.getPosition()) < 2.5 && 
+               drivetrain.getSpeed() < 0.2;
     }
+
+
+
 
     @Override
     protected void end()
