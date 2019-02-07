@@ -21,8 +21,9 @@ import robot.deepspace.RobotMap;
  */
 public class DriveTrain extends Subsystem
 {
-    // Support units 
-    private final static double COUNTS_PER_INCH = 10 * 3122.0/ 144.0;
+    // Support units :
+    // 95700 counts for 36feet
+    private final static double COUNTS_PER_INCH = 95700 / (36.0*12.0);
     private final WPI_TalonSRX left = new WPI_TalonSRX(RobotMap.LEFT_MOTOR_MAIN);
     private final WPI_TalonSRX left_slave = new WPI_TalonSRX(RobotMap.LEFT_MOTOR_SLAVE);
 
@@ -48,9 +49,7 @@ public class DriveTrain extends Subsystem
         left_slave.configFactoryDefault();
         right_slave.configFactoryDefault();
 
-        // TODO See if motor or sensor need to be inverted
-        // On 2018 chassis, all drive motors need to be inverted
-        // so that positive speed results in "forward" move
+        // Invert motors or sensors as necessary
         left.setInverted(true);
         right.setInverted(true);
         left_slave.setInverted(true);
@@ -103,7 +102,7 @@ public class DriveTrain extends Subsystem
                 return getPosition();
             }        
         };
-        position_pid = new PIDController(0.03, 0, 0.05  , pos_source, this::setSpeed);
+        position_pid = new PIDController(0.045, 0, 0.05  , pos_source, this::setSpeed);
         position_pid.setOutputRange(-0.5, 0.5);
         // Check https://frc-pdr.readthedocs.io/en/latest/control/using_WPILIB's_pid_controller.html#adding-ramping-for-motors
         // for more ideas on damping motor speed changes
@@ -136,7 +135,7 @@ public class DriveTrain extends Subsystem
                 return getHeading();
             }        
         };
-        heading_pid = new PIDController(0.03, 0.000, 0.05, heading_source, this::setRotation);
+        heading_pid = new PIDController(0.03, 0.000, 0.045, heading_source, this::setRotation);
         // TODO Try continuous mode?
         // heading_pid.setInputRange(-180, 180);
         // heading_pid.setContinuous();
@@ -166,6 +165,11 @@ public class DriveTrain extends Subsystem
     public void setSpeed(final double speed)
     {
         this.speed = speed;
+    }
+
+    public double getSpeed()
+    {
+        return speed;
     }
 
     public void setRotation(final double new_rotation)
