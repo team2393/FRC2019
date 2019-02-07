@@ -20,7 +20,21 @@ public class OI
     {
         return joystick.getRawButtonPressed(PDPController.A_BUTTON);
     }
-    
+
+    private static boolean hatch_button_was_pressed = false;
+
+    public static final boolean isHatchButtonPressed()
+    {
+        final boolean is_pressed = joystick.getRawAxis(PDPController.LEFT_FRONT_LEVER) > 0.8;
+        final boolean was_pressed_since_last_checked = is_pressed  &&  ! hatch_button_was_pressed;
+        hatch_button_was_pressed = is_pressed;
+        return was_pressed_since_last_checked;
+    }
+
+    public static final boolean isCargoButtonPressed()
+    {
+        return joystick.getRawButtonPressed(PDPController.LEFT_FRONT_BUTTON);
+    }
     public static final Button togglegrabber = new JoystickButton(joystick, PDPController.LEFT_FRONT_BUTTON);
 
     public static final Button set_lift_home = new JoystickButton(joystick, PDPController.LEFT_TOP_BUTTON);

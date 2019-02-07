@@ -38,9 +38,9 @@ public class RobotMap
 
     // DIO ports =================================
     // Lift at bottom limit
-    public final static int LIMIT_SWITCH = 4;
+    public final static int LIMIT_SWITCH = 0;
     // Ball detected
     public final static int CARGO_SENSOR = 1;
     // Hatch panel detected
-    public final static int HATCH_SENSOR = 3;
+    public final static int HATCH_SENSOR = 2;
 }

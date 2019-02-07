@@ -107,6 +107,7 @@ public class DeepspaceRobot extends BasicRobot
 
         // Release hatch panel
         release_hatch.addSequential(new Extend(grabber));
+        // not sure if we should open or if it will slip off on its own
         // release_hatch.addSequential(new OpenGrabber(grabber));
 
         // Get Cargo
@@ -144,7 +145,7 @@ public class DeepspaceRobot extends BasicRobot
    
         SmartDashboard.putData("Drive", joydrive);
         SmartDashboard.putData("HH Drive", hhdrive);
-        SmartDashboard.putData("Reset", reset_drivetrain);
+        SmartDashboard.putData("Reset Drivetrain", reset_drivetrain);
 
         SmartDashboard.putData("Home Lift", home_lift);
         SmartDashboard.putData("Drive Lift", drive_lift);
@@ -162,7 +163,7 @@ public class DeepspaceRobot extends BasicRobot
         SmartDashboard.putData("Rise Front", rise_front);
 
         // Publish scheduler to see active command
-        SmartDashboard.putData(Scheduler.getInstance());
+        SmartDashboard.putData("Scheduler", Scheduler.getInstance());
 
         // Allow "Reset" even when not in teleop or periodic
         reset_drivetrain.setRunWhenDisabled(true);
@@ -236,6 +237,22 @@ public class DeepspaceRobot extends BasicRobot
     public void robotPeriodic()
     {
         Scheduler.getInstance().run();
+
+        if (OI.isCargoButtonPressed())
+        {
+            if (grabber.isCargoDetected())
+                deposit_cargo.start();
+            else 
+                get_cargo.start();
+        }
+
+        if (OI.isHatchButtonPressed())
+        {
+            if (grabber.isHatchDetected())
+                release_hatch.start();
+            else 
+                get_hatch.start();
+        }
 
         SmartDashboard.putNumber("Current [A]", pdp.getTotalCurrent());
         SmartDashboard.putNumber("Capacity [KWh]", pdp.getTotalEnergy()/60/60/1000);
