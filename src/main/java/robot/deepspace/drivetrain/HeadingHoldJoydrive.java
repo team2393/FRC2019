@@ -31,7 +31,7 @@ public class HeadingHoldJoydrive extends Command
         // via left/right joystick axis
         double turn = OI.getTurn();
         if (Math.abs(turn) > 0.03)
-            heading += turn;
+            heading += 1.5*turn;
         drivetrain.setHeading(heading);
     }
 

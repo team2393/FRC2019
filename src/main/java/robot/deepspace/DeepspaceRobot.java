@@ -229,6 +229,14 @@ public class DeepspaceRobot extends BasicRobot
         demo.addSequential(new MoveToPosition(drivetrain, 0));
         auto_options.addOption("L to R1", demo);
 
+        demo = new CommandGroup();
+        demo.addSequential(new ResetDrivetrain(drivetrain));
+        demo.addSequential(new MoveToPosition(drivetrain, 118, 0));
+        demo.addSequential(new RotateToHeading(drivetrain, 90));
+        demo.addSequential(new MoveToPosition(drivetrain, 202, 90));
+        auto_options.addOption("Test1", demo);
+
+
         // Also allow "Nothing"
         auto_options.setDefaultOption("Nothing", new WaitCommand(0.1));
     }
