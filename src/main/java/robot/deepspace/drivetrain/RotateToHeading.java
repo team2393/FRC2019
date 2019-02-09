@@ -1,7 +1,6 @@
 package robot.deepspace.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
-import robot.util.OnTargetCheck;
 
 /** Rotate drivetrain to a desired heading */
 public class RotateToHeading extends Command

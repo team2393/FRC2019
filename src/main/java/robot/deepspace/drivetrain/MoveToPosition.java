@@ -1,7 +1,6 @@
 package robot.deepspace.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
-import robot.util.OnTargetCheck;
 
 /** Move drivetrain to a desired position */
 public class MoveToPosition extends Command
@@ -9,7 +8,6 @@ public class MoveToPosition extends Command
     private final DriveTrain drivetrain;
     private final double inches;
     private final double heading;
-    private final OnTargetCheck check = new OnTargetCheck(2, 0.5);
 
     /** Move to position, ignore heading 
      *  @param drivetrain
