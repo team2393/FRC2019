@@ -11,7 +11,7 @@ import robot.parts.PDPController;
  */
 public class OI
 {
-    private static final Joystick joystick = new Joystick(0);
+    public static final Joystick joystick = new Joystick(0);
     
     private static final Joystick buttonboard = new Joystick(1);
     
@@ -48,7 +48,7 @@ public class OI
         double raw = -joystick.getRawAxis(PDPController.LEFT_STICK_VERTICAL);
         // Button reduces turn rate
         if (joystick.getRawAxis(PDPController.RIGHT_FRONT_LEVER) > 0.5)
-            raw = raw/3;
+            raw = raw/2;
         return square(raw);
     }
 
@@ -58,7 +58,7 @@ public class OI
         double raw = 0.9 * joystick.getRawAxis(PDPController.RIGHT_STICK_HORIZONTAL);
         // Button reduces turn rate
         if (joystick.getRawAxis(PDPController.RIGHT_FRONT_LEVER) > 0.5)
-            raw = raw/3;
+            raw = raw/2;
         return square(raw);
     }
 

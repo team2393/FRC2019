@@ -59,6 +59,7 @@ public class DeepspaceRobot extends BasicRobot
     private final Command toggle_gear = new ToggleGear(drivetrain);
     private final Joydrive joydrive = new Joydrive(drivetrain);
     private final HeadingHoldJoydrive hhdrive = new HeadingHoldJoydrive(drivetrain);
+    private final Rumble rumble = new Rumble();
 
     // .. Lift
     private final Command home_lift = new HomeLift(lift);
@@ -161,9 +162,6 @@ public class DeepspaceRobot extends BasicRobot
         SmartDashboard.putData("Reset Riser", reset_riser);
         SmartDashboard.putData("Drop All", drop_all);
         SmartDashboard.putData("Rise Front", rise_front);
-
-        // Publish scheduler to see active command
-        SmartDashboard.putData("Scheduler", Scheduler.getInstance());
 
         // Allow "Reset" even when not in teleop or periodic
         reset_drivetrain.setRunWhenDisabled(true);
@@ -276,11 +274,13 @@ public class DeepspaceRobot extends BasicRobot
             {
                 joydrive.cancelbutdontstop();
                 hhdrive.start();
+                rumble.start(0.1);
             }
             else
             {
                 hhdrive.cancelbutdontstop();
                 joydrive.start();
+                rumble.start(0.5);
             }
         }
     }

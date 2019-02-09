@@ -24,6 +24,6 @@ public class ResetDrivetrain extends InstantCommand
     @Override
     protected void execute()
     {
-        drivetrain.resetEncoders();;
+        drivetrain.resetEncoders();
     }
 }
