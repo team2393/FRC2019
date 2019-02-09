@@ -57,8 +57,8 @@ public class DeepspaceRobot extends BasicRobot
     // Commands for drivetrain
     private final Command reset_drivetrain = new ResetDrivetrain(drivetrain);
     private final Command toggle_gear = new ToggleGear(drivetrain);
-    private final Command joydrive = new Joydrive(drivetrain);
-    private final Command hhdrive = new HeadingHoldJoydrive(drivetrain);
+    private final Joydrive joydrive = new Joydrive(drivetrain);
+    private final HeadingHoldJoydrive hhdrive = new HeadingHoldJoydrive(drivetrain);
 
     // .. Lift
     private final Command home_lift = new HomeLift(lift);
@@ -266,15 +266,7 @@ public class DeepspaceRobot extends BasicRobot
         SmartDashboard.putNumber("Capacity [KWh]", pdp.getTotalEnergy()/60/60/1000);
     }
 
-    @Override
-    public void teleopInit()
-    {
-        super.teleopInit();
-        joydrive.start();
-    }
-
-    @Override
-    public void teleopPeriodic()
+    private void updateJoystickDrivemode()
     {
         // Toggle between plain drive
         // and heading-hold mode
@@ -282,15 +274,30 @@ public class DeepspaceRobot extends BasicRobot
         {
             if (joydrive.isRunning())
             {
-                joydrive.cancel();
+                joydrive.cancelbutdontstop();
                 hhdrive.start();
             }
             else
             {
-                hhdrive.cancel();
+                hhdrive.cancelbutdontstop();
                 joydrive.start();
             }
         }
+    }
+    
+    @Override
+    public void teleopInit()
+    {
+        super.teleopInit();
+        // Start driving by joystick
+        joydrive.start();
+    }
+
+    @Override
+    public void teleopPeriodic()
+    {
+        // .. and allow toggling between HH mode and plain joydrive
+        updateJoystickDrivemode();
     }
 
     @Override
@@ -298,8 +305,9 @@ public class DeepspaceRobot extends BasicRobot
     {
         super.autonomousInit();
 
-        // Start the selected option
+        // Start the selected option, which may be "Nothing"
         auto_options.getSelected().start();
+        // Driving by joystick is initially off
     }
 
     @Override
@@ -310,5 +318,9 @@ public class DeepspaceRobot extends BasicRobot
         //     drivetrain.setPosition(24);
         // else
         //     drivetrain.setPosition(0);
+
+        // Pressing a button will start driving by joystick,
+        // then toggle between plain and HH mode
+        updateJoystickDrivemode();
     }
 }

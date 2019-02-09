@@ -8,6 +8,8 @@ public class HeadingHoldJoydrive extends Command
 {
     private final DriveTrain drivetrain;
     private double heading;
+    private boolean do_stop; 
+
 
     public HeadingHoldJoydrive(final DriveTrain drivetrain)
     {
@@ -20,6 +22,7 @@ public class HeadingHoldJoydrive extends Command
     {
         // Lock onto current heading when command starts
         heading = drivetrain.getHeading();
+        do_stop = true;
     }
 
     @Override
@@ -35,6 +38,12 @@ public class HeadingHoldJoydrive extends Command
         drivetrain.setHeading(heading);
     }
 
+    public void cancelbutdontstop()
+    {
+        do_stop = false;
+        cancel();
+    }
+
     @Override
     protected boolean isFinished()
     {
@@ -46,7 +55,8 @@ public class HeadingHoldJoydrive extends Command
     protected void end()
     {
         // When command is cancelled, stop the drivetrain and cancel PID
-        drivetrain.setSpeed(0);
+        if (do_stop)
+            drivetrain.setSpeed(0);
         drivetrain.setHeading(Double.NaN);
     }
 }

@@ -7,13 +7,20 @@ import robot.deepspace.OI;
 public class Joydrive extends Command
 {
     private final DriveTrain drivetrain;
+    private boolean do_stop; 
 
     public Joydrive(final DriveTrain drivetrain)
     {
         this.drivetrain = drivetrain;
         requires(drivetrain);
     }
-
+   
+    @Override
+    public void initialize()
+    {
+        do_stop = true;
+    }
+    
     @Override
     protected void execute()
     {
@@ -21,6 +28,12 @@ public class Joydrive extends Command
         drivetrain.setRotation(OI.getTurn());
     }
 
+    public void cancelbutdontstop()
+    {
+        do_stop = false;
+        cancel();
+    }
+    
     @Override
     protected boolean isFinished()
     {
@@ -32,7 +45,8 @@ public class Joydrive extends Command
     protected void end()
     {
         // When command is cancelled, stop the drivetrain
-        drivetrain.setSpeed(0);
+        if (do_stop)
+            drivetrain.setSpeed(0);
         drivetrain.setRotation(0);
     }
 }

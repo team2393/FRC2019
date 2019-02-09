@@ -44,17 +44,22 @@ public class OI
 
     public static final double getSpeed()
     {
-        final double raw = joystick.getRawAxis(PDPController.LEFT_STICK_VERTICAL);
         // "Forward" should be positive
-        return -square(raw);
+        double raw = -joystick.getRawAxis(PDPController.LEFT_STICK_VERTICAL);
+        // Button reduces turn rate
+        if (joystick.getRawAxis(PDPController.RIGHT_FRONT_LEVER) > 0.5)
+            raw = raw/3;
+        return square(raw);
     }
 
     public static final double getTurn() 
     {
-        // Full turn speed tends to be too much?
-        // TODO Have a button that toggles between full turn speed
-        //      and reduced speed?
-        return square (0.9 * joystick.getRawAxis(PDPController.RIGHT_STICK_HORIZONTAL));
+        // Full turn speed tends to be too much, so calm by 0.9
+        double raw = 0.9 * joystick.getRawAxis(PDPController.RIGHT_STICK_HORIZONTAL);
+        // Button reduces turn rate
+        if (joystick.getRawAxis(PDPController.RIGHT_FRONT_LEVER) > 0.5)
+            raw = raw/3;
+        return square(raw);
     }
 
     // sqare velae to be mor sensitive around 0
