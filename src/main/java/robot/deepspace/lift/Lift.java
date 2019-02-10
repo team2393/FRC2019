@@ -56,12 +56,24 @@ public class Lift extends Subsystem
 		// motor.configPeakCurrentLimit(60);
 		// motor.configPeakCurrentDuration(100);
         // motor.enableCurrentLimit(true);
+
+        // TODO Use max of 11.5V, so behaves same with full/weaker battery 
+        // motor.configVoltageCompSaturation(11.5);
+        // motor.enableVoltageCompensation(true);
     }
 
     @Override
     protected void initDefaultCommand()
     {
         // We have no default command, yet
+    }
+
+    @Override
+    public void periodic()
+    {
+        // TODO Check limit switch in here,
+        // reset encoder, stop motor?
+        // But need to allow motor move UP...
     }
 
     /** Drive the lift up and down

@@ -61,6 +61,7 @@ public class DriveTrain extends Subsystem
         // Coast or break when speed is set to 0.0?
         left.setNeutralMode(NeutralMode.Brake);
         right.setNeutralMode(NeutralMode.Brake);
+        // TODO Neutral mode needs to be set for both master and follower
 
         // Use quad (relative) encoder
         left.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
