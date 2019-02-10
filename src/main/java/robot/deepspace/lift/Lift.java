@@ -48,6 +48,14 @@ public class Lift extends Subsystem
         motor.configMotionCruiseVelocity(max_speed*3/4);
         // Accelerate twice as fast to reach cruise velocity in half a second
         motor.configMotionAcceleration(2*max_speed*3/4);
+        
+        // TODO Slow down?
+        // motor.configOpenloopRamp(0.15);
+        // motor.configClosedloopRamp(0.15);
+        // motor.configContinuousCurrentLimit(40);
+		// motor.configPeakCurrentLimit(60);
+		// motor.configPeakCurrentDuration(100);
+        // motor.enableCurrentLimit(true);
     }
 
     @Override

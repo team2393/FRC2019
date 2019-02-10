@@ -66,6 +66,12 @@ public class DriveTrain extends Subsystem
         left.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         right.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
        
+        // TODO Slow down acceleration
+        // left.configOpenloopRamp(0.15);
+        // right.configOpenloopRamp(0.15);
+        // left_slave.configOpenloopRamp(0.15);
+        // right_slave.configOpenloopRamp(0.15);
+
         // Tie Slaves To Master
         left_slave.follow(left);
         right_slave.follow(right);
