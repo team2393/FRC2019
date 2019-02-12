@@ -64,9 +64,14 @@ public class DeepspaceRobot extends BasicRobot
     // .. Lift
     private final Command home_lift = new HomeLift(lift);
     private final Command drive_lift = new DriveLift(lift);
-    private final Command move_lift_low = new MoveLift("Low Pos", lift, 15.5);
-    private final Command move_lift_middle = new MoveLift("Mid Pos", lift, 30.0);
-    private final Command move_lift_high = new MoveLift("Hi Pos", lift, 75.0);
+    private final Command move_lift_hatch_low = new MoveLift("Hatch Low", lift, 12+7);
+    private final Command move_lift_hatch_middle = new MoveLift("Hatch Mid", lift, 3*12+11);
+    private final Command move_lift_hatch_high = new MoveLift("Hatch Hi", lift, 6*12+3);
+    private final Command move_lift_cargo_low = new MoveLift("Cargo Low", lift, 2*12+3.5);
+    private final Command move_lift_cargo_middle = new MoveLift("Cargo Mid", lift, 4*12+7.5);
+    private final Command move_lift_cargo_high = new MoveLift("Cargo Hi", lift, 6*12+11.5);
+    private final Command move_lift_cargo_ship = new MoveLift("Cargo Ship", lift, 15.5);
+    private final Command move_lift_cargo_pickup = new MoveLift("Cargo Pickup", lift, 30.0);
 
     // .. Grabber
     private final Command toggle_grabber = new ToggleGrabber(grabber);
@@ -130,9 +135,9 @@ public class DeepspaceRobot extends BasicRobot
         OI.togglegrabber.whenPressed(toggle_grabber);
 
         OI.set_lift_home.whenPressed(home_lift);
-        OI.set_lift_low.whenPressed(move_lift_low);
-        OI.set_lift_med.whenPressed(move_lift_middle);
-        OI.set_lift_high.whenPressed(move_lift_high);
+        OI.set_lift_low.whenPressed(move_lift_hatch_low);
+        OI.set_lift_med.whenPressed(move_lift_hatch_middle);
+        OI.set_lift_high.whenPressed(move_lift_hatch_high);
 
         // TODO Buttons to
         // move lift to the rocket's low/mid/high cargo openings,
@@ -150,9 +155,15 @@ public class DeepspaceRobot extends BasicRobot
 
         SmartDashboard.putData("Home Lift", home_lift);
         SmartDashboard.putData("Drive Lift", drive_lift);
-        SmartDashboard.putData("Lift Low", move_lift_low);
-        SmartDashboard.putData("Lift Middle", move_lift_middle);
-        SmartDashboard.putData("Lift High", move_lift_high);
+
+        SmartDashboard.putData("Hatch Low", move_lift_hatch_low);
+        SmartDashboard.putData("Hatch Mid", move_lift_hatch_middle);
+        SmartDashboard.putData("Hatch High", move_lift_hatch_high);
+        SmartDashboard.putData("Cargo Low", move_lift_cargo_low);
+        SmartDashboard.putData("Cargo Mid", move_lift_cargo_middle);
+        SmartDashboard.putData("Cargo High", move_lift_cargo_high);
+        SmartDashboard.putData("Cargo Ship", move_lift_cargo_ship);
+        SmartDashboard.putData("Cargo Pickup",move_lift_cargo_pickup);
 
         SmartDashboard.putData("Get Hatch", get_hatch);
         SmartDashboard.putData("Release Hatch", release_hatch);
