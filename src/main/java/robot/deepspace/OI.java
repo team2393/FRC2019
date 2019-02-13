@@ -62,7 +62,7 @@ public class OI
         return square(raw);
     }
 
-    // sqare velae to be mor sensitive around 0
+    // square value to be more sensitive around 0
     private static double square(double raw) 
     {
 		double squareded = raw*raw;
