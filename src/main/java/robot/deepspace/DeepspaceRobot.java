@@ -64,14 +64,14 @@ public class DeepspaceRobot extends BasicRobot
     // .. Lift
     private final Command home_lift = new HomeLift(lift);
     private final Command drive_lift = new DriveLift(lift);
-    private final Command move_lift_hatch_low = new MoveLift("Hatch Low", lift, 12+7);
-    private final Command move_lift_hatch_middle = new MoveLift("Hatch Mid", lift, 3*12+11);
-    private final Command move_lift_hatch_high = new MoveLift("Hatch Hi", lift, 6*12+3);
-    private final Command move_lift_cargo_low = new MoveLift("Cargo Low", lift, 2*12+3.5);
-    private final Command move_lift_cargo_middle = new MoveLift("Cargo Mid", lift, 4*12+7.5);
-    private final Command move_lift_cargo_high = new MoveLift("Cargo Hi", lift, 6*12+11.5);
-    private final Command move_lift_cargo_ship = new MoveLift("Cargo Ship", lift, 15.5);
-    private final Command move_lift_cargo_pickup = new MoveLift("Cargo Pickup", lift, 30.0);
+    private final Command move_lift_hatch_low = new MoveLift("Hatch Low Pos", lift, 12+7);
+    private final Command move_lift_hatch_middle = new MoveLift("Hatch Mid Pos", lift, 3*12+11);
+    private final Command move_lift_hatch_high = new MoveLift("Hatch Hi Pos", lift, 6*12+3);
+    private final Command move_lift_cargo_low = new MoveLift("Cargo Low Pos", lift, 2*12+3.5);
+    private final Command move_lift_cargo_middle = new MoveLift("Cargo Mid Pos", lift, 4*12+7.5);
+    private final Command move_lift_cargo_high = new MoveLift("Cargo Hi Pos", lift, 6*12+11.5);
+    private final Command move_lift_cargo_ship = new MoveLift("Cargo Ship Pos", lift, 15.5);
+    private final Command move_lift_cargo_pickup = new MoveLift("Cargo Pickup Pos", lift, 30.0);
 
     // .. Grabber
     private final Command toggle_grabber = new ToggleGrabber(grabber);
