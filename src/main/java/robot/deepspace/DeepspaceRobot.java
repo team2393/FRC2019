@@ -300,6 +300,10 @@ public class DeepspaceRobot extends BasicRobot
     public void teleopInit()
     {
         super.teleopInit();
+
+        //Reading to clear any pending button presses
+        OI.isToggleHeadingholdPressed();
+
         // Start driving by joystick
         joydrive.start();
     }
@@ -315,6 +319,9 @@ public class DeepspaceRobot extends BasicRobot
     public void autonomousInit()
     {
         super.autonomousInit();
+
+        //Reading to clear any pending button presses
+        OI.isToggleHeadingholdPressed();
 
         // Start the selected option, which may be "Nothing"
         auto_options.getSelected().start();
