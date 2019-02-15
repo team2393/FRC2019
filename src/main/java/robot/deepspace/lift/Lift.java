@@ -20,6 +20,10 @@ public class Lift extends Subsystem
 {
     // TODO Measure how many inches lift moves per count
     private final double COUNTS_PER_INCH = 4096.0;
+
+    // TODO Measure bottom position (floor to lower edge of grabber assembly on lift)
+    private final double BOTTOM_INCH = 0.0;
+    
     private final TalonSRX motor = new TalonSRX(RobotMap.LIFT_MOTOR);
     private final DigitalInput limit_switch = new DigitalInput(RobotMap.LIMIT_SWITCH);
 
@@ -86,7 +90,8 @@ public class Lift extends Subsystem
         if (at_limit)
         {
             // Reset position when hitting limit
-            motor.setSelectedSensorPosition(0);
+            // BOTTOM_INCH = counts / COUNTS_PER_INCH
+            motor.setSelectedSensorPosition((int) (BOTTOM_INCH * COUNTS_PER_INCH));
             // Prohibit moving down by setting motor to 0 once switch is hit
             if (speed < 0)
                 speed = 0.0;
@@ -104,7 +109,7 @@ public class Lift extends Subsystem
         // To Tune PID, use
         // motor.set(ControlMode.Position, position);
         motor.set(ControlMode.MotionMagic, position);
-        int pos = motor.getSelectedSensorPosition();
+        final int pos = motor.getSelectedSensorPosition();
         SmartDashboard.putNumber("Lift Position", pos);
         SmartDashboard.putNumber("Lift Pos Error", motor.getClosedLoopError());
         SmartDashboard.putNumber("Lift Height", pos / COUNTS_PER_INCH);
