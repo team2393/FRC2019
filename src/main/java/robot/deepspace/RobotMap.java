@@ -8,7 +8,6 @@ public class RobotMap
 {
     // Solenoids =================================
     //Riser Solenoid
-    // TODO Set to 1 for actual second PCM
     public final static int RISER_PCM = 0;
     public final static int FRONT_RISER_SOLENOID = 5;
     public final static int BACK_RISER_SOLENOID = 4;

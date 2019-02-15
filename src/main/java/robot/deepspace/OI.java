@@ -97,7 +97,7 @@ public class OI
 
     public static final boolean isPickUpPressed()
     {
-        return buttonboard.getRawButtonPressed(2);
+        return buttonboard.getRawButtonPressed(7);
     }    
 
     public static final boolean isCargoShipPressed()
