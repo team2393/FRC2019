@@ -185,7 +185,7 @@ public class DeepspaceRobot extends BasicRobot
 
         // TODO Make sure risers are retracted
         // reset_riser.setRunWhenDisabled(true);
-        // reset_riser.start();
+        //reset_riser.start();
     }
 
     /** Create auto moves */
@@ -344,7 +344,7 @@ public class DeepspaceRobot extends BasicRobot
         if (OI.riserFrontUp())
             rise_front.start();
 
-        if (OI.riserAllUp());
+        if (OI.riserAllUp())
             reset_riser.start();
     }
 
@@ -384,7 +384,7 @@ public class DeepspaceRobot extends BasicRobot
     @Override
     public void autonomousPeriodic()
     {
-        
+
         // Test drive PID
         // if ((System.currentTimeMillis() / 5000) % 2 == 1)
         //     drivetrain.setPosition(24);
