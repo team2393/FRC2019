@@ -21,20 +21,28 @@ public class OI
     {
         return joystick.getRawButtonPressed(PDPController.A_BUTTON);
     }
-
+    
     // Hatch 'button' is actually a lever,
     // so we need to handle the has-it-been-pressed logic ourselves
     private static boolean hatch_button_was_pressed = false;
-
-    public static final boolean isHatchButtonPressed()
+    
+    public static final boolean isReleaseButtonPressed()
     {
         final boolean is_pressed = joystick.getRawAxis(PDPController.LEFT_FRONT_LEVER) > 0.8;
         final boolean was_pressed_since_last_checked = is_pressed  &&  ! hatch_button_was_pressed;
         hatch_button_was_pressed = is_pressed;
         return was_pressed_since_last_checked;
     }
+    
+    public static boolean isReleaseButtonReleased()
+    {
+        final boolean is_pressed = joystick.getRawAxis(PDPController.LEFT_FRONT_LEVER) > 0.8;
+        final boolean was_released = hatch_button_was_pressed   &&  !is_pressed;
+        hatch_button_was_pressed = is_pressed;
+        return was_released;
+    }
 
-    public static final boolean isCargoButtonPressed()
+    public static final boolean isGetButtonPressed()
     {
         return joystick.getRawButtonPressed(PDPController.LEFT_FRONT_BUTTON);
     }

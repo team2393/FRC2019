@@ -27,6 +27,7 @@ import robot.deepspace.grabber.SetSpinnerSpeed;
 import robot.deepspace.grabber.ToggleGrabber;
 import robot.deepspace.grabber.WaitForCargo;
 import robot.deepspace.grabber.WaitForHatch;
+import robot.deepspace.grabber.WaitForHatchButtonRelease;
 import robot.deepspace.lift.DriveLift;
 import robot.deepspace.lift.HomeLift;
 import robot.deepspace.lift.Lift;
@@ -101,10 +102,11 @@ public class DeepspaceRobot extends BasicRobot
         // Get hatch panel
         // TODO Maybe start by moving lift to loading station height
         // get_hatch.addSequential(new StartCommand(move_lift_low));
-        get_hatch.addSequential(new Retract(grabber));
+        get_hatch.addSequential(new Extend(grabber));
         get_hatch.addSequential(new OpenGrabber(grabber));
         get_hatch.addSequential(new WaitForHatch(grabber));
         get_hatch.addSequential(new CloseGrabber(grabber));
+        get_hatch.addSequential(new Retract(grabber));
         // TODO Maybe add command to lift the hatch panel
         // off the lower brush in the loading station
         // get_hatch.addSequential(new MoveLift("Loading Station Get Out", lift, 18));
@@ -113,9 +115,10 @@ public class DeepspaceRobot extends BasicRobot
 
         // Release hatch panel
         release_hatch.addSequential(new Extend(grabber));
-        // not sure if we should open or if it will slip off on its own
-        // release_hatch.addSequential(new OpenGrabber(grabber));
-
+        release_hatch.addSequential(new WaitForHatchButtonRelease());
+        release_hatch.addSequential(new OpenGrabber(grabber));
+        release_hatch.addSequential(new Retract(grabber));
+        
         // Get Cargo
         get_cargo.addSequential(new SetSpinnerSpeed(grabber, -0.5));
         get_cargo.addSequential(new WaitForCargo(grabber));
@@ -255,20 +258,20 @@ public class DeepspaceRobot extends BasicRobot
     {
         Scheduler.getInstance().run();
 
-        if (OI.isCargoButtonPressed())
+        if (OI.isGetButtonPressed())
         {
-            if (grabber.isCargoDetected())
+            if (OI.isCargoModeEnabled())
+                get_cargo.start();
+            else
+                get_hatch.start();
+        }
+            
+        if (OI.isReleaseButtonPressed())
+        {
+            if (OI.isCargoModeEnabled())
                 deposit_cargo.start();
             else 
-                get_cargo.start();
-        }
-
-        if (OI.isHatchButtonPressed())
-        {
-            if (grabber.isHatchDetected())
                 release_hatch.start();
-            else 
-                get_hatch.start();
         }
 
         SmartDashboard.putNumber("Current [A]", pdp.getTotalCurrent());
