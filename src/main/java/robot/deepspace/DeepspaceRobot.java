@@ -298,9 +298,13 @@ public class DeepspaceRobot extends BasicRobot
     
     private void handleButtonBoard()
     {
+        final boolean cargo_mode = OI.isCargoModeEnabled();
+        SmartDashboard.putBoolean("Cargo Mode", cargo_mode);
+        SmartDashboard.putBoolean("Hatch Mode", ! cargo_mode);
+        
         if (OI.isPickUpPressed())
         {
-            if (OI.isCargoModeEnabled())
+            if (cargo_mode)
                 move_lift_cargo_pickup.start();
             else
                 move_lift_hatch_low.start();
@@ -308,7 +312,7 @@ public class DeepspaceRobot extends BasicRobot
 
         if (OI.isCargoShipPressed())
         {
-            if (OI.isCargoModeEnabled())
+            if (cargo_mode)
                 move_lift_cargo_ship.start();
             else
                 move_lift_hatch_low.start();
@@ -316,7 +320,7 @@ public class DeepspaceRobot extends BasicRobot
 
         if (OI.isRocketLowPressed())
         {
-            if (OI.isCargoModeEnabled())
+            if (cargo_mode)
                 move_lift_cargo_low.start();
             else
                 move_lift_hatch_low.start();
@@ -324,7 +328,7 @@ public class DeepspaceRobot extends BasicRobot
 
         if (OI.isRocketMedPressed())
         {
-            if (OI.isCargoModeEnabled())
+            if (cargo_mode)
                 move_lift_cargo_middle.start();
             else
                 move_lift_hatch_middle.start();
@@ -332,7 +336,7 @@ public class DeepspaceRobot extends BasicRobot
 
         if (OI.isRocketHighPressed())
         {
-            if (OI.isCargoModeEnabled())
+            if (cargo_mode)
                 move_lift_cargo_high.start();
             else
                 move_lift_hatch_high.start();
