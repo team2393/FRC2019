@@ -296,6 +296,58 @@ public class DeepspaceRobot extends BasicRobot
         }
     }
     
+    private void handlebuttonboard()
+    {
+        if (OI.isPickUpPressed())
+        {
+            if (OI.isCargoModeEnabled())
+                move_lift_cargo_pickup.start();
+            else
+                move_lift_hatch_low.start();
+        }
+
+        if (OI.isCargoShipPressed())
+        {
+            if (OI.isCargoModeEnabled())
+                move_lift_cargo_ship.start();
+            else
+                move_lift_hatch_low.start();
+        }
+
+        if (OI.isRocketLowPressed())
+        {
+            if (OI.isCargoModeEnabled())
+                move_lift_cargo_low.start();
+            else
+                move_lift_hatch_low.start();
+        }
+
+        if (OI.isRocketMedPressed())
+        {
+            if (OI.isCargoModeEnabled())
+                move_lift_cargo_middle.start();
+            else
+                move_lift_hatch_middle.start();
+        }
+
+        if (OI.isRocketHighPressed())
+        {
+            if (OI.isCargoModeEnabled())
+                move_lift_cargo_high.start();
+            else
+                move_lift_hatch_high.start();
+        }
+
+        if (OI.riserAllDown())
+            drop_all.start();
+
+        if (OI.riserFrontUp())
+            rise_front.start();
+
+        if (OI.riserAllUp());
+            reset_riser.start();
+    }
+
     @Override
     public void teleopInit()
     {
@@ -313,6 +365,7 @@ public class DeepspaceRobot extends BasicRobot
     {
         // .. and allow toggling between HH mode and plain joydrive
         updateJoystickDrivemode();
+        handlebuttonboard();
     }
 
     @Override
@@ -331,14 +384,17 @@ public class DeepspaceRobot extends BasicRobot
     @Override
     public void autonomousPeriodic()
     {
+        
         // Test drive PID
         // if ((System.currentTimeMillis() / 5000) % 2 == 1)
         //     drivetrain.setPosition(24);
         // else
         //     drivetrain.setPosition(0);
 
+
         // Pressing a button will start driving by joystick,
         // then toggle between plain and HH mode
         updateJoystickDrivemode();
+        handlebuttonboard();
     }
 }

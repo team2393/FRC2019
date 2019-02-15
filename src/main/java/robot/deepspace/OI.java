@@ -77,4 +77,49 @@ public class OI
         // "Up" should be positive
         return -joystick.getRawAxis(PDPController.RIGHT_STICK_VERTICAL);
     }
+
+    public static final boolean isCargoModeEnabled()
+    {
+        return buttonboard.getRawButton(1);
+    }
+
+    public static final boolean isPickUpPressed()
+    {
+        return buttonboard.getRawButtonPressed(2);
+    }    
+
+    public static final boolean isCargoShipPressed()
+    {
+        return buttonboard.getRawButtonPressed(3);
+    }
+
+    public static final boolean isRocketLowPressed()
+    {
+        return buttonboard.getRawButtonPressed(4);
+    }
+
+    public static final boolean isRocketMedPressed()
+    {
+        return buttonboard.getRawButtonPressed(5);
+    }
+
+    public static final boolean isRocketHighPressed()
+    {
+        return buttonboard.getRawButtonPressed(8);
+    }
+
+    public static final boolean riserAllDown()
+    {
+        return buttonboard.getRawButtonPressed(6);
+    }
+
+    public static final boolean riserFrontUp()
+    {
+        return buttonboard.getRawButtonPressed(10);
+    }
+
+    public static final boolean riserAllUp()
+    {
+        return buttonboard.getRawButtonPressed(9);
+    }
 }
