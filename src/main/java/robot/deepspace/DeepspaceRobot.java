@@ -296,7 +296,7 @@ public class DeepspaceRobot extends BasicRobot
         }
     }
     
-    private void handlebuttonboard()
+    private void handleButtonBoard()
     {
         if (OI.isPickUpPressed())
         {
@@ -338,13 +338,13 @@ public class DeepspaceRobot extends BasicRobot
                 move_lift_hatch_high.start();
         }
 
-        if (OI.riserAllDown())
+        if (OI.isRiserAllDownPressed())
             drop_all.start();
 
-        if (OI.riserFrontUp())
+        if (OI.isRiserFrontUpPressed())
             rise_front.start();
 
-        if (OI.riserAllUp())
+        if (OI.isRiserAllUpPressed())
             reset_riser.start();
     }
 
@@ -353,7 +353,7 @@ public class DeepspaceRobot extends BasicRobot
     {
         super.teleopInit();
 
-        //Reading to clear any pending button presses
+        // Reading to clear any pending button presses
         OI.isToggleHeadingholdPressed();
 
         // Start driving by joystick
@@ -365,7 +365,7 @@ public class DeepspaceRobot extends BasicRobot
     {
         // .. and allow toggling between HH mode and plain joydrive
         updateJoystickDrivemode();
-        handlebuttonboard();
+        handleButtonBoard();
     }
 
     @Override
@@ -373,7 +373,7 @@ public class DeepspaceRobot extends BasicRobot
     {
         super.autonomousInit();
 
-        //Reading to clear any pending button presses
+        // Reading to clear any pending button presses
         OI.isToggleHeadingholdPressed();
 
         // Start the selected option, which may be "Nothing"
@@ -384,17 +384,21 @@ public class DeepspaceRobot extends BasicRobot
     @Override
     public void autonomousPeriodic()
     {
-
         // Test drive PID
         // if ((System.currentTimeMillis() / 5000) % 2 == 1)
         //     drivetrain.setPosition(24);
         // else
         //     drivetrain.setPosition(0);
 
+        // Test lift PID
+        // if ((System.currentTimeMillis() / 5000) % 2 == 1)
+        //     lift.setHeight(12);
+        // else
+        //     lift.setHeight(24);
 
         // Pressing a button will start driving by joystick,
         // then toggle between plain and HH mode
         updateJoystickDrivemode();
-        handlebuttonboard();
+        handleButtonBoard();
     }
 }

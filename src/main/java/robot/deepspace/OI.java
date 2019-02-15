@@ -16,11 +16,14 @@ public class OI
     private static final Joystick buttonboard = new Joystick(1);
     
     public static final Button gearshift = new JoystickButton(joystick, PDPController.RIGHT_FRONT_BUTTON);
+
     public static final boolean isToggleHeadingholdPressed()
     {
         return joystick.getRawButtonPressed(PDPController.A_BUTTON);
     }
 
+    // Hatch 'button' is actually a lever,
+    // so we need to handle the has-it-been-pressed logic ourselves
     private static boolean hatch_button_was_pressed = false;
 
     public static final boolean isHatchButtonPressed()
@@ -35,6 +38,7 @@ public class OI
     {
         return joystick.getRawButtonPressed(PDPController.LEFT_FRONT_BUTTON);
     }
+    
     public static final Button togglegrabber = new JoystickButton(joystick, PDPController.LEFT_FRONT_BUTTON);
 
     public static final Button set_lift_home = new JoystickButton(joystick, PDPController.LEFT_TOP_BUTTON);
@@ -108,17 +112,17 @@ public class OI
         return buttonboard.getRawButtonPressed(8);
     }
 
-    public static final boolean riserAllDown()
+    public static final boolean isRiserAllDownPressed()
     {
         return buttonboard.getRawButtonPressed(6);
     }
 
-    public static final boolean riserFrontUp()
+    public static final boolean isRiserFrontUpPressed()
     {
         return buttonboard.getRawButtonPressed(10);
     }
 
-    public static final boolean riserAllUp()
+    public static final boolean isRiserAllUpPressed()
     {
         return buttonboard.getRawButtonPressed(9);
     }
