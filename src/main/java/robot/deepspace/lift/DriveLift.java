@@ -17,7 +17,11 @@ public class DriveLift extends Command
     @Override
     protected void execute() 
     {
-        lift.drive(OI.getLiftUpDown());
+        double joystick_reading = OI.getLiftUpDown();
+        if (Math.abs(joystick_reading) > 0.1)
+            lift.drive(joystick_reading);
+        else
+            lift.drive(0.0);        
     }
 
     @Override
