@@ -142,14 +142,7 @@ public class DeepspaceRobot extends BasicRobot
         OI.set_lift_med.whenPressed(move_lift_hatch_middle);
         OI.set_lift_high.whenPressed(move_lift_hatch_high);
 
-        // TODO Buttons to
-        // move lift to the rocket's low/mid/high cargo openings,
-        // move lift to space ship cargo opening,
-        // get_hatch,
-        // release_hatch,
-        // drop_all, rise_front, reset_riser
 
-        // .. and/or place them on dashboard
         SmartDashboard.putData("Auto Options", auto_options);
    
         SmartDashboard.putData("Drive", joydrive);
