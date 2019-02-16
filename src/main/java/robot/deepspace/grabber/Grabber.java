@@ -22,7 +22,7 @@ public class Grabber extends Subsystem
     private final Solenoid extender = new Solenoid(RobotMap.EXTEND_SOLENOID);
     private final DigitalInput hatch_sensor = new DigitalInput(RobotMap.HATCH_SENSOR);
     private final DigitalInput cargo_sensor = new DigitalInput(RobotMap.CARGO_SENSOR);
-    private final AnalogInput sonic_test = new AnalogInput(RobotMap.USONIC_TEST);
+    // private final AnalogInput sonic_test = new AnalogInput(RobotMap.USONIC_TEST);
     private final Victor intake_spinner1 = new Victor(RobotMap.CARGO_SPINNER1);
     private final Victor intake_spinner2 = new Victor(RobotMap.CARGO_SPINNER2);
     
@@ -93,7 +93,7 @@ public class Grabber extends Subsystem
     {
         intake_spinner1.set(speed);
         intake_spinner2.set(speed);
-        SmartDashboard.putNumber("Sonic Test", sonic_test.getVoltage());
+        // SmartDashboard.putNumber("Sonic Test", sonic_test.getVoltage());
         SmartDashboard.putBoolean("Cargo Sensor", isCargoDetected());
         SmartDashboard.putBoolean("Hatch Sensor", isHatchDetected());
     }   

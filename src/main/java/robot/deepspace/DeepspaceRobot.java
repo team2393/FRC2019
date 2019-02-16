@@ -76,6 +76,8 @@ public class DeepspaceRobot extends BasicRobot
 
     // .. Grabber
     private final Command toggle_grabber = new ToggleGrabber(grabber);
+    private final Command extend_grabber = new Extend(grabber);
+    private final Command retract_grabber = new Retract(grabber);
     private final CommandGroup get_hatch = new CommandGroup();
     private final CommandGroup release_hatch = new CommandGroup();
     private final CommandGroup get_cargo = new CommandGroup();
@@ -104,10 +106,9 @@ public class DeepspaceRobot extends BasicRobot
         // get_hatch.addSequential(new StartCommand(move_lift_low));
         get_hatch.addSequential(new Extend(grabber));
         get_hatch.addSequential(new OpenGrabber(grabber));
-
-        // get_hatch.addSequential(new WaitForHatch(grabber));
-        // get_hatch.addSequential(new CloseGrabber(grabber));
-        // get_hatch.addSequential(new Retract(grabber));
+        get_hatch.addSequential(new WaitForHatch(grabber));
+        get_hatch.addSequential(new CloseGrabber(grabber));
+        get_hatch.addSequential(new Retract(grabber));
         // TODO Maybe add command to lift the hatch panel
         // off the lower brush in the loading station
         // get_hatch.addSequential(new MoveLift("Loading Station Get Out", lift, 18));
@@ -115,10 +116,9 @@ public class DeepspaceRobot extends BasicRobot
         // to spaceship or rocket, and push low/mid/high position buttons.
 
         // Release hatch panel
-        // release_hatch.addSequential(new Extend(grabber));
-        // release_hatch.addSequential(new WaitForHatchButtonRelease());
-        // release_hatch.addSequential(new OpenGrabber(grabber));
-        release_hatch.addSequential(new CloseGrabber(grabber));
+        release_hatch.addSequential(new Extend(grabber));
+        release_hatch.addSequential(new WaitForHatchButtonRelease());
+        release_hatch.addSequential(new OpenGrabber(grabber));
         release_hatch.addSequential(new Retract(grabber));
         
         // Get Cargo
@@ -137,7 +137,6 @@ public class DeepspaceRobot extends BasicRobot
 
         // Bind Buttons to commands ..
         OI.gearshift.whenPressed(toggle_gear);
-        OI.togglegrabber.whenPressed(toggle_grabber);
 
         OI.set_lift_home.whenPressed(home_lift);
         OI.set_lift_low.whenPressed(move_lift_hatch_low);
@@ -163,6 +162,9 @@ public class DeepspaceRobot extends BasicRobot
         SmartDashboard.putData("Cargo Ship", move_lift_cargo_ship);
         SmartDashboard.putData("Cargo Pickup",move_lift_cargo_pickup);
 
+        SmartDashboard.putData("Extend Grabber", extend_grabber);
+        SmartDashboard.putData("Retract Grabber", retract_grabber);
+        SmartDashboard.putData("Toggle Grabber", toggle_grabber);
         SmartDashboard.putData("Get Hatch", get_hatch);
         SmartDashboard.putData("Release Hatch", release_hatch);
         SmartDashboard.putData("Get Cargo", get_cargo);
@@ -268,9 +270,6 @@ public class DeepspaceRobot extends BasicRobot
             else 
                 release_hatch.start();
         }
-
-        // SmartDashboard.putNumber("Current [A]", pdp.getTotalCurrent());
-        // SmartDashboard.putNumber("Capacity [KWh]", pdp.getTotalEnergy()/60/60/1000);
     }
 
     private void updateJoystickDrivemode()

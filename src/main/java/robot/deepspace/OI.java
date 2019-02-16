@@ -47,13 +47,6 @@ public class OI
         return joystick.getRawButtonPressed(PDPController.LEFT_FRONT_BUTTON);
     }
     
-    public static final Button togglegrabber = new JoystickButton(joystick, PDPController.LEFT_FRONT_BUTTON);
-
-    public static final Button set_lift_home = new JoystickButton(joystick, PDPController.LEFT_TOP_BUTTON);
-    public static final Button set_lift_low = new JoystickButton(joystick, PDPController.X_BUTTON);
-    public static final Button set_lift_med = new JoystickButton(joystick, PDPController.Y_BUTTON);
-    public static final Button set_lift_high = new JoystickButton(joystick, PDPController.B_BUTTON);
-
     public static final double getSpeed()
     {
         // "Forward" should be positive

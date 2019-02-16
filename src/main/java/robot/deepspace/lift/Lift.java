@@ -2,6 +2,7 @@ package robot.deepspace.lift;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -33,8 +34,10 @@ public class Lift extends Subsystem
         motor.configFactoryDefault();
         motor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
 
+        motor.setNeutralMode(NeutralMode.Brake);
+
         // TODO Depending on the actual lift mechanics, might need to invert
-        motor.setInverted(false);
+        motor.setInverted(true);
          // Does the sensor rotate in opposite direction compared to motor?
         motor.setSensorPhase(false);
 

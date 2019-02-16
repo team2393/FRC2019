@@ -1,5 +1,14 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="Toggle Grabber" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="483" y="561"/>
+	</widget>
+	<widget field="Retract Grabber" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="320" y="592"/>
+	</widget>
+	<widget field="Extend Grabber" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="323" y="560"/>
+	</widget>
 	<widget field="Hatch Mode" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
 		<location x="960" y="135"/>
 		<width>90</width>
@@ -105,7 +114,7 @@
 		<width>156</width>
 	</widget>
 	<widget field="Auto Options" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
-		<location x="4" y="429"/>
+		<location x="43" y="540"/>
 	</widget>
 	<widget field="RightEncoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="235"/>
@@ -200,24 +209,13 @@
 		<location x="512" y="496"/>
 	</widget>
 	<widget field="Rise Front" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="-4" y="408"/>
+		<location x="4" y="399"/>
 	</widget>
 	<widget field="Reset Riser" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
 		<location x="-3" y="436"/>
 	</widget>
 	<widget field="Drop All" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="-5" y="380"/>
-	</widget>
-	<widget field="Sonic Test" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="471"/>
-		<width>125</width>
-		<height>25</height>
-	</widget>
-	<widget field="Capacity [KWh]" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="540" y="557"/>
-	</widget>
-	<widget field="Current [A]" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="712" y="588"/>
+		<location x="15" y="369"/>
 	</widget>
 </dashboard>
 </xml>
