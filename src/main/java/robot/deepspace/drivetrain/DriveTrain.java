@@ -31,8 +31,7 @@ public class DriveTrain extends Subsystem
     private final WPI_TalonSRX right_slave = new WPI_TalonSRX(RobotMap.RIGHT_MOTOR_SLAVE);
     
     private final DifferentialDrive drive = new DifferentialDrive(left, right);
-    private final Solenoid gearbox1 = new Solenoid(RobotMap.GEARBOX_SOLENOID1);
-    private final Solenoid gearbox2 = new Solenoid(RobotMap.GEARBOX_SOLENOID2);
+    private final Solenoid gearbox = new Solenoid(RobotMap.GEARBOX_SOLENOID);
     private double speed = 0;
     private double rotation = 0;
 
@@ -159,13 +158,12 @@ public class DriveTrain extends Subsystem
     
     public boolean isHighGear()
     {
-        return gearbox1.get();
+        return gearbox.get();
     }
 
     public void setGear(final boolean high)
     {
-        gearbox1.set(high);
-        gearbox2.set(high);
+        gearbox.set(high);
         SmartDashboard.putBoolean("Gear", high);
     }
     

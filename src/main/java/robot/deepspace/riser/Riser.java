@@ -15,7 +15,8 @@ import robot.deepspace.RobotMap;
  */
 public class Riser extends Subsystem
 {
-    private final Solenoid front_riser = new Solenoid(RobotMap.RISER_PCM, RobotMap.FRONT_RISER_SOLENOID);
+    private final Solenoid front_riser1 = new Solenoid(RobotMap.RISER_PCM, RobotMap.FRONT_RISER_SOLENOID1);
+    private final Solenoid front_riser2 = new Solenoid(RobotMap.RISER_PCM, RobotMap.FRONT_RISER_SOLENOID2);
     private final Solenoid back_riser = new Solenoid(RobotMap.RISER_PCM, RobotMap.BACK_RISER_SOLENOID);
     private final Victor drive = new Victor(RobotMap.RISER_MOTOR);
 
@@ -27,7 +28,8 @@ public class Riser extends Subsystem
 
     public void dropFront(boolean down)
     {
-        front_riser.set(down);
+        front_riser1.set(down);
+        front_riser2.set(down);
     }
 
     public void dropBack(boolean down)

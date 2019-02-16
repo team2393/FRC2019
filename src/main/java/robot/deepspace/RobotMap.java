@@ -9,15 +9,15 @@ public class RobotMap
     // Solenoids =================================
     //Riser Solenoid
     public final static int RISER_PCM = 0;
-    public final static int FRONT_RISER_SOLENOID = 5;
+    public final static int FRONT_RISER_SOLENOID1 = 6;
+    public final static int FRONT_RISER_SOLENOID2 = 5;
     public final static int BACK_RISER_SOLENOID = 4;
     // High/low speed gear
-    public final static int GEARBOX_SOLENOID1 = 1;
-    public final static int GEARBOX_SOLENOID2 = 2;
+    public final static int GEARBOX_SOLENOID = 2;
     // Hatch grabber open/close
-    public final static int GRABBER_SOLENOID = 6;
+    public final static int GRABBER_SOLENOID = 0;
     // Hatch grabber extend/retract
-    public final static int EXTEND_SOLENOID = 7;
+    public final static int EXTEND_SOLENOID = 1;
     
     // Talon IDs =================================
     // Lift up/down

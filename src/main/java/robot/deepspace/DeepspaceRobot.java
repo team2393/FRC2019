@@ -104,9 +104,10 @@ public class DeepspaceRobot extends BasicRobot
         // get_hatch.addSequential(new StartCommand(move_lift_low));
         get_hatch.addSequential(new Extend(grabber));
         get_hatch.addSequential(new OpenGrabber(grabber));
-        get_hatch.addSequential(new WaitForHatch(grabber));
-        get_hatch.addSequential(new CloseGrabber(grabber));
-        get_hatch.addSequential(new Retract(grabber));
+
+        // get_hatch.addSequential(new WaitForHatch(grabber));
+        // get_hatch.addSequential(new CloseGrabber(grabber));
+        // get_hatch.addSequential(new Retract(grabber));
         // TODO Maybe add command to lift the hatch panel
         // off the lower brush in the loading station
         // get_hatch.addSequential(new MoveLift("Loading Station Get Out", lift, 18));
@@ -114,9 +115,10 @@ public class DeepspaceRobot extends BasicRobot
         // to spaceship or rocket, and push low/mid/high position buttons.
 
         // Release hatch panel
-        release_hatch.addSequential(new Extend(grabber));
-        release_hatch.addSequential(new WaitForHatchButtonRelease());
-        release_hatch.addSequential(new OpenGrabber(grabber));
+        // release_hatch.addSequential(new Extend(grabber));
+        // release_hatch.addSequential(new WaitForHatchButtonRelease());
+        // release_hatch.addSequential(new OpenGrabber(grabber));
+        release_hatch.addSequential(new CloseGrabber(grabber));
         release_hatch.addSequential(new Retract(grabber));
         
         // Get Cargo
@@ -267,8 +269,8 @@ public class DeepspaceRobot extends BasicRobot
                 release_hatch.start();
         }
 
-        SmartDashboard.putNumber("Current [A]", pdp.getTotalCurrent());
-        SmartDashboard.putNumber("Capacity [KWh]", pdp.getTotalEnergy()/60/60/1000);
+        // SmartDashboard.putNumber("Current [A]", pdp.getTotalCurrent());
+        // SmartDashboard.putNumber("Capacity [KWh]", pdp.getTotalEnergy()/60/60/1000);
     }
 
     private void updateJoystickDrivemode()
@@ -365,7 +367,7 @@ public class DeepspaceRobot extends BasicRobot
     {
         // .. and allow toggling between HH mode and plain joydrive
         updateJoystickDrivemode();
-        handleButtonBoard();
+        // handleButtonBoard();
     }
 
     @Override
@@ -399,6 +401,6 @@ public class DeepspaceRobot extends BasicRobot
         // Pressing a button will start driving by joystick,
         // then toggle between plain and HH mode
         updateJoystickDrivemode();
-        handleButtonBoard();
+        // handleButtonBoard();
     }
 }
