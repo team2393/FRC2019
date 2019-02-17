@@ -138,11 +138,6 @@ public class DeepspaceRobot extends BasicRobot
         // Bind Buttons to commands ..
         OI.gearshift.whenPressed(toggle_gear);
 
-        OI.set_lift_home.whenPressed(home_lift);
-        OI.set_lift_low.whenPressed(move_lift_hatch_low);
-        OI.set_lift_med.whenPressed(move_lift_hatch_middle);
-        OI.set_lift_high.whenPressed(move_lift_hatch_high);
-
         // .. and/or place them on dashboard
         SmartDashboard.putData("Auto Options", auto_options);
    

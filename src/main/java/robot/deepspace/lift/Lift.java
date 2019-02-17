@@ -39,7 +39,7 @@ public class Lift extends Subsystem
         // TODO Depending on the actual lift mechanics, might need to invert
         motor.setInverted(true);
          // Does the sensor rotate in opposite direction compared to motor?
-        motor.setSensorPhase(false);
+        motor.setSensorPhase(true);
 
         // Configure PID
         motor.config_kP(0, 0.5);
