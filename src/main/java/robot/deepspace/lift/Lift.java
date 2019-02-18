@@ -75,7 +75,7 @@ public class Lift extends Subsystem
     {
         final int pos = motor.getSelectedSensorPosition();
         SmartDashboard.putNumber("Lift Position", pos);
-        SmartDashboard.putNumber("Lift Height (inchs)", pos / COUNTS_PER_INCH);
+        SmartDashboard.putNumber("Lift Height (inche    s)", pos / COUNTS_PER_INCH);
     }
 
     public void resetLift()
