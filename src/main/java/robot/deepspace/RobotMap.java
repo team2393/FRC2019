@@ -38,8 +38,6 @@ public class RobotMap
     public final static int CARGO_SPINNER2 = 2;
 
     // DIO ports =================================
-    // Lift at bottom limit
-    public final static int LIMIT_SWITCH = 0;
     // Ball detected
     public final static int CARGO_SENSOR = 1;
     // Hatch panel detected

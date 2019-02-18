@@ -29,9 +29,9 @@ import robot.deepspace.grabber.WaitForCargo;
 import robot.deepspace.grabber.WaitForHatch;
 import robot.deepspace.grabber.WaitForHatchButtonRelease;
 import robot.deepspace.lift.DriveLift;
-import robot.deepspace.lift.HomeLift;
 import robot.deepspace.lift.Lift;
 import robot.deepspace.lift.MoveLift;
+import robot.deepspace.lift.ResetLift;
 import robot.deepspace.riser.DropAll;
 import robot.deepspace.riser.ResetRiser;
 import robot.deepspace.riser.RiseFront;
@@ -63,7 +63,7 @@ public class DeepspaceRobot extends BasicRobot
     private final Rumble rumble = new Rumble();
 
     // .. Lift
-    private final Command home_lift = new HomeLift(lift);
+    private final Command reset_lift = new ResetLift(lift);
     private final Command drive_lift = new DriveLift(lift);
     private final Command move_lift_hatch_low = new MoveLift("Hatch Low Pos", lift, 12+7);
     private final Command move_lift_hatch_middle = new MoveLift("Hatch Mid Pos", lift, 3*12+11);
@@ -145,7 +145,7 @@ public class DeepspaceRobot extends BasicRobot
         SmartDashboard.putData("HH Drive", hhdrive);
         SmartDashboard.putData("Reset Drivetrain", reset_drivetrain);
 
-        SmartDashboard.putData("Home Lift", home_lift);
+        SmartDashboard.putData("Reset Lift", reset_lift);
         SmartDashboard.putData("Drive Lift", drive_lift);
 
         SmartDashboard.putData("Hatch Low", move_lift_hatch_low);
@@ -232,7 +232,7 @@ public class DeepspaceRobot extends BasicRobot
         demo.addSequential(new RotateToHeading(drivetrain, 0));
         demo.addSequential(new MoveToPosition(drivetrain, 0));
         auto_options.addOption("L to R1", demo);
-
+ 
         demo = new CommandGroup();
         demo.addSequential(new ResetDrivetrain(drivetrain));
         demo.addSequential(new MoveToPosition(drivetrain, 118, 0));

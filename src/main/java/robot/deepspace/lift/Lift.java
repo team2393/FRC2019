@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.deepspace.RobotMap;
@@ -20,13 +19,9 @@ import robot.deepspace.RobotMap;
 public class Lift extends Subsystem
 {
     // TODO Measure how many inches lift moves per count
-    private final double COUNTS_PER_INCH = 4096.0;
-
-    // TODO Measure bottom position (floor to lower edge of grabber assembly on lift)
-    private final double BOTTOM_INCH = 0.0;
+    private final double COUNTS_PER_INCH = 1;
     
     private final TalonSRX motor = new TalonSRX(RobotMap.LIFT_MOTOR);
-    private final DigitalInput limit_switch = new DigitalInput(RobotMap.LIMIT_SWITCH);
 
     public Lift()
     {
@@ -76,51 +71,46 @@ public class Lift extends Subsystem
     }
 
     @Override
-    public void periodic()
+    public void periodic() 
     {
-        // TODO Check limit switch in here,
-        // reset encoder, stop motor?
-        // But need to allow motor move UP...
+        final int pos = motor.getSelectedSensorPosition();
+        SmartDashboard.putNumber("Lift Position", pos);
+        SmartDashboard.putNumber("Lift Height (inchs)", pos / COUNTS_PER_INCH);
     }
 
+    public void resetLift()
+    {
+    motor.setSelectedSensorPosition(0);
+    }
     /** Drive the lift up and down
      *  @param speed -1 to 1, positive is up
      *  @return true if OK, false if we hit the limit switch
      */
     public boolean drive(double speed)
     {
-        boolean at_limit = limit_switch.get();
+        boolean at_limit = motor.getSelectedSensorPosition() <= 0;
         if (at_limit)
         {
-            // Reset position when hitting limit
-            // BOTTOM_INCH = counts / COUNTS_PER_INCH
-            motor.setSelectedSensorPosition((int) (BOTTOM_INCH * COUNTS_PER_INCH));
             // Prohibit moving down by setting motor to 0 once switch is hit
             if (speed < 0)
                 speed = 0.0;
         }
         motor.set(ControlMode.PercentOutput, speed);
- 
-        SmartDashboard.putNumber("Lift Position", motor.getSelectedSensorPosition());
-
+        
         return ! at_limit;
     }
-
+    
     /** @param position Desired position in encoder counts */
     public void setPosition(final double position)
     {
         // To Tune PID, use
         // motor.set(ControlMode.Position, position);
         motor.set(ControlMode.MotionMagic, position);
-        final int pos = motor.getSelectedSensorPosition();
-        SmartDashboard.putNumber("Lift Position", pos);
-        SmartDashboard.putNumber("Lift Pos Error", motor.getClosedLoopError());
-        SmartDashboard.putNumber("Lift Height", pos / COUNTS_PER_INCH);
     }
-
+    
     /** @param inches Desired position */
     public void setHeight(final double inches)
     {
-         setPosition(inches * COUNTS_PER_INCH);
+        setPosition(inches * COUNTS_PER_INCH);
     }
 }
