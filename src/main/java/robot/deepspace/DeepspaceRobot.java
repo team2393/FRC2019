@@ -290,6 +290,8 @@ public class DeepspaceRobot extends BasicRobot
     
     private void handleButtonBoard()
     {
+        if (! OI.haveButtonboard())
+            return;
         final boolean cargo_mode = OI.isCargoModeEnabled();
         SmartDashboard.putBoolean("Cargo Mode", cargo_mode);
         SmartDashboard.putBoolean("Hatch Mode", ! cargo_mode);
@@ -361,7 +363,7 @@ public class DeepspaceRobot extends BasicRobot
     {
         // .. and allow toggling between HH mode and plain joydrive
         updateJoystickDrivemode();
-        // handleButtonBoard();
+        handleButtonBoard();
     }
 
     @Override
@@ -395,6 +397,6 @@ public class DeepspaceRobot extends BasicRobot
         // Pressing a button will start driving by joystick,
         // then toggle between plain and HH mode
         updateJoystickDrivemode();
-        // handleButtonBoard();
+        handleButtonBoard();
     }
 }

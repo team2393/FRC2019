@@ -17,6 +17,11 @@ public class OI
     
     public static final Button gearshift = new JoystickButton(joystick, PDPController.RIGHT_FRONT_BUTTON);
 
+    public static boolean haveButtonboard()
+    {
+        return buttonboard.getButtonCount() > 0;
+    }
+
     public static final boolean isToggleHeadingholdPressed()
     {
         return joystick.getRawButtonPressed(PDPController.A_BUTTON);
