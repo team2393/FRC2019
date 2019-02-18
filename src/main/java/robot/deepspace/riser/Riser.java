@@ -39,6 +39,7 @@ public class Riser extends Subsystem
 
     public void setSpeed(double speed)
     {
-        drive.set(speed);
+        //Sets riser motor to opposite speed
+        drive.set(-speed);
     }
 }

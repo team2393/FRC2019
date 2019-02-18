@@ -18,7 +18,7 @@ public class RiseFront extends Command
     {
         riser.dropBack(true);
         riser.dropFront(false);
-        riser.setSpeed(OI.getSpeed());
+        riser.setSpeed(OI.getLiftUpDown());
     }
 
     // Make this return true when this Command no longer needs to run execute()
