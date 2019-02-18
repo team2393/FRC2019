@@ -18,7 +18,12 @@ public class RiseFront extends Command
     {
         riser.dropBack(true);
         riser.dropFront(false);
-        riser.setSpeed(OI.getLiftUpDown());
+
+        double joystick_reading = OI.getSpeed();
+        if (Math.abs(joystick_reading) > 0.1)
+            riser.setSpeed(joystick_reading);
+        else
+            riser.setSpeed(0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
