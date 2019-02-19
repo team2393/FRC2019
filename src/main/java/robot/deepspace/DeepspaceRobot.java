@@ -113,6 +113,7 @@ public class DeepspaceRobot extends BasicRobot
         get_hatch.addSequential(new WaitForHatch(grabber));
         get_hatch.addSequential(new WaitCommand(0.5));
         get_hatch.addSequential(new CloseGrabber(grabber));
+        get_hatch.addSequential(new WaitCommand(0.5));
         get_hatch.addSequential(new Retract(grabber));
         // TODO Maybe add command to lift the hatch panel
         // off the lower brush in the loading station
