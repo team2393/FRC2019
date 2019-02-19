@@ -34,6 +34,7 @@ public class RobotMap
     // PWM ports =================================
     public final static int RISER_MOTOR = 0;
     // Ball grabber
+    //1 is on top, 2 is on bottom
     public final static int CARGO_SPINNER1 = 1;
     public final static int CARGO_SPINNER2 = 2;
 

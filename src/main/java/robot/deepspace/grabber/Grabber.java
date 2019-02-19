@@ -74,7 +74,7 @@ public class Grabber extends Subsystem
     /** @return true when cargo detected */
     public boolean isCargoDetected()
     {
-        return !cargo_sensor.get();
+        return cargo_sensor.get();
     }
 
     /** Set spinner speed

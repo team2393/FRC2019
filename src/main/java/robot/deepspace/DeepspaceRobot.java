@@ -111,6 +111,7 @@ public class DeepspaceRobot extends BasicRobot
         get_hatch.addSequential(new Extend(grabber));
         get_hatch.addSequential(new OpenGrabber(grabber));
         get_hatch.addSequential(new WaitForHatch(grabber));
+        get_hatch.addSequential(new WaitCommand(0.5));
         get_hatch.addSequential(new CloseGrabber(grabber));
         get_hatch.addSequential(new Retract(grabber));
         // TODO Maybe add command to lift the hatch panel
@@ -126,13 +127,13 @@ public class DeepspaceRobot extends BasicRobot
         release_hatch.addSequential(new Retract(grabber));
         
         // Get Cargo
-        get_cargo.addSequential(new SetSpinnerSpeed(grabber, -0.5));
+        get_cargo.addSequential(new SetSpinnerSpeed(grabber, 0.5));
         get_cargo.addSequential(new WaitForCargo(grabber));
         // Maybe we use -0.1 to make sure cargo isn't dropped
         get_cargo.addSequential(new SetSpinnerSpeed(grabber, 0));
 
         // Deposit Cargo
-        deposit_cargo.addSequential(new SetSpinnerSpeed(grabber, 1));
+        deposit_cargo.addSequential(new SetSpinnerSpeed(grabber, -1));
         deposit_cargo.addSequential(new WaitCommand(1));
         deposit_cargo.addSequential(new SetSpinnerSpeed(grabber, 0));
 
