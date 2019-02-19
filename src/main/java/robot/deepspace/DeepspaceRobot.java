@@ -336,12 +336,13 @@ public class DeepspaceRobot extends BasicRobot
                 move_lift_hatch_high.start();
         }
 
-        if (OI.isRiserAllDownPressed())
-            drop_all.start();
-
-        if (OI.isRiserFrontUpPressed())
-            rise_front.start();
-
+        if (OI.isRiserEnabled())
+        {
+            if (OI.isRiserAllDownPressed())
+               drop_all.start();
+            else if (OI.isRiserFrontUpPressed())
+                rise_front.start();
+        }
         if (OI.isRiserAllUpPressed())
             reset_riser.start();
     }

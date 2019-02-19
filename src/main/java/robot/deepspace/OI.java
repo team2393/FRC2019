@@ -118,6 +118,11 @@ public class OI
         return buttonboard.getRawButtonPressed(8);
     }
 
+    public static final boolean isRiserEnabled()
+    {
+        return joystick.getRawButton(PDPController.Y_BUTTON);
+    }
+
     public static final boolean isRiserAllDownPressed()
     {
         return buttonboard.getRawButtonPressed(6);
