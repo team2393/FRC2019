@@ -23,7 +23,7 @@ public class Riser extends Subsystem
     @Override
     protected void initDefaultCommand()
     {
-      // Doesn't Do Anything
+        // Doesn't Do Anything
     }
 
     public void dropFront(boolean down)
@@ -35,6 +35,11 @@ public class Riser extends Subsystem
     public void dropBack(boolean down)
     {
         back_riser.set(down);
+    }
+
+    public boolean isBackDown()
+    {
+        return back_riser.get();
     }
 
     public void setSpeed(double speed)

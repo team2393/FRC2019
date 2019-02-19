@@ -336,13 +336,16 @@ public class DeepspaceRobot extends BasicRobot
                 move_lift_hatch_high.start();
         }
 
-        if (OI.isRiserEnabled())
-        {
-            if (OI.isRiserAllDownPressed())
-               drop_all.start();
-            else if (OI.isRiserFrontUpPressed())
-                rise_front.start();
-        }
+        // Prevent accidental riser deployment:
+        // To lower all risers, must hold the 'Y'(es) button on joystick.
+        if (OI.isRiserAllDownPressed() && OI.isRiserEnabled())
+            drop_all.start();
+        // The second step, pulling the front back up which would on its own
+        // lower the back is only permitted when the back was already down
+        // as a result of the first step.
+        if (OI.isRiserFrontUpPressed() && riser.isBackDown())
+            rise_front.start();
+        // Raising all back up is always permitted
         if (OI.isRiserAllUpPressed())
             reset_riser.start();
     }

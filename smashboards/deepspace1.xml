@@ -7,9 +7,6 @@
 	<widget field="Reset Lift" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
 		<location x="711" y="541"/>
 	</widget>
-	<widget field="Y Value" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="344"/>
-	</widget>
 	<widget field="Toggle Grabber" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
 		<location x="483" y="561"/>
 	</widget>
@@ -216,91 +213,4 @@
 		<location x="15" y="369"/>
 	</widget>
 </dashboard>
-<live-window>
-	<widget field="Riser" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<location x="335" y="69"/>
-	</widget>
-	<widget field="Grabber" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<location x="335" y="46"/>
-	</widget>
-	<widget field="Lift" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<location x="335" y="23"/>
-	</widget>
-	<widget field="DriveTrain" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<location x="335" y="0"/>
-	</widget>
-	<widget field="Ungrouped" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<widget field="Solenoid[0,4]" type="Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
-			<location x="0" y="0"/>
-			<height>0</height>
-			<width>0</width>
-		</widget>
-		<widget field="Solenoid[0,4]" type="Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
-			<location x="0" y="0"/>
-			<height>0</height>
-			<width>0</width>
-		</widget>
-		<widget field="PowerDistributionPanel[0]" type="PowerDistributionPanel" class="edu.wpi.first.smartdashboard.livewindow.elements.PowerDistributionPanel">
-			<location x="6" y="16"/>
-			<height>194</height>
-			<width>341</width>
-		</widget>
-		<widget field="Talon SRX [4]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
-			<location x="6" y="210"/>
-			<height>45</height>
-			<width>341</width>
-		</widget>
-		<widget field="Talon SRX [3]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
-			<location x="6" y="255"/>
-			<height>45</height>
-			<width>341</width>
-		</widget>
-		<widget field="ADXRS450_Gyro[0]" type="Gyro" class="edu.wpi.first.smartdashboard.gui.elements.Compass">
-			<location x="6" y="300"/>
-			<height>150</height>
-			<width>341</width>
-		</widget>
-		<widget field="Solenoid[0,0]" type="Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
-			<location x="115" y="450"/>
-			<height>23</height>
-			<width>122</width>
-		</widget>
-		<widget field="Solenoid[0,2]" type="Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
-			<location x="115" y="473"/>
-			<height>23</height>
-			<width>122</width>
-		</widget>
-		<widget field="Solenoid[0,1]" type="Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
-			<location x="115" y="496"/>
-			<height>23</height>
-			<width>122</width>
-		</widget>
-		<widget field="Solenoid[0,5]" type="Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
-			<location x="115" y="519"/>
-			<height>23</height>
-			<width>122</width>
-		</widget>
-		<widget field="DigitalInput[1]" type="Digital Input" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalInputDisplay">
-			<location x="6" y="542"/>
-			<height>20</height>
-			<width>341</width>
-		</widget>
-		<widget field="Solenoid[0,6]" type="Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
-			<location x="115" y="562"/>
-			<height>23</height>
-			<width>122</width>
-		</widget>
-		<widget field="DigitalInput[2]" type="Digital Input" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalInputDisplay">
-			<location x="6" y="585"/>
-			<height>20</height>
-			<width>341</width>
-		</widget>
-		<location x="0" y="0"/>
-		<width>353</width>
-		<height>611</height>
-	</widget>
-</live-window>
-	<hidden field="Lift Height (inche    s)"/>
-	<hidden field="Lift Height"/>
-	<hidden field="Lift Pos Error"/>
 </xml>
