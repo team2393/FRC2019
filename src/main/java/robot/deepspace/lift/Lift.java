@@ -62,6 +62,8 @@ public class Lift extends Subsystem
         // TODO Use max of 11.5V, so behaves same with full/weaker battery 
         // motor.configVoltageCompSaturation(11.5);
         // motor.enableVoltageCompensation(true);
+
+        resetLift();
     }
 
     @Override
@@ -78,20 +80,22 @@ public class Lift extends Subsystem
         SmartDashboard.putNumber("Lift Height (in)", pos / COUNTS_PER_INCH);
     }
 
+    /** Zero lift position encoder */
     public void resetLift()
     {
-    motor.setSelectedSensorPosition(0);
+        motor.setSelectedSensorPosition(0);
     }
+
     /** Drive the lift up and down
      *  @param speed -1 to 1, positive is up
-     *  @return true if OK, false if we hit the limit switch
+     *  @return true if OK, false if we bottomed out
      */
     public boolean drive(double speed)
     {
-        boolean at_limit = motor.getSelectedSensorPosition() <= 0;
+        final boolean at_limit = motor.getSelectedSensorPosition() <= 0;
         if (at_limit)
         {
-            // Prohibit moving down by setting motor to 0 once switch is hit
+            // Prohibit moving further down by setting motor to 0
             if (speed < 0)
                 speed = 0.0;
         }
