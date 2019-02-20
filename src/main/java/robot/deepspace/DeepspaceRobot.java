@@ -128,7 +128,7 @@ public class DeepspaceRobot extends BasicRobot
         release_hatch.addSequential(new Retract(grabber));
         
         // Get Cargo
-        get_cargo.addSequential(new SetSpinnerSpeed(grabber, 0.5));
+        get_cargo.addSequential(new SetSpinnerSpeed(grabber, 0.3));
         get_cargo.addSequential(new WaitForCargo(grabber));
         // Maybe we use -0.1 to make sure cargo isn't dropped
         get_cargo.addSequential(new SetSpinnerSpeed(grabber, 0));
@@ -143,6 +143,7 @@ public class DeepspaceRobot extends BasicRobot
 
         // Bind Buttons to commands ..
         OI.gearshift.whenPressed(toggle_gear);
+        OI.toggleLift.toggleWhenPressed(drive_lift);
 
         // .. and/or place them on dashboard
         SmartDashboard.putData("Auto Options", auto_options);
@@ -398,8 +399,8 @@ public class DeepspaceRobot extends BasicRobot
         // else
         //     drivetrain.setPosition(0);
 
-        // Test lift PID
-        // if ((System.currentTimeMillis() / 5000) % 2 == 1)
+        //Test lift PID
+        // if ((System.currentTimeMillis() / 10000) % 2 == 1)
         //     lift.setHeight(12);
         // else
         //     lift.setHeight(24);

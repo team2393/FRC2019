@@ -18,8 +18,8 @@ import robot.deepspace.RobotMap;
  */
 public class Lift extends Subsystem
 {
-    // TODO Measure how many inches lift moves per count
-    private final double COUNTS_PER_INCH = 1;
+    // Measure how many inches lift moves per count
+    private final double COUNTS_PER_INCH = 16127.0/(47.5-16);
     
     private final TalonSRX motor = new TalonSRX(RobotMap.LIFT_MOTOR);
 
@@ -37,23 +37,23 @@ public class Lift extends Subsystem
         motor.setSensorPhase(true);
 
         // Configure PID
-        motor.config_kP(0, 0.5);
-        motor.config_kI(0, 0.01);
-        motor.config_kD(0, 5.0);
-        motor.config_IntegralZone(0, 5000);
-        motor.configMaxIntegralAccumulator(0, 5000);
+        motor.config_kP(0, 0.2);
+        motor.config_kI(0, 0.05);
+        motor.config_kD(0, 0.1);
+        motor.config_IntegralZone(0, 2000);
+        motor.configMaxIntegralAccumulator(0, 2000);
 
         // Configure Motion Magic
-        int max_speed = 17200;
+        int max_speed = 1400;
         motor.config_kF(0, 1023.0/max_speed);
         // Set max speed to about 75% of max speed in tics/100ms
         motor.configMotionCruiseVelocity(max_speed*3/4);
         // Accelerate twice as fast to reach cruise velocity in half a second
         motor.configMotionAcceleration(2*max_speed*3/4);
         
-        // TODO Slow down?
-        // motor.configOpenloopRamp(0.15);
-        // motor.configClosedloopRamp(0.15);
+        // Slow down
+        motor.configClosedloopRamp(0.5);
+        motor.configClosedLoopPeakOutput(0, 0.5);
         // motor.configContinuousCurrentLimit(40);
 		// motor.configPeakCurrentLimit(60);
 		// motor.configPeakCurrentDuration(100);
