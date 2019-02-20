@@ -16,6 +16,7 @@ public class MoveLift extends Command
     private final String name;
     private final Lift lift;
     private final double height;
+    private final boolean stop_pid;
 
     /** @param name Name used for position tweaks on dashboard
      *  @param lift Lift to use
@@ -23,9 +24,19 @@ public class MoveLift extends Command
      */
     public MoveLift(final String name, final Lift lift, final double height)
     {
+        this(name, lift, height, false);
+    }
+
+    /** @param name Name used for position tweaks on dashboard
+     *  @param lift Lift to use
+     *  @param height Desired height
+     */
+    public MoveLift(final String name, final Lift lift, final double height, final boolean stop_pid)
+    {
         this.name = name;
         this.lift = lift;
         this.height = height;
+        this.stop_pid = stop_pid;
         requires(lift);
 
         SmartDashboard.setDefaultNumber(name, height);
@@ -40,6 +51,8 @@ public class MoveLift extends Command
     @Override
     protected boolean isFinished()
     {
+        if (stop_pid  &&  this.timeSinceInitialized() > 2.5)
+            return true;
         return false;
     }
 

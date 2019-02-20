@@ -113,7 +113,7 @@ public class DriveTrain extends Subsystem
         // Check https://frc-pdr.readthedocs.io/en/latest/control/using_WPILIB's_pid_controller.html#adding-ramping-for-motors
         // for more ideas on damping motor speed changes
    
-        SmartDashboard.putData("Pos. PID", position_pid);
+        // SmartDashboard.putData("Pos. PID", position_pid);
 
         // Create PID controller for heading,
         // controlling rotation based on gyro.
@@ -147,7 +147,7 @@ public class DriveTrain extends Subsystem
         // heading_pid.setContinuous();
         // Limit output, otherwise robot is too agressive
         heading_pid.setOutputRange(-0.4, 0.4);
-        SmartDashboard.putData("Heading PID", heading_pid);
+        // SmartDashboard.putData("Heading PID", heading_pid);
     }
 
     @Override
@@ -256,10 +256,10 @@ public class DriveTrain extends Subsystem
     {
         drive.arcadeDrive(speed, rotation, false);
 
-        SmartDashboard.putNumber("Left Encoder", left.getSelectedSensorPosition());
-        SmartDashboard.putNumber("RightEncoder", right.getSelectedSensorPosition());
+        // SmartDashboard.putNumber("Left Encoder", left.getSelectedSensorPosition());
+        // SmartDashboard.putNumber("RightEncoder", right.getSelectedSensorPosition());
         SmartDashboard.putNumber("Position", getPosition());
         SmartDashboard.putNumber("Heading", getHeading());
-        SmartDashboard.putNumber("Turn Rate", getTurnRate());
+        // SmartDashboard.putNumber("Turn Rate", getTurnRate());
     }
 }

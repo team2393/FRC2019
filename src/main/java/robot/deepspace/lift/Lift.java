@@ -52,8 +52,8 @@ public class Lift extends Subsystem
         motor.configMotionAcceleration(2*max_speed*3/4);
         
         // Slow down
-        motor.configClosedloopRamp(0.5);
-        motor.configClosedLoopPeakOutput(0, 0.5);
+        motor.configClosedloopRamp(0.25);
+        motor.configClosedLoopPeakOutput(0, 0.6);
         // motor.configContinuousCurrentLimit(40);
 		// motor.configPeakCurrentLimit(60);
 		// motor.configPeakCurrentDuration(100);
@@ -76,7 +76,7 @@ public class Lift extends Subsystem
     public void periodic() 
     {
         final int pos = motor.getSelectedSensorPosition();
-        SmartDashboard.putNumber("Lift Position", pos);
+        // SmartDashboard.putNumber("Lift Position", pos);
         SmartDashboard.putNumber("Lift Height (in)", pos / COUNTS_PER_INCH);
     }
 

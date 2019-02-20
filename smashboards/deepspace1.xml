@@ -362,4 +362,5 @@
 		<height>708</height>
 	</widget>
 </live-window>
+	<hidden field="Average Tilt"/>
 </xml>
