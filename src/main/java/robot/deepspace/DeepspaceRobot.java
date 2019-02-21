@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.StartCommand;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -181,10 +182,6 @@ public class DeepspaceRobot extends BasicRobot
         // .. and in fact do it right now
         reset_drivetrain.start();
 
-        // TODO Allow home_lift when disabled, and do that right now?
-        // home_lift.setRunWhenDisabled(true);
-        // home_lift.start();
-
         // TODO Make sure risers are retracted
         // reset_riser.setRunWhenDisabled(true);
         //reset_riser.start();
@@ -203,6 +200,7 @@ public class DeepspaceRobot extends BasicRobot
             demo.addSequential(new RotateToHeading(drivetrain, 0));
             demo.addSequential(new WaitCommand(3));
         }
+        demo.addSequential(new StartCommand(joydrive));
         auto_options.addOption("0deg 90deg", demo);
 
         demo = new CommandGroup();
@@ -214,6 +212,7 @@ public class DeepspaceRobot extends BasicRobot
             demo.addSequential(new MoveToPosition(drivetrain, 0*12));
             demo.addSequential(new WaitCommand(3));
         }
+        demo.addSequential(new StartCommand(joydrive));
         auto_options.addOption("2ft and back", demo);
 
         demo = new CommandGroup();
@@ -226,6 +225,7 @@ public class DeepspaceRobot extends BasicRobot
         demo.addSequential(new RotateToHeading(drivetrain, 270));
         demo.addSequential(new MoveToPosition(drivetrain, (6+3+6+3)*12, 270));
         demo.addSequential(new RotateToHeading(drivetrain, 360));
+        demo.addSequential(new StartCommand(joydrive));
         auto_options.addOption("Rectangle", demo);
 
         // Left start position to Rocket port 1
@@ -238,6 +238,7 @@ public class DeepspaceRobot extends BasicRobot
         demo.addSequential(new MoveToPosition(drivetrain, 6*12));
         demo.addSequential(new RotateToHeading(drivetrain, 0));
         demo.addSequential(new MoveToPosition(drivetrain, 0));
+        demo.addSequential(new StartCommand(joydrive));
         auto_options.addOption("L to R1", demo);
  
         demo = new CommandGroup();
@@ -245,11 +246,11 @@ public class DeepspaceRobot extends BasicRobot
         demo.addSequential(new MoveToPosition(drivetrain, 118, 0));
         demo.addSequential(new RotateToHeading(drivetrain, 90));
         demo.addSequential(new MoveToPosition(drivetrain, 202, 90));
+        demo.addSequential(new StartCommand(joydrive));
         auto_options.addOption("Test1", demo);
 
-
         // Also allow "Nothing"
-        auto_options.setDefaultOption("Nothing", new WaitCommand(0.1));
+        auto_options.setDefaultOption("Nothing", new StartCommand(joydrive));
     }
 
     @Override
