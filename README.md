@@ -98,3 +98,62 @@ For anything in `robot` you need the WPILib. That way you can view and edit the 
 To compile, invoke "Build Robot Code" from the upper right "..." menu.
 To actually run it, you deploy to the roboRIO hardware via "Deploy Robot Code"
 in the same menu.
+
+
+Profiling
+---------
+
+![Visual VM](visualvm.png)
+
+'VisualVM', available from https://visualvm.github.io,
+allows you to see how much CPU and memory the code is using on the RoboRIO,
+and where it spends its time.
+
+To profile a program running on the laptop, simply double-click it in the 'Local' list.
+To profile a program that is running on the RoboRIO,
+we need to enable 'Remote JMX' access to that program.
+
+Open a "git bash" shell, connect to the robot via
+```
+# Use 10.23.93.2 when using radio, otherwise the 'USB' IP address
+ssh lvuser@172.22.11.2
+```
+
+Edit the file `robotCommand`. By default it will look like this:
+```
+/usr/local/frc/JRE/bin/java -Djava.library.path=/usr/local/frc/third-party/lib   -jar "/home/lvuser/2393First.jar"
+```
+
+Add these settings:
+```
+-Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.port=1099 -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname=172.22.11.2 
+```
+
+The settings need to be added after the `.../bin/java`, and use the correct IP for the `hostname` setting.
+To do that with `vi`:
+```
+vi robotCommand
+# Move cursor to the end of .../bin/java
+# Press 'i' for insert
+# Paste the text for the added settings
+# Press `ESC` to exit insert mode
+# Type ':wq' and press 'Enter' to write and quit
+```
+
+Stop the running Java instance:
+```
+/usr/local/frc/bin/frcKillRobot.sh
+```
+
+After a few seconds you should see that a new one is automatically started, this time using the additional JMX settings:
+```
+ps | grep java
+```
+
+Back on the laptop, start `visualvm` and connect to the program running on the robot.
+ * File, Add JMX Connection
+ * 'Connection:' 172.22.11.2:1099 (respectively 10.23.93.2:1099)
+ * Check 'Do not require SSL connection'
+ * A new entry with a 'pid' should appear under the 'Remote' list.
+   Double-click, then check 'Monitor', 'Sample.. CPU' etc.
+
