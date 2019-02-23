@@ -119,6 +119,13 @@ Open a "git bash" shell, connect to the robot via
 ssh lvuser@172.22.11.2
 ```
 
+If `ssh` issues "WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!"
+because you had used it with a different RoboRIO:
+```
+rm .ssh/known_hosts
+ssh lvuser@172.22.11.2
+```
+
 Edit the file `robotCommand`. By default it will look like this:
 ```
 /usr/local/frc/JRE/bin/java -Djava.library.path=/usr/local/frc/third-party/lib   -jar "/home/lvuser/2393First.jar"
