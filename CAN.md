@@ -60,6 +60,10 @@ To use CTRE devices like `TalonSRX` in Java code
 
  Examples are in https://github.com/CrossTheRoadElec/Phoenix-Examples-Languages/tree/master/Java
 
+To later __update__ the Phoenix software, download and install the latest
+similar to the initial installation.
+Then follow the same "Manage Vendor Libraries" procedure as before
+but select "Check for updates (offline)" and select the new version.
 
 Troubleshooting
 ---------------
