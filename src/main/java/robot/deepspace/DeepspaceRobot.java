@@ -42,15 +42,13 @@ import robot.deepspace.riser.RiseFront;
 import robot.deepspace.riser.Riser;
 
 /** Main robot class for deep space 2019
- * 
- *  TODO Documentation: PPT for OI, vision, ..
- *
+ *  *
  *  TODO Prepare autonomous moves from N start positions to M initial disk placements.
  *  Maybe leave last leg of route to driver, using vision, but get them close.
  */
 public class DeepspaceRobot extends BasicRobot
 {
-    private final PowerDistributionPanel pdp = new PowerDistributionPanel();
+    // private final PowerDistributionPanel pdp = new PowerDistributionPanel();
     private final Accelerometer tilty = new BuiltInAccelerometer();
     
     // Components, subsystems
@@ -181,15 +179,14 @@ public class DeepspaceRobot extends BasicRobot
         reset_drivetrain.setRunWhenDisabled(true);
         // .. and in fact do it right now
         reset_drivetrain.start();
-
-        // TODO Make sure risers are retracted
-        // reset_riser.setRunWhenDisabled(true);
-        //reset_riser.start();
     }
 
     /** Create auto moves */
     private void createAutoMoves()
     {
+        // Note: Most command sequences start with 'ResetDrivetrain'
+        //       and end in StartCommand(joydrive)
+
         // Demo
         CommandGroup demo = new CommandGroup();
         demo.addSequential(new ResetDrivetrain(drivetrain));

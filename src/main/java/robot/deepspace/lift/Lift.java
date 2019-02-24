@@ -31,7 +31,6 @@ public class Lift extends Subsystem
 
         motor.setNeutralMode(NeutralMode.Brake);
 
-        // TODO Depending on the actual lift mechanics, might need to invert
         motor.setInverted(true);
          // Does the sensor rotate in opposite direction compared to motor?
         motor.setSensorPhase(true);
