@@ -133,7 +133,7 @@ Edit the file `robotCommand`. By default it will look like this:
 
 Add these settings:
 ```
--Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.port=1099 -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname=172.22.11.2 
+-Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.port=1099 -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname=10.23.93.2 
 ```
 
 The settings need to be added after the `.../bin/java`, and use the correct IP for the `hostname` setting.
