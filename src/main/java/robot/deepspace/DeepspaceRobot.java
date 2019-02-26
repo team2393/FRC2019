@@ -70,11 +70,11 @@ public class DeepspaceRobot extends BasicRobot
     private final Command move_lift_hatch_high = new MoveLift("Hatch Hi Pos", lift, 54.5);
     private final Command move_lift_hatch_middle = new MoveLift("Hatch Mid Pos", lift, 29.5);
     private final Command move_lift_hatch_low = new MoveLift("Hatch Low Pos", lift, 3, true);
-    private final Command move_lift_cargo_high = new MoveLift("Cargo Hi Pos", lift, 54);
+    private final Command move_lift_cargo_high = new MoveLift("Cargo Hi Pos", lift, 47  );
     private final Command move_lift_cargo_middle = new MoveLift("Cargo Mid Pos", lift, 25);
     private final Command move_lift_cargo_low = new MoveLift("Cargo Low Pos", lift, 3, true);
     private final Command move_lift_cargo_ship = new MoveLift("Cargo Ship Pos", lift, 10);
-    private final Command move_lift_cargo_pickup = new MoveLift("Cargo Pickup Pos", lift, 10);
+    private final Command move_lift_cargo_pickup = new MoveLift("Cargo Pickup Pos", lift, 11.8);
 
     // .. Grabber
     private final Command toggle_grabber = new ToggleGrabber(grabber);
@@ -113,11 +113,8 @@ public class DeepspaceRobot extends BasicRobot
         get_hatch.addSequential(new CloseGrabber(grabber));
         get_hatch.addSequential(new WaitCommand(0.5));
         get_hatch.addSequential(new Retract(grabber));
-        // TODO Maybe add command to lift the hatch panel
-        // off the lower brush in the loading station
-        // get_hatch.addSequential(new MoveLift("Loading Station Get Out", lift, 18));
-        // Then drivers need to move robot away from loading station,
-        // to spaceship or rocket, and push low/mid/high position buttons.
+        // TODO Only do this in autonomous:
+        get_hatch.addSequential(new MoveLift("Loading Station Get Out", lift, 15));
 
         // Release hatch panel
         release_hatch.addSequential(new Extend(grabber));
