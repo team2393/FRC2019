@@ -52,7 +52,7 @@ public class Lift extends Subsystem
         
         // Slow down
         motor.configClosedloopRamp(0.25);
-        motor.configClosedLoopPeakOutput(0, 0.6);
+        motor.configClosedLoopPeakOutput(0, 0.8);
         // motor.configContinuousCurrentLimit(40);
 		// motor.configPeakCurrentLimit(60);
 		// motor.configPeakCurrentDuration(100);
@@ -91,12 +91,12 @@ public class Lift extends Subsystem
      */
     public boolean drive(double speed)
     {
-        final boolean at_limit = motor.getSelectedSensorPosition() <= 0;
+        final boolean at_limit = motor.getSelectedSensorPosition() <= 1.0;
         if (at_limit)
         {
             // Prohibit moving further down by setting motor to 0
             if (speed < 0)
-                speed = 0.0;
+                speed = -0.1;
         }
         motor.set(ControlMode.PercentOutput, speed);
         
