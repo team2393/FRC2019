@@ -2,8 +2,10 @@ package robot.deepspace;
 
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.ConditionalCommand;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.StartCommand;
 import edu.wpi.first.wpilibj.command.WaitCommand;
@@ -113,8 +115,16 @@ public class DeepspaceRobot extends BasicRobot
         get_hatch.addSequential(new CloseGrabber(grabber));
         get_hatch.addSequential(new WaitCommand(0.5));
         get_hatch.addSequential(new Retract(grabber));
-        // TODO Only do this in autonomous:
-        get_hatch.addSequential(new MoveLift("Loading Station Get Out", lift, 15));
+        // Only do this in autonomous:
+        get_hatch.addSequential(
+                new ConditionalCommand(new MoveLift("Loading Station Get Out", lift, 15))
+                {
+                    @Override
+                    protected boolean condition()
+                    {
+                        return DriverStation.getInstance().isAutonomous();
+                    }
+                });
 
         // Release hatch panel
         release_hatch.addSequential(new Extend(grabber));
