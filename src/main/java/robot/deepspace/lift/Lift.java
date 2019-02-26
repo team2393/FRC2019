@@ -71,12 +71,19 @@ public class Lift extends Subsystem
         // We have no default command, yet
     }
 
+    /** Counter to slow updates of position display */
+    private int updates = 0;
+
     @Override
     public void periodic() 
     {
-        final int pos = motor.getSelectedSensorPosition();
-        // SmartDashboard.putNumber("Lift Position", pos);
-        SmartDashboard.putNumber("Lift Height (in)", pos / COUNTS_PER_INCH);
+        // Only show lift position twice per second
+        if (++updates > 25)
+        {
+            final int pos = motor.getSelectedSensorPosition();
+            // SmartDashboard.putNumber("Lift Position", pos);
+            SmartDashboard.putNumber("Lift Height (in)", pos / COUNTS_PER_INCH);
+        }
     }
 
     /** Zero lift position encoder */

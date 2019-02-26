@@ -251,15 +251,26 @@ public class DriveTrain extends Subsystem
         }
     }
 
+    /** Counter to slow updates of position display */
+    private int updates = 0;
+
     @Override
     public void periodic()
     {
         drive.arcadeDrive(speed, rotation, false);
 
-        // SmartDashboard.putNumber("Left Encoder", left.getSelectedSensorPosition());
-        // SmartDashboard.putNumber("RightEncoder", right.getSelectedSensorPosition());
-        SmartDashboard.putNumber("Position", getPosition());
-        SmartDashboard.putNumber("Heading", getHeading());
-        // SmartDashboard.putNumber("Turn Rate", getTurnRate());
+        // 'periodic' runs 50 times per second (every 0.02 secs)
+        // The 'getPosition()' call out to the CAN bus is slow,
+        // so only do that once per second
+        if (++updates > 50)
+        {
+            // SmartDashboard.putNumber("Left Encoder", left.getSelectedSensorPosition());
+            // SmartDashboard.putNumber("RightEncoder", right.getSelectedSensorPosition());
+            SmartDashboard.putNumber("Position", getPosition());
+            SmartDashboard.putNumber("Heading", getHeading());
+            // SmartDashboard.putNumber("Turn Rate", getTurnRate());
+
+            updates = 0;
+        }
     }
 }
