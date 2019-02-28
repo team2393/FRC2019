@@ -69,12 +69,12 @@ public class DeepspaceRobot extends BasicRobot
     // .. Lift
     private final Command reset_lift = new ResetLift(lift);
     private final Command drive_lift = new DriveLift(lift);
-    private final Command move_lift_hatch_high = new MoveLift("Hatch Hi Pos", lift, 54.5);
-    private final Command move_lift_hatch_middle = new MoveLift("Hatch Mid Pos", lift, 29.5);
-    private final Command move_lift_hatch_low = new MoveLift("Hatch Low Pos", lift, 3, true);
-    private final Command move_lift_cargo_high = new MoveLift("Cargo Hi Pos", lift, 47  );
-    private final Command move_lift_cargo_middle = new MoveLift("Cargo Mid Pos", lift, 25);
-    private final Command move_lift_cargo_low = new MoveLift("Cargo Low Pos", lift, 3, true);
+    private final Command move_lift_hatch_high = new MoveLift("Hatch Hi Pos", lift, 47.5);
+    private final Command move_lift_hatch_middle = new MoveLift("Hatch Mid Pos", lift, 26.0);
+    private final Command move_lift_hatch_low = new MoveLift("Hatch Low Pos", lift, 0.5, true);
+    private final Command move_lift_cargo_high = new MoveLift("Cargo Hi Pos", lift, 46.0);
+    private final Command move_lift_cargo_middle = new MoveLift("Cargo Mid Pos", lift, 21);
+    private final Command move_lift_cargo_low = new MoveLift("Cargo Low Pos", lift, 0.5, true);
     private final Command move_lift_cargo_ship = new MoveLift("Cargo Ship Pos", lift, 10);
     private final Command move_lift_cargo_pickup = new MoveLift("Cargo Pickup Pos", lift, 11.8);
 
