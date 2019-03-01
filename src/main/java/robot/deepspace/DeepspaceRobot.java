@@ -115,16 +115,7 @@ public class DeepspaceRobot extends BasicRobot
         get_hatch.addSequential(new CloseGrabber(grabber));
         get_hatch.addSequential(new WaitCommand(0.5));
         get_hatch.addSequential(new Retract(grabber));
-        // Only do this in autonomous:
-        get_hatch.addSequential(
-                new ConditionalCommand(new MoveLift("Loading Station Get Out", lift, 15))
-                {
-                    @Override
-                    protected boolean condition()
-                    {
-                        return DriverStation.getInstance().isAutonomous();
-                    }
-                });
+        get_hatch.addSequential(new MoveLift("Loading Station Get Out", lift, 4));
 
         // Release hatch panel
         release_hatch.addSequential(new Extend(grabber));
@@ -383,6 +374,9 @@ public class DeepspaceRobot extends BasicRobot
     public void autonomousInit()
     {
         super.autonomousInit();
+
+        // Zero lift position
+        reset_lift.start();
 
         // Reading to clear any pending button presses
         OI.isToggleHeadingholdPressed();
