@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.ConditionalCommand;
+import edu.wpi.first.wpilibj.command.PrintCommand;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.StartCommand;
 import edu.wpi.first.wpilibj.command.WaitCommand;
@@ -77,6 +78,7 @@ public class DeepspaceRobot extends BasicRobot
     private final Command move_lift_cargo_low = new MoveLift("Cargo Low Pos", lift, 0.5, true);
     private final Command move_lift_cargo_ship = new MoveLift("Cargo Ship Pos", lift, 10);
     private final Command move_lift_cargo_pickup = new MoveLift("Cargo Pickup Pos", lift, 11.8);
+    private final Command move_lift_above_camera = new MoveLift("Clear Camera Pos", lift, 5);
 
     // .. Grabber
     private final Command toggle_grabber = new ToggleGrabber(grabber);
@@ -115,7 +117,7 @@ public class DeepspaceRobot extends BasicRobot
         get_hatch.addSequential(new CloseGrabber(grabber));
         get_hatch.addSequential(new WaitCommand(0.5));
         get_hatch.addSequential(new Retract(grabber));
-        get_hatch.addSequential(new MoveLift("Loading Station Get Out", lift, 4));
+        get_hatch.addSequential(new StartCommand(move_lift_above_camera));
 
         // Release hatch panel
         release_hatch.addSequential(new Extend(grabber));
@@ -239,6 +241,7 @@ public class DeepspaceRobot extends BasicRobot
         demo.addSequential(new ResetDrivetrain(drivetrain));
         demo.addSequential(new MoveToPosition(drivetrain, 10*12, 0));
         demo.addSequential(new StartCommand(joydrive));
+        demo.addSequential(new StartCommand(move_lift_above_camera));
         auto_options.addOption("Move 10", demo);
 
         // Also allow "Nothing"
