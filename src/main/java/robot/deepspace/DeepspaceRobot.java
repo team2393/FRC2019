@@ -69,7 +69,7 @@ public class DeepspaceRobot extends BasicRobot
     // .. Lift
     private final Command reset_lift = new ResetLift(lift);
     private final Command drive_lift = new DriveLift(lift);
-    private final Command move_lift_hatch_high = new MoveLift("Hatch Hi Pos", lift, 47.5);
+    private final Command move_lift_hatch_high = new MoveLift("Hatch Hi Pos", lift, 47.0);
     private final Command move_lift_hatch_middle = new MoveLift("Hatch Mid Pos", lift, 26.0);
     private final Command move_lift_hatch_low = new MoveLift("Hatch Low Pos", lift, 0.5, true);
     private final Command move_lift_cargo_high = new MoveLift("Cargo Hi Pos", lift, 46.0);
@@ -246,11 +246,9 @@ public class DeepspaceRobot extends BasicRobot
  
         demo = new CommandGroup();
         demo.addSequential(new ResetDrivetrain(drivetrain));
-        demo.addSequential(new MoveToPosition(drivetrain, 118, 0));
-        demo.addSequential(new RotateToHeading(drivetrain, 90));
-        demo.addSequential(new MoveToPosition(drivetrain, 202, 90));
+        demo.addSequential(new MoveToPosition(drivetrain, 10*12, 0));
         demo.addSequential(new StartCommand(joydrive));
-        auto_options.addOption("Test1", demo);
+        auto_options.addOption("Move 10", demo);
 
         // Also allow "Nothing"
         auto_options.setDefaultOption("Nothing", new StartCommand(joydrive));

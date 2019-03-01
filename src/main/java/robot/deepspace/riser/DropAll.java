@@ -31,8 +31,8 @@ public class DropAll extends Command
         // Positive tilt angle: Front is up.
         // IF positive angle is too large, then front cylinders must be turned off
         // if the negative angle is too large, the back cylinder must be turned off
-        riser.dropFront(avg_tilt < 20);
-        riser.dropBack(avg_tilt > -20);
+        riser.dropFront(avg_tilt < 10);
+        riser.dropBack(avg_tilt > -10);
 
         // riser.dropBack(true);
         // riser.dropFront(true);
