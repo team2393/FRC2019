@@ -31,11 +31,11 @@ public class DropAll extends Command
         // Positive tilt angle: Front is up.
         // IF positive angle is too large, then front cylinders must be turned off
         // if the negative angle is too large, the back cylinder must be turned off
-        riser.dropFront(avg_tilt < 10);
-        riser.dropBack(avg_tilt > -10);
+        // riser.dropFront(avg_tilt < 10);
+        // riser.dropBack(avg_tilt > -10);
 
-        // riser.dropBack(true);
-        // riser.dropFront(true);
+        riser.dropBack(true);
+        riser.dropFront(true);
 
         double joystick_reading = OI.getSpeed();
         if (Math.abs(joystick_reading) > 0.1)
