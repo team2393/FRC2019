@@ -51,7 +51,7 @@ public class MoveLift extends Command
     @Override
     protected boolean isFinished()
     {
-        if (stop_pid  &&  this.timeSinceInitialized() > 2.5)
+        if (stop_pid  &&  this.timeSinceInitialized() > 5)
             return true;
         return false;
     }
