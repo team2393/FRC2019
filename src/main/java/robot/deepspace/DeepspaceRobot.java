@@ -182,55 +182,55 @@ public class DeepspaceRobot extends BasicRobot
         //       and end in StartCommand(joydrive)
 
         // Demo
-        CommandGroup demo = new CommandGroup();
-        demo.addSequential(new ResetDrivetrain(drivetrain));
-        for (int i=0; i<10; ++i)
-        {
-            demo.addSequential(new RotateToHeading(drivetrain, 90));
-            demo.addSequential(new WaitCommand(3));
-            demo.addSequential(new RotateToHeading(drivetrain, 0));
-            demo.addSequential(new WaitCommand(3));
-        }
-        demo.addSequential(new StartCommand(joydrive));
-        auto_options.addOption("0deg 90deg", demo);
+        CommandGroup demo;   // = new CommandGroup();
+        // demo.addSequential(new ResetDrivetrain(drivetrain));
+        // for (int i=0; i<10; ++i)
+        // {
+        //     demo.addSequential(new RotateToHeading(drivetrain, 90));
+        //     demo.addSequential(new WaitCommand(3));
+        //     demo.addSequential(new RotateToHeading(drivetrain, 0));
+        //     demo.addSequential(new WaitCommand(3));
+        // }
+        // demo.addSequential(new StartCommand(joydrive));
+        // auto_options.addOption("0deg 90deg", demo);
 
-        demo = new CommandGroup();
-        demo.addSequential(new ResetDrivetrain(drivetrain));
-        for (int i=0; i<10; ++i)
-        {
-            demo.addSequential(new MoveToPosition(drivetrain, 2*12));
-            demo.addSequential(new WaitCommand(3));
-            demo.addSequential(new MoveToPosition(drivetrain, 0*12));
-            demo.addSequential(new WaitCommand(3));
-        }
-        demo.addSequential(new StartCommand(joydrive));
-        auto_options.addOption("2ft and back", demo);
+        // demo = new CommandGroup();
+        // demo.addSequential(new ResetDrivetrain(drivetrain));
+        // for (int i=0; i<10; ++i)
+        // {
+        //     demo.addSequential(new MoveToPosition(drivetrain, 2*12));
+        //     demo.addSequential(new WaitCommand(3));
+        //     demo.addSequential(new MoveToPosition(drivetrain, 0*12));
+        //     demo.addSequential(new WaitCommand(3));
+        // }
+        // demo.addSequential(new StartCommand(joydrive));
+        // auto_options.addOption("2ft and back", demo);
 
-        demo = new CommandGroup();
-        demo.addSequential(new ResetDrivetrain(drivetrain));
-        demo.addSequential(new MoveToPosition(drivetrain, 6*12, 0));
-        demo.addSequential(new RotateToHeading(drivetrain, 90));
-        demo.addSequential(new MoveToPosition(drivetrain, (6+3)*12, 90));
-        demo.addSequential(new RotateToHeading(drivetrain, 180));
-        demo.addSequential(new MoveToPosition(drivetrain, (6+3+6)*12, 180));
-        demo.addSequential(new RotateToHeading(drivetrain, 270));
-        demo.addSequential(new MoveToPosition(drivetrain, (6+3+6+3)*12, 270));
-        demo.addSequential(new RotateToHeading(drivetrain, 360));
-        demo.addSequential(new StartCommand(joydrive));
-        auto_options.addOption("Rectangle", demo);
+        // demo = new CommandGroup();
+        // demo.addSequential(new ResetDrivetrain(drivetrain));
+        // demo.addSequential(new MoveToPosition(drivetrain, 6*12, 0));
+        // demo.addSequential(new RotateToHeading(drivetrain, 90));
+        // demo.addSequential(new MoveToPosition(drivetrain, (6+3)*12, 90));
+        // demo.addSequential(new RotateToHeading(drivetrain, 180));
+        // demo.addSequential(new MoveToPosition(drivetrain, (6+3+6)*12, 180));
+        // demo.addSequential(new RotateToHeading(drivetrain, 270));
+        // demo.addSequential(new MoveToPosition(drivetrain, (6+3+6+3)*12, 270));
+        // demo.addSequential(new RotateToHeading(drivetrain, 360));
+        // demo.addSequential(new StartCommand(joydrive));
+        //auto_options.addOption("Rectangle", demo);
 
-        // Left start position to Rocket port 1
-        demo = new CommandGroup();
-        demo.addSequential(new ResetDrivetrain(drivetrain));
-        demo.addSequential(new MoveToPosition(drivetrain, 6*12));
-        demo.addSequential(new RotateToHeading(drivetrain, -20));
-        demo.addSequential(new MoveToPosition(drivetrain, (6+3)*12));
-        // .. and back for testing
-        demo.addSequential(new MoveToPosition(drivetrain, 6*12));
-        demo.addSequential(new RotateToHeading(drivetrain, 0));
-        demo.addSequential(new MoveToPosition(drivetrain, 0));
-        demo.addSequential(new StartCommand(joydrive));
-        auto_options.addOption("L to R1", demo);
+        //Left start position to Rocket port 1
+        // demo = new CommandGroup();
+        // demo.addSequential(new ResetDrivetrain(drivetrain));
+        // demo.addSequential(new MoveToPosition(drivetrain, 6*12));
+        // demo.addSequential(new RotateToHeading(drivetrain, -20));
+        // demo.addSequential(new MoveToPosition(drivetrain, (6+3)*12));
+        // // .. and back for testing
+        // demo.addSequential(new MoveToPosition(drivetrain, 6*12));
+        // demo.addSequential(new RotateToHeading(drivetrain, 0));
+        // demo.addSequential(new MoveToPosition(drivetrain, 0));
+        // demo.addSequential(new StartCommand(joydrive));
+        // auto_options.addOption("L to R1", demo);
  
         demo = new CommandGroup();
         demo.addSequential(new ResetDrivetrain(drivetrain));
@@ -238,6 +238,13 @@ public class DeepspaceRobot extends BasicRobot
         demo.addSequential(new StartCommand(joydrive));
         demo.addSequential(new StartCommand(move_lift_above_camera));
         auto_options.addOption("Move 5", demo);
+        
+        demo = new CommandGroup();
+        demo.addSequential(new ResetDrivetrain(drivetrain));
+        demo.addSequential(new MoveToPosition(drivetrain, 10*12, 0));
+        demo.addSequential(new StartCommand(joydrive));
+        demo.addSequential(new StartCommand(move_lift_above_camera));
+        auto_options.addOption("Move 10", demo);
 
         // Also allow "Nothing"
         auto_options.setDefaultOption("Nothing", new StartCommand(joydrive));
