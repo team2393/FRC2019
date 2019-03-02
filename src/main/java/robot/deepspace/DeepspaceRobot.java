@@ -239,10 +239,10 @@ public class DeepspaceRobot extends BasicRobot
  
         demo = new CommandGroup();
         demo.addSequential(new ResetDrivetrain(drivetrain));
-        demo.addSequential(new MoveToPosition(drivetrain, 10*12, 0));
+        demo.addSequential(new MoveToPosition(drivetrain, 5*12, 0));
         demo.addSequential(new StartCommand(joydrive));
         demo.addSequential(new StartCommand(move_lift_above_camera));
-        auto_options.addOption("Move 10", demo);
+        auto_options.addOption("Move 5", demo);
 
         // Also allow "Nothing"
         auto_options.setDefaultOption("Nothing", new StartCommand(joydrive));

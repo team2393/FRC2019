@@ -200,12 +200,22 @@ public class MarkerDetector implements VisionProcessor
             direction = Double.NaN;
         
         // Center marker
-        Imgproc.circle(original, center, 3, overlay_bgr);
+        // // Imgproc.circle(original, center, 3, overlay_bgr);
+        // Imgproc.line(original, 
+        //             new Point(0, center.y), 
+        //             new Point(2*center.x, center.y), 
+        //             overlay_bgr);
+        Imgproc.line(original, 
+                    new Point(center.x, 0), 
+                    new Point(center.x, 2*center.y), 
+                    overlay_bgr);
+                    
+
         // If we found the direction to the markers, indicate it
         if (! Double.isNaN(direction))
             Imgproc.arrowedLine(original,
                                 center,
-                                new Point(center.x + direction, center.y),
+                                new Point(center.x + direction, center.y -10),
                                 overlay_bgr);
         
         // Publish the source with overlay as 'Processed'
