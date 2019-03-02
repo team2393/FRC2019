@@ -26,6 +26,7 @@ import robot.deepspace.drivetrain.RotateToHeading;
 import robot.deepspace.drivetrain.ToggleGear;
 import robot.deepspace.grabber.CloseGrabber;
 import robot.deepspace.grabber.Extend;
+import robot.deepspace.grabber.GetCargo;
 import robot.deepspace.grabber.Grabber;
 import robot.deepspace.grabber.OpenGrabber;
 import robot.deepspace.grabber.Retract;
@@ -86,7 +87,7 @@ public class DeepspaceRobot extends BasicRobot
     private final Command retract_grabber = new Retract(grabber);
     private final CommandGroup get_hatch = new CommandGroup();
     private final CommandGroup release_hatch = new CommandGroup();
-    private final CommandGroup get_cargo = new CommandGroup();
+    private final Command get_cargo = new GetCargo(grabber);
     private final CommandGroup deposit_cargo = new CommandGroup();
 
     // .. Riser
@@ -125,12 +126,6 @@ public class DeepspaceRobot extends BasicRobot
         release_hatch.addSequential(new OpenGrabber(grabber));
         release_hatch.addSequential(new Retract(grabber));
         
-        // Get Cargo
-        get_cargo.addSequential(new SetSpinnerSpeed(grabber, 0.3));
-        get_cargo.addSequential(new WaitForCargo(grabber));
-        // Maybe we use -0.1 to make sure cargo isn't dropped
-        get_cargo.addSequential(new SetSpinnerSpeed(grabber, 0));
-
         // Deposit Cargo
         deposit_cargo.addSequential(new SetSpinnerSpeed(grabber, -1));
         deposit_cargo.addSequential(new WaitCommand(1));
