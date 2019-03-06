@@ -19,6 +19,12 @@ public class DropAll extends Command
     }
 
     @Override
+    protected void initialize()
+    {
+        OI.forward_only = true;
+    }
+
+    @Override
     protected void execute() 
     {
         // System.out.format("X: %.3f Y: %.3f Z: %.3f\n",  tilty.getX(), tilty.getY(), tilty.getZ());

@@ -18,6 +18,8 @@ public class OI
     public static final Button gearshift = new JoystickButton(joystick, PDPController.RIGHT_FRONT_BUTTON);
     public static final Button toggleLift = new JoystickButton(joystick, PDPController.RIGHT_TOP_BUTTON);
 
+    public static boolean forward_only = false;
+
     public static boolean haveButtonboard()
     {
         return buttonboard.getButtonCount() > 0;
@@ -60,6 +62,9 @@ public class OI
         // Button reduces turn rate
         if (joystick.getRawAxis(PDPController.RIGHT_FRONT_LEVER) > 0.5)
             raw = raw/2;
+        // Prevent going backwards? 
+        if (forward_only  &&  raw < 0.0)
+            return 0;
         return square(raw);
     }
 
