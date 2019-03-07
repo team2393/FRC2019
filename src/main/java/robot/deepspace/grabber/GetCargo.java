@@ -16,23 +16,27 @@ public class GetCargo extends Command
     @Override
     protected void execute() 
     {
+        // If we detect a ball in the grabber, stop the spinners.
+        // Otherwise spin 'inwards' at a slow rate.
         if (grabber.isCargoDetected())
             grabber.setSpinnerSpeed(0);
-        else grabber.setSpinnerSpeed(0.3);
+        else
+            grabber.setSpinnerSpeed(0.3);
     }
-
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() 
     {
-      return false;
+        // Keep going unless command is cancelled/replaced
+        return false;
     }
 
     // Called once after isFinished returns true
     @Override
     protected void end()
     {
-      grabber.setSpinnerSpeed(0);
+        // If command is cancelled, stop the motor
+        grabber.setSpinnerSpeed(0);
     }
 }
