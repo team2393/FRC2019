@@ -222,7 +222,7 @@ public class DriveTrain extends Subsystem
     {
         final ErrorCode error = pigeon.getYawPitchRoll(ypr_deg);
         if (error == ErrorCode.OK)
-            return ypr_deg[1]; // Pitch
+            return ypr_deg[2];
         return 0.0;
     }
     
