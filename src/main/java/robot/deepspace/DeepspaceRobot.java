@@ -1,18 +1,10 @@
 package robot.deepspace;
 
-
-import com.ctre.phoenix.sensors.PigeonIMU;
-
-import edu.wpi.first.wpilibj.BuiltInAccelerometer;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.ConditionalCommand;
-import edu.wpi.first.wpilibj.command.PrintCommand;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.StartCommand;
 import edu.wpi.first.wpilibj.command.WaitCommand;
-import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
@@ -24,7 +16,6 @@ import robot.deepspace.drivetrain.HeadingHoldJoydrive;
 import robot.deepspace.drivetrain.Joydrive;
 import robot.deepspace.drivetrain.MoveToPosition;
 import robot.deepspace.drivetrain.ResetDrivetrain;
-import robot.deepspace.drivetrain.RotateToHeading;
 import robot.deepspace.drivetrain.ToggleGear;
 import robot.deepspace.grabber.CloseGrabber;
 import robot.deepspace.grabber.Extend;
@@ -34,7 +25,6 @@ import robot.deepspace.grabber.OpenGrabber;
 import robot.deepspace.grabber.Retract;
 import robot.deepspace.grabber.SetSpinnerSpeed;
 import robot.deepspace.grabber.ToggleGrabber;
-import robot.deepspace.grabber.WaitForCargo;
 import robot.deepspace.grabber.WaitForHatch;
 import robot.deepspace.grabber.WaitForHatchButtonRelease;
 import robot.deepspace.lift.DriveLift;
