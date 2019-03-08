@@ -1,14 +1,9 @@
 package robot.demos;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
-import robot.parts.PDPController;
 
 /** Demo of basic TalonSRX move with encoder display */
 public class TalonEncoderTest extends BasicRobot

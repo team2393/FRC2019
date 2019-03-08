@@ -23,6 +23,7 @@ public class RobotMap
     // Lift up/down
     public final static int LIFT_MOTOR = 5;
     // Drivetrain motors
+    // Left slave also has Pigeon
     public final static int LEFT_MOTOR_SLAVE = 4;
     public final static int LEFT_MOTOR_MAIN = 2;
     public final static int RIGHT_MOTOR_SLAVE = 3;
