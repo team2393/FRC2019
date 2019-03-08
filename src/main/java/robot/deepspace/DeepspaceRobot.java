@@ -127,7 +127,7 @@ public class DeepspaceRobot extends BasicRobot
         release_hatch.addSequential(new Retract(grabber));
         
         // Deposit Cargo
-        deposit_cargo.addSequential(new SetSpinnerSpeed(grabber, -1));
+        deposit_cargo.addSequential(new SetSpinnerSpeed(grabber, -0.6));
         deposit_cargo.addSequential(new WaitCommand(1));
         deposit_cargo.addSequential(new SetSpinnerSpeed(grabber, 0));
 
