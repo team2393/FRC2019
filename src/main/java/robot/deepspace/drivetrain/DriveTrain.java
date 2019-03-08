@@ -1,17 +1,18 @@
 package robot.deepspace.drivetrain;
 
+import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.sensors.PigeonIMU;
+import com.ctre.phoenix.sensors.PigeonIMU.FusionStatus;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.deepspace.RobotMap;
 
@@ -29,13 +30,13 @@ public class DriveTrain extends Subsystem
 
     private final WPI_TalonSRX right = new WPI_TalonSRX(RobotMap.RIGHT_MOTOR_MAIN);
     private final WPI_TalonSRX right_slave = new WPI_TalonSRX(RobotMap.RIGHT_MOTOR_SLAVE);
-    
+
+    private final PigeonIMU pigeon = new PigeonIMU(left_slave);
+
     private final DifferentialDrive drive = new DifferentialDrive(left, right);
     private final Solenoid gearbox = new Solenoid(RobotMap.GEARBOX_SOLENOID);
     private double speed = 0;
     private double rotation = 0;
-
-    private final Gyro gyro = new ADXRS450_Gyro();
 
     private PIDController position_pid;
     private PIDController heading_pid;
@@ -47,6 +48,8 @@ public class DriveTrain extends Subsystem
         right.configFactoryDefault();
         left_slave.configFactoryDefault();
         right_slave.configFactoryDefault();
+
+        pigeon.configFactoryDefault();
 
         // Invert motors or sensors as necessary
         left.setInverted(true);
@@ -187,7 +190,7 @@ public class DriveTrain extends Subsystem
     {
         left.setSelectedSensorPosition(0);
         right.setSelectedSensorPosition(0);
-        gyro.reset();
+        pigeon.setFusedHeading(0.0);
     }
 
     /** @return position Position in inches */ 
@@ -212,16 +215,36 @@ public class DriveTrain extends Subsystem
         }
     }
 
+    private double[] ypr_deg = new double[3];
+
+    /** @return Tilt angle. Positive: Front is up */
+    public double getTilt()
+    {
+        final ErrorCode error = pigeon.getYawPitchRoll(ypr_deg);
+        if (error == ErrorCode.OK)
+            return ypr_deg[0];
+        return 0.0;
+    }
+    
+    private FusionStatus heading_state = new FusionStatus();
+
     /** @return Current heading in degrees */
     public double getHeading()
     {
-        return gyro.getAngle();
+        pigeon.getFusedHeading(heading_state);
+        if (heading_state.bIsValid)
+            return heading_state.heading;
+        return 0.0;
     }
+
+    private double[] xyz_dps = new double[3];
 
     /** @return Current turn rate in degrees per second */
     public double getTurnRate()
     {
-        return gyro.getRate();
+        if (pigeon.getRawGyro(xyz_dps) == ErrorCode.OK)
+            return xyz_dps[2];
+        return 0.0;
     }
 
     /** Set desired angle for PID control of heading
@@ -268,6 +291,7 @@ public class DriveTrain extends Subsystem
             // SmartDashboard.putNumber("RightEncoder", right.getSelectedSensorPosition());
             SmartDashboard.putNumber("Position", getPosition());
             SmartDashboard.putNumber("Heading", getHeading());
+            SmartDashboard.putNumber("Tilt", getTilt());
             // SmartDashboard.putNumber("Turn Rate", getTurnRate());
 
             updates = 0;

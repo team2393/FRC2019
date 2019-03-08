@@ -1,6 +1,8 @@
 package robot.deepspace;
 
 
+import com.ctre.phoenix.sensors.PigeonIMU;
+
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
@@ -51,9 +53,6 @@ import robot.deepspace.riser.Riser;
  */
 public class DeepspaceRobot extends BasicRobot
 {
-    // private final PowerDistributionPanel pdp = new PowerDistributionPanel();
-    private final Accelerometer tilty = new BuiltInAccelerometer();
-    
     // Components, subsystems
     private final DriveTrain drivetrain = new DriveTrain();
     private final Lift lift = new Lift();
@@ -92,7 +91,7 @@ public class DeepspaceRobot extends BasicRobot
 
     // .. Riser
     private final Command reset_riser = new ResetRiser(riser);
-    private final Command drop_all = new DropAll(riser,tilty);
+    private final Command drop_all = new DropAll(riser, drivetrain);
     private final Command rise_front = new RiseFront(riser);
 
     // What to start in autonomous mode

@@ -1,21 +1,19 @@
 package robot.deepspace.riser;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.interfaces.Accelerometer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.deepspace.OI;
+import robot.deepspace.drivetrain.DriveTrain;
 
 public class DropAll extends Command
 {
     private final Riser riser;
-    private final Accelerometer tilty;
-    private double avg_tilt = 0.0;
+    private final DriveTrain drive;
 
-    public DropAll(Riser riser, Accelerometer tilty) 
+    public DropAll(final Riser riser, final DriveTrain drive) 
     { 
         requires(riser);
         this.riser = riser;
-        this.tilty = tilty;
+        this.drive = drive;
     }
 
     @Override
@@ -27,18 +25,13 @@ public class DropAll extends Command
     @Override
     protected void execute() 
     {
-        // System.out.format("X: %.3f Y: %.3f Z: %.3f\n",  tilty.getX(), tilty.getY(), tilty.getZ());
-        double tilt = Math.toDegrees(Math.atan2(tilty.getY(), tilty.getZ()));
-        if (Math.abs(tilt) > 30)
-            tilt = 0;
-        avg_tilt = avg_tilt*0.5 + tilt*0.5;
-        SmartDashboard.putNumber("Average Tilt", avg_tilt);                                                                                                                                                                                                                                             
-
+        final double tilt = drive.getTilt();
+        
         // Positive tilt angle: Front is up.
         // IF positive angle is too large, then front cylinders must be turned off
         // if the negative angle is too large, the back cylinder must be turned off
-        // riser.dropFront(avg_tilt < 10);
-        // riser.dropBack(avg_tilt > -10);
+        // riser.dropFront(tilt < 10);
+        // riser.dropBack(tilt > -10);
 
         riser.dropBack(true);
         riser.dropFront(true);
