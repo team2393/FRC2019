@@ -226,8 +226,8 @@ public class DeepspaceRobot extends BasicRobot
         demo.addSequential(new MoveToPosition(drivetrain, 5*12, 0));
         demo.addSequential(new StartCommand(joydrive));
         demo.addSequential(new StartCommand(move_lift_above_camera));
-        auto_options.addOption("Move 5", demo);
-        
+        auto_options.setDefaultOption("Move 5", demo);
+
         demo = new CommandGroup();
         demo.addSequential(new ResetDrivetrain(drivetrain));
         demo.addSequential(new MoveToPosition(drivetrain, 10*12, 0));
@@ -235,8 +235,21 @@ public class DeepspaceRobot extends BasicRobot
         demo.addSequential(new StartCommand(move_lift_above_camera));
         auto_options.addOption("Move 10", demo);
 
+        demo = new CommandGroup();
+        demo.addSequential(new ResetDrivetrain(drivetrain));
+        demo.addSequential(new MoveToPosition(drivetrain, 58, 0));
+        demo.addSequential(new MoveToPosition(drivetrain, 58, -45));
+        demo.addSequential(new MoveToPosition(drivetrain, 105, -45));
+        demo.addSequential(new MoveToPosition(drivetrain, 105, 0));
+        demo.addSequential(new MoveToPosition(drivetrain, 140, 0));
+        demo.addSequential(new StartCommand(joydrive));
+        // demo.addSequential(new StartCommand(move_lift_above_camera));
+        auto_options.setDefaultOption("R to R cargo", demo);
+
+
         // Also allow "Nothing"
-        auto_options.setDefaultOption("Nothing", new StartCommand(joydrive));
+        auto_options.addOption("Nothing", new StartCommand(joydrive));
+
     }
 
     @Override

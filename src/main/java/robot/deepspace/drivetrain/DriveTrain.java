@@ -232,6 +232,7 @@ public class DriveTrain extends Subsystem
     public double getHeading()
     {
         pigeon.getFusedHeading(heading_state);
+        
         if (heading_state.bIsValid)
             return heading_state.heading;
         return 0.0;
