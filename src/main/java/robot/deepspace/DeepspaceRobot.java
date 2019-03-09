@@ -300,12 +300,30 @@ public class DeepspaceRobot extends BasicRobot
             }
         }
     }
-    
+
+    private boolean was_cargo_mode = false;
+
     private void handleButtonBoard()
     {
         if (! OI.haveButtonboard())
             return;
+
+        // Reset grabber as we change mode
         final boolean cargo_mode = OI.isCargoModeEnabled();
+        if (cargo_mode != was_cargo_mode)
+        {
+            // Hatch vs. cargo mode changed
+            if (cargo_mode)
+            {   // If we just leave hatch mode, retract and close
+                grabber.close();
+                grabber.extend(false);
+            }
+            else
+            {   // If we just left cargo mode, turn motors off
+                grabber.setSpinnerSpeed(0);
+            }
+        }
+        was_cargo_mode = cargo_mode;
         SmartDashboard.putBoolean("Cargo Mode", cargo_mode);
         SmartDashboard.putBoolean("Hatch Mode", ! cargo_mode);
         
