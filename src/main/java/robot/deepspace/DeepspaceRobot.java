@@ -2,6 +2,7 @@ package robot.deepspace;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.ConditionalCommand;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.StartCommand;
 import edu.wpi.first.wpilibj.command.WaitCommand;
@@ -107,7 +108,14 @@ public class DeepspaceRobot extends BasicRobot
         get_hatch.addSequential(new CloseGrabber(grabber));
         get_hatch.addSequential(new WaitCommand(0.5));
         get_hatch.addSequential(new Retract(grabber));
-        get_hatch.addSequential(new StartCommand(move_lift_above_camera));
+        get_hatch.addSequential(new StartCommand(new ConditionalCommand(move_lift_above_camera)
+        {
+            @Override
+            protected boolean condition()
+            {
+                return grabber.isHatchDetected();
+            }
+        }));
 
         // Release hatch panel
         release_hatch.addSequential(new Extend(grabber));
@@ -234,22 +242,20 @@ public class DeepspaceRobot extends BasicRobot
         demo.addSequential(new StartCommand(joydrive));
         demo.addSequential(new StartCommand(move_lift_above_camera));
         auto_options.addOption("Move 10", demo);
+        
+        // Also allow "Nothing"
+        auto_options.addOption("Nothing", new StartCommand(joydrive));
 
         demo = new CommandGroup();
         demo.addSequential(new ResetDrivetrain(drivetrain));
+        demo.addSequential(new StartCommand(move_lift_above_camera));
         demo.addSequential(new MoveToPosition(drivetrain, 58, 0));
         demo.addSequential(new MoveToPosition(drivetrain, 58, -45));
         demo.addSequential(new MoveToPosition(drivetrain, 105, -45));
         demo.addSequential(new MoveToPosition(drivetrain, 105, 0));
         demo.addSequential(new MoveToPosition(drivetrain, 140, 0));
         demo.addSequential(new StartCommand(joydrive));
-        // demo.addSequential(new StartCommand(move_lift_above_camera));
         auto_options.setDefaultOption("R to R cargo", demo);
-
-
-        // Also allow "Nothing"
-        auto_options.addOption("Nothing", new StartCommand(joydrive));
-
     }
 
     @Override
