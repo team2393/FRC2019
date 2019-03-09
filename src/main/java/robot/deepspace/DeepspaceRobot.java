@@ -99,8 +99,6 @@ public class DeepspaceRobot extends BasicRobot
         // Fill command groups =======================================
 
         // Get hatch panel
-        // TODO Maybe start by moving lift to loading station height
-        // get_hatch.addSequential(new StartCommand(move_lift_low));
         get_hatch.addSequential(new Extend(grabber));
         get_hatch.addSequential(new OpenGrabber(grabber));
         get_hatch.addSequential(new WaitForHatch(grabber));
