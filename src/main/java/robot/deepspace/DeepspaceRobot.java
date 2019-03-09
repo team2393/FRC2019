@@ -313,12 +313,18 @@ public class DeepspaceRobot extends BasicRobot
             // Hatch vs. cargo mode changed
             if (cargo_mode)
             {   // If we just leave hatch mode, retract and close
-                grabber.close();
+                get_hatch.cancel();
+                release_hatch.cancel();
+
+                grabber.open(false);
                 grabber.extend(false);
             }
             else
             {   // If we just left cargo mode, turn motors off
-                grabber.setSpinnerSpeed(0);
+                get_cargo.cancel();
+                deposit_cargo.cancel();  
+                
+                grabber.setSpinnerSpeed(0);              
             }
         }
         was_cargo_mode = cargo_mode;
