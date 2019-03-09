@@ -108,14 +108,14 @@ public class DeepspaceRobot extends BasicRobot
         get_hatch.addSequential(new CloseGrabber(grabber));
         get_hatch.addSequential(new WaitCommand(0.5));
         get_hatch.addSequential(new Retract(grabber));
-        get_hatch.addSequential(new StartCommand(new ConditionalCommand(move_lift_above_camera)
+        get_hatch.addSequential(new ConditionalCommand(new StartCommand(move_lift_above_camera))
         {
             @Override
             protected boolean condition()
             {
                 return grabber.isHatchDetected();
             }
-        }));
+        });
 
         // Release hatch panel
         release_hatch.addSequential(new Extend(grabber));
