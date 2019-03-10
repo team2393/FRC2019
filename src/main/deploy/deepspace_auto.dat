@@ -1,0 +1,26 @@
+# Autonomous moves
+#
+# Must be placed in src/main/deploy folder
+# Lines starting with '#' are comments
+
+# Commands:
+# S            - start a new sequence
+# M pos angle  - Move to position at angle
+# R angle      - Rotate to angle
+# E Some Name  - End and publish under Some Name
+
+S
+M 60 0
+E Move 5
+
+S
+M 120 0
+E Move 10
+
+S
+M 58 0
+M 58 -45
+M 105 -45
+M 105 0
+M 140 0
+E R to R cargo

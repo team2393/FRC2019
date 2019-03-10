@@ -1,5 +1,11 @@
 package robot.deepspace;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.Scanner;
+
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.ConditionalCommand;
@@ -17,6 +23,7 @@ import robot.deepspace.drivetrain.HeadingHoldJoydrive;
 import robot.deepspace.drivetrain.Joydrive;
 import robot.deepspace.drivetrain.MoveToPosition;
 import robot.deepspace.drivetrain.ResetDrivetrain;
+import robot.deepspace.drivetrain.RotateToHeading;
 import robot.deepspace.drivetrain.ToggleGear;
 import robot.deepspace.grabber.CloseGrabber;
 import robot.deepspace.grabber.Extend;
@@ -177,7 +184,7 @@ public class DeepspaceRobot extends BasicRobot
         //       and end in StartCommand(joydrive)
 
         // Demo
-        CommandGroup demo;   // = new CommandGroup();
+        CommandGroup demo = null;   // = new CommandGroup();
         // demo.addSequential(new ResetDrivetrain(drivetrain));
         // for (int i=0; i<10; ++i)
         // {
@@ -213,50 +220,78 @@ public class DeepspaceRobot extends BasicRobot
         // demo.addSequential(new RotateToHeading(drivetrain, 360));
         // demo.addSequential(new StartCommand(joydrive));
         //auto_options.addOption("Rectangle", demo);
+         
+        // Also allow "Nothing"
+        auto_options.setDefaultOption("Nothing", new StartCommand(joydrive));
 
-        //Left start position to Rocket port 1
         // demo = new CommandGroup();
         // demo.addSequential(new ResetDrivetrain(drivetrain));
-        // demo.addSequential(new MoveToPosition(drivetrain, 6*12));
-        // demo.addSequential(new RotateToHeading(drivetrain, -20));
-        // demo.addSequential(new MoveToPosition(drivetrain, (6+3)*12));
-        // // .. and back for testing
-        // demo.addSequential(new MoveToPosition(drivetrain, 6*12));
-        // demo.addSequential(new RotateToHeading(drivetrain, 0));
-        // demo.addSequential(new MoveToPosition(drivetrain, 0));
+        // demo.addSequential(new StartCommand(move_lift_above_camera));
+        // demo.addSequential(new MoveToPosition(drivetrain, 58, 0));
+        // demo.addSequential(new MoveToPosition(drivetrain, 58, -45));
+        // demo.addSequential(new MoveToPosition(drivetrain, 105, -45));
+        // demo.addSequential(new MoveToPosition(drivetrain, 105, 0));
+        // demo.addSequential(new MoveToPosition(drivetrain, 140, 0));
         // demo.addSequential(new StartCommand(joydrive));
-        // auto_options.addOption("L to R1", demo);
- 
-        demo = new CommandGroup();
-        demo.addSequential(new ResetDrivetrain(drivetrain));
-        demo.addSequential(new MoveToPosition(drivetrain, 5*12, 0));
-        demo.addSequential(new StartCommand(joydrive));
-        demo.addSequential(new StartCommand(move_lift_above_camera));
-        auto_options.setDefaultOption("Move 5", demo);
+        // auto_options.setDefaultOption("R to R cargo", demo);
+  
+        // Read auto moves from file
+        final File auto_moves = new File(Filesystem.getDeployDirectory(), "deepspace_auto.dat");
+        System.out.println("Reading auto moves from " + auto_moves);
+        if (auto_moves.canRead())
+        {
+            try
+            {
+                final BufferedReader reader = new BufferedReader(new FileReader(auto_moves));
+                String line;
+                while ((line = reader.readLine()) != null)
+                {
+                    // System.out.println(line);
+                    if (line.isBlank()  ||  line.isEmpty()  || line.startsWith("#"))
+                        continue;
+                    final Scanner scanner = new Scanner(line);
+                    final char command = line.charAt(0);
+                    if (command == 'S')
+                    {
+                        System.out.println("Start new auto sequence");
+                        demo = new CommandGroup();
+                        demo.addSequential(new ResetDrivetrain(drivetrain));
+                        demo.addSequential(new StartCommand(move_lift_above_camera));
+                    }
+                    else if (command == 'M')
+                    {
+                        final double position = scanner.nextDouble();
+                        final double angle = scanner.nextDouble();
+                        demo.addSequential(new MoveToPosition(drivetrain, position, angle));
+                        System.out.println("Move to " + position + " @ " + angle);
+                    }
+                    else if (command == 'R')
+                    {
+                        final double angle = scanner.nextDouble();
+                        System.out.println("Rotate to " + angle);
+                        demo.addSequential(new RotateToHeading(drivetrain, angle));
 
-        demo = new CommandGroup();
-        demo.addSequential(new ResetDrivetrain(drivetrain));
-        demo.addSequential(new MoveToPosition(drivetrain, 10*12, 0));
-        demo.addSequential(new StartCommand(joydrive));
-        demo.addSequential(new StartCommand(move_lift_above_camera));
-        auto_options.addOption("Move 10", demo);
-        
-        // Also allow "Nothing"
-        auto_options.addOption("Nothing", new StartCommand(joydrive));
-
-        demo = new CommandGroup();
-        demo.addSequential(new ResetDrivetrain(drivetrain));
-        demo.addSequential(new StartCommand(move_lift_above_camera));
-        demo.addSequential(new MoveToPosition(drivetrain, 58, 0));
-        demo.addSequential(new MoveToPosition(drivetrain, 58, -45));
-        demo.addSequential(new MoveToPosition(drivetrain, 105, -45));
-        demo.addSequential(new MoveToPosition(drivetrain, 105, 0));
-        demo.addSequential(new MoveToPosition(drivetrain, 140, 0));
-        demo.addSequential(new StartCommand(joydrive));
-        auto_options.setDefaultOption("R to R cargo", demo);
+                    }
+                    else if (command == 'E')
+                    {
+                        final String name = line.substring(2);
+                        System.out.println("End sequence '" + name + "''");
+                        demo.addSequential(new StartCommand(joydrive));
+                        auto_options.addOption(name, demo);
+                    }
+                    scanner.close();
+                }
+                reader.close();
+            }
+            catch (Exception ex)
+            {
+                System.err.println("Cannot read " + auto_moves);
+                ex.printStackTrace();
+            }
+        }
     }
-
-    @Override
+        
+        @Override
     public void robotPeriodic()
     {
         Scheduler.getInstance().run();
