@@ -7,6 +7,7 @@
 # S            - start a new sequence
 # M pos angle  - Move to position at angle
 # R angle      - Rotate to angle
+# B            - Backtrack
 # E Some Name  - End and publish under Some Name
 
 S
@@ -16,6 +17,14 @@ E Move 5
 S
 M 120 0
 E Move 10
+
+S
+M 60 0
+M 60 -45
+M 90 -45
+M 90 0
+B
+E Test
 
 S
 M 58 0

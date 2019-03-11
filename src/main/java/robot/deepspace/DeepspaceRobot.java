@@ -3,7 +3,11 @@ package robot.deepspace;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.command.Command;
@@ -242,27 +246,33 @@ public class DeepspaceRobot extends BasicRobot
         {
             try
             {
+                final LinkedList<Command> backtrack = new LinkedList<>();
                 final BufferedReader reader = new BufferedReader(new FileReader(auto_moves));
                 String line;
                 while ((line = reader.readLine()) != null)
                 {
                     // System.out.println(line);
+                    // Skip comments
                     if (line.isBlank()  ||  line.isEmpty()  || line.startsWith("#"))
                         continue;
                     final Scanner scanner = new Scanner(line);
                     final char command = line.charAt(0);
+                    // Handle commands
                     if (command == 'S')
                     {
                         System.out.println("Start new auto sequence");
                         demo = new CommandGroup();
                         demo.addSequential(new ResetDrivetrain(drivetrain));
                         demo.addSequential(new StartCommand(move_lift_above_camera));
+                        backtrack.clear();
+                        backtrack.add(new MoveToPosition(drivetrain, 0.0, 0.0));
                     }
                     else if (command == 'M')
                     {
                         final double position = scanner.nextDouble();
                         final double angle = scanner.nextDouble();
                         demo.addSequential(new MoveToPosition(drivetrain, position, angle));
+                        backtrack.add(new MoveToPosition(drivetrain, position, angle));
                         System.out.println("Move to " + position + " @ " + angle);
                     }
                     else if (command == 'R')
@@ -270,7 +280,14 @@ public class DeepspaceRobot extends BasicRobot
                         final double angle = scanner.nextDouble();
                         System.out.println("Rotate to " + angle);
                         demo.addSequential(new RotateToHeading(drivetrain, angle));
-
+                        backtrack.add(new RotateToHeading(drivetrain, angle));
+                    }
+                    else if (command == 'B')
+                    {
+                        System.out.println("Backtrack all moves");
+                        // Repeat moves in reverse
+                        while (! backtrack.isEmpty())
+                            demo.addSequential(backtrack.removeLast());
                     }
                     else if (command == 'E')
                     {
