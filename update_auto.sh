@@ -10,7 +10,7 @@
 IP=10.23.93.2
 
 # Copy auto file to robot
-scp src/main/deploy/deepspace_auto.dat lvuser@$IP:/home/lvuser/deploy
+scp src/main/deploy/deepspace_auto.dat admin@$IP:/home/lvuser/deploy
 
 # Restart
 ssh lvuser@$IP "/usr/local/frc/bin/frcKillRobot.sh"

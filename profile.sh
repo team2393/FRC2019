@@ -7,9 +7,9 @@
 # For details, see README.md
 
 #.. when connected via USB
-IP=172.22.11.2
+#IP=172.22.11.2
 #.. when connected via Radio
-#IP=10.23.93.2
+IP=10.23.93.2
 
 # Show current robot command
 ssh lvuser@$IP "cat robotCommand"
