@@ -1,7 +1,5 @@
 # This configures the RoboRIO to enable profiling
 #
-# Run from  from the GIT bash:
-#
 # Start GIT bash
 # cd git/2393First
 # source profile.sh
