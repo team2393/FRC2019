@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.command.ConditionalCommand;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.StartCommand;
 import edu.wpi.first.wpilibj.command.WaitCommand;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
@@ -256,7 +257,7 @@ public class DeepspaceRobot extends BasicRobot
                     if (line.isBlank()  ||  line.isEmpty()  || line.startsWith("#"))
                         continue;
                     final Scanner scanner = new Scanner(line);
-                    final char command = line.charAt(0);
+                    final char command = scanner.next(".").charAt(0);
                     // Handle commands
                     if (command == 'S')
                     {
@@ -308,7 +309,7 @@ public class DeepspaceRobot extends BasicRobot
         }
     }
         
-        @Override
+    @Override
     public void robotPeriodic()
     {
         Scheduler.getInstance().run();
@@ -447,6 +448,9 @@ public class DeepspaceRobot extends BasicRobot
 
         // Start driving by joystick
         joydrive.start();
+
+        // Disable live window
+        LiveWindow.disableAllTelemetry();
     }
 
     @Override
@@ -467,6 +471,9 @@ public class DeepspaceRobot extends BasicRobot
 
         // Reading to clear any pending button presses
         OI.isToggleHeadingholdPressed();
+
+        // Disable live window
+        LiveWindow.disableAllTelemetry();
 
         // Start the selected option, which may be "Nothing"
         auto_options.getSelected().start();
