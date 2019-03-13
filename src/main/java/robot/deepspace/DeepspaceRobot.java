@@ -268,11 +268,11 @@ public class DeepspaceRobot extends BasicRobot
                         backtrack.clear();
                         backtrack.add(new MoveToPosition(drivetrain, 0.0, 0.0));
                     }
-                    else if (command == 'M')
+                    else if (command == 'M'  ||  command == 'm')
                     {
                         final double position = scanner.nextDouble();
                         final double angle = scanner.nextDouble();
-                        demo.addSequential(new MoveToPosition(drivetrain, position, angle));
+                        demo.addSequential(new MoveToPosition(drivetrain, position, angle, command == 'M'));
                         backtrack.add(new MoveToPosition(drivetrain, position, angle));
                         System.out.println("Move to " + position + " @ " + angle);
                     }

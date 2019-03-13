@@ -6,6 +6,7 @@
 # Commands:
 # S            - start a new sequence
 # M pos angle  - Move to position at angle
+# m pos angle  - Move at lower speed
 # R angle      - Rotate to angle
 # B            - Backtrack
 # E Some Name  - End and publish under Some Name
@@ -31,7 +32,7 @@ E Move 10
 
 
 S
-M 58 0
+m 58 0
 M 58 -45
 M 105 -45
 M 105 0
@@ -40,7 +41,7 @@ E R to RF Cargo
 
 
 S
-M 100 0
+m 100 0
 R 15
 M 194 15
 R -90
@@ -49,7 +50,7 @@ E R to R1 Cargo
 
 
 S
-M 100 0
+m 100 0
 R 15
 M 218 15
 R -90
@@ -58,7 +59,7 @@ E R to R2 Cargo
 
 
 S
-M 50 0
+m 50 0
 R 60
 M 120 60
 R 30
@@ -67,7 +68,7 @@ E R to R Rocket
 
 
 S
-M 110 0
+m 110 0
 R 35
 M 240 35
 R 150

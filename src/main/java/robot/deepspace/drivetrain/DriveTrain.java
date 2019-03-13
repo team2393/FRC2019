@@ -169,7 +169,7 @@ public class DriveTrain extends Subsystem
         gearbox.set(high);
         SmartDashboard.putBoolean("Gear", high);
     }
-    
+
     public void setSpeed(final double speed)
     {
         this.speed = speed;
@@ -200,6 +200,15 @@ public class DriveTrain extends Subsystem
         final int position = (left.getSelectedSensorPosition() +
                               right.getSelectedSensorPosition()) / 2;
         return position / COUNTS_PER_INCH;
+    }
+
+    /** @param high Set PID to higher output range? Else lower range */
+    public void setPositionSpeed(final boolean high)
+    {
+        if (high)
+            position_pid.setOutputRange(-0.5, 0.5);
+        else
+            position_pid.setOutputRange(-0.3, 0.3);
     }
 
     /** @param inches Desired position in inches or NaN to disable PID */
