@@ -106,7 +106,7 @@ public class DeepspaceRobot extends BasicRobot
         super.robotInit();
 
         if (CameraInfo.haveCamera())
-            camera = new CameraHandler(320, 240, 15, new MarkerDetector());
+            camera = new CameraHandler(320, 240, 10, new MarkerDetector());
 
         // Fill command groups =======================================
 
