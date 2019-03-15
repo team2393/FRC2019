@@ -9,6 +9,8 @@
 # m pos angle  - Move at lower speed
 # R angle      - Rotate to angle
 # B            - Backtrack
+# H            - Place hatch
+# C            - Place cargo
 # E Some Name  - End and publish under Some Name
 
 S

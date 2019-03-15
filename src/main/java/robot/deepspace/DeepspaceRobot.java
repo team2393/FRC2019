@@ -290,6 +290,16 @@ public class DeepspaceRobot extends BasicRobot
                         while (! backtrack.isEmpty())
                             demo.addSequential(backtrack.removeLast());
                     }
+                    else if (command == 'H')
+                    {
+                        System.out.println("Place Hatch");
+                        demo.addSequential(new StartCommand (release_hatch));
+                    }
+                    else if (command == 'C')
+                    {
+                        System.out.println("Place Cargo");
+                        demo.addSequential(new StartCommand (deposit_cargo));
+                    }
                     else if (command == 'E')
                     {
                         final String name = line.substring(2);
