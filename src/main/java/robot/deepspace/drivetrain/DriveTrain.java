@@ -208,7 +208,7 @@ public class DriveTrain extends Subsystem
         if (high)
             position_pid.setOutputRange(-0.5, 0.5);
         else
-            position_pid.setOutputRange(-0.3, 0.3);
+            position_pid.setOutputRange(-0.4, 0.4);
     }
 
     /** @param inches Desired position in inches or NaN to disable PID */
