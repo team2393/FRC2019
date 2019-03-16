@@ -8,6 +8,28 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/* Basic idea how one could switch between two cameras:
+
+UsbCamera camera1, camera2;
+VideoSink server;
+void robotInit()
+{
+  camera1 = CameraServer.getInstance().startAutomaticCapture(0);
+  camera2 = CameraServer.getInstance().startAutomaticCapture(1);
+  server = CameraServer.getInstance().addSwitchedCamera("switched camera");
+  camera1.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+  camera2.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+}
+void teleopPeriodic()
+{
+  if (......)
+    server.setSource(camera2);
+  else if (.....)
+    server.setSource(camera1);
+}
+*/
+
+
 /** Helper class for handling the camera
  * 
  *  Connects to the USB camera,
