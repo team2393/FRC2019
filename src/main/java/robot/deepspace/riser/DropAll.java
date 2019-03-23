@@ -24,8 +24,7 @@ public class DropAll extends Command
         abort = false;
     }
 
-    @Override
-    protected void execute() 
+    private void rise_or_abort()
     {
         final double tilt = drive.getTilt();
         
@@ -45,6 +44,38 @@ public class DropAll extends Command
 
         riser.dropBack(true);
         riser.dropFront(true);
+    }
+
+    private boolean blipping = false;
+
+    private void blip_if_tilted()
+    {
+        final double tilt = drive.getTilt();
+
+        // Positive tilt angle: Front is up.
+        if (!blipping && tilt > 5)
+        {
+            riser.dropFront(false);
+            blipping = true;
+        }
+        else if (! blipping &&  tilt < -5)
+        {
+            riser.dropBack(false);
+            blipping = true;
+        }
+        else
+        {
+            riser.dropBack(true);
+            riser.dropFront(true);    
+            blipping = false;
+        }
+    }
+
+    @Override
+    protected void execute() 
+    {
+        // blip_if_tilted();
+        rise_or_abort();
 
         double joystick_reading = OI.getSpeed();
         if (Math.abs(joystick_reading) > 0.1)
