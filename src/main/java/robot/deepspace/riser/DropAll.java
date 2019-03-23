@@ -9,7 +9,8 @@ public class DropAll extends Command
     private final Riser riser;
     private final DriveTrain drive;
     private boolean abort = false;
-
+    private int blipping = 0;
+    
     public DropAll(final Riser riser, final DriveTrain drive) 
     { 
         requires(riser);
@@ -22,13 +23,14 @@ public class DropAll extends Command
     {
         OI.forward_only = true;
         abort = false;
+        blipping = 0;
     }
 
+    /** Rise up unless we're tilted too far, in which case we abort */
     private void rise_or_abort()
     {
         final double tilt = drive.getTilt();
-        
-        // Positive tilt angle: Front is up.
+        // Abort if tilted too far front or back
         if (Math.abs(tilt) > 10)
         {
             riser.dropBack(false);
@@ -37,43 +39,68 @@ public class DropAll extends Command
             OI.forward_only = false;
             return;
         }
-        // IF positive angle is too large, then front cylinders must be turned off
-        // if the negative angle is too large, the back cylinder must be turned off
-        // riser.dropFront(tilt < 12);
-        // riser.dropBack(tilt > -12);
-
         riser.dropBack(true);
         riser.dropFront(true);
     }
 
-    private boolean blipping = false;
-
+    /** Rise up.
+     *  Abort when tilted too far.
+     *  If tilted a little, pull the 'high' front or back riser
+     *  up for N periods, then check again.
+     * 
+     *  TODO Check if this helps.
+     *  Determine N=1, 2, ... such that it just about pauses the rise.
+     *  When blipping too long, it will pull the riser in too far
+     *  and start a crazy oscillation.
+     */
     private void blip_if_tilted()
     {
         final double tilt = drive.getTilt();
 
-        // Positive tilt angle: Front is up.
-        if (!blipping && tilt > 5)
-        {
-            riser.dropFront(false);
-            blipping = true;
-        }
-        else if (! blipping &&  tilt < -5)
+        // Abort if tilted too far
+        if (Math.abs(tilt) > 15)
         {
             riser.dropBack(false);
-            blipping = true;
+            riser.dropFront(false);
+            abort = true;
+            OI.forward_only = false;
+            return;
+        }
+
+        // Last time around, did we blip the front or back for N periods?
+        if (blipping > 0)
+        {
+            --blipping;
+            if (blipping <= 0)
+            {   // Back to rising both for one period, don't check tilt, wait for next reading
+                riser.dropBack(true);
+                riser.dropFront(true);
+            }
+            return;
+        }
+        // Not blipping. Check if we should.
+        // Positive tilt angle: Front is up.
+        if (tilt > 5)
+        {   // Stop front for one 
+            riser.dropFront(false);
+            blipping = 1;
+        }
+        else if (tilt < -5)
+        {
+            riser.dropBack(false);
+            blipping = 1;
         }
         else
         {
             riser.dropBack(true);
-            riser.dropFront(true);    
-            blipping = false;
+            riser.dropFront(true);
         }
     }
 
     @Override
     protected void execute() 
     {
+        // Pick one of the next:
         // blip_if_tilted();
         rise_or_abort();
 
