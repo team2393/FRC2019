@@ -110,3 +110,20 @@ M 240 -35
 R -150
 M 258 -150
 E L to L B Rocket
+
+
+S
+m 55 0
+R 15
+M 95 15
+R 0
+M 126 0
+E M to F R Cargo
+
+S
+m 55 0
+R -15
+M 95 -15
+R 0
+M 126 0
+E M to F L Cargo
