@@ -101,8 +101,8 @@ public class DropAll extends Command
     protected void execute() 
     {
         // Pick one of the next:
-        // blip_if_tilted();
-        rise_or_abort();
+        blip_if_tilted();
+        // rise_or_abort();
 
         double joystick_reading = OI.getSpeed();
         if (Math.abs(joystick_reading) > 0.1)
