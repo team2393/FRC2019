@@ -58,7 +58,7 @@ public class DropAll extends Command
         final double tilt = drive.getTilt();
 
         // Abort if tilted too far
-        if (Math.abs(tilt) > 15)
+        if (Math.abs(tilt) > 20)
         {
             riser.dropBack(false);
             riser.dropFront(false);
@@ -80,12 +80,12 @@ public class DropAll extends Command
         }
         // Not blipping. Check if we should.
         // Positive tilt angle: Front is up.
-        if (tilt > 5)
+        if (tilt > 12)
         {   // Stop front for one 
             riser.dropFront(false);
             blipping = 1;
         }
-        else if (tilt < -5)
+        else if (tilt < -12)
         {
             riser.dropBack(false);
             blipping = 1;

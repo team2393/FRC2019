@@ -453,6 +453,9 @@ public class DeepspaceRobot extends BasicRobot
     {
         super.teleopInit();
 
+        reset_riser.start();
+        OI.forward_only = false;
+
         // Reading to clear any pending button presses
         OI.isToggleHeadingholdPressed();
 
@@ -475,6 +478,9 @@ public class DeepspaceRobot extends BasicRobot
     public void autonomousInit()
     {
         super.autonomousInit();
+
+        //Reset Riser before robot starts
+        reset_riser.start();
 
         // Zero lift position
         reset_lift.start();
