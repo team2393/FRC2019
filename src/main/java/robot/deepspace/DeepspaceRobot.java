@@ -454,7 +454,6 @@ public class DeepspaceRobot extends BasicRobot
         super.teleopInit();
 
         reset_riser.start();
-        OI.forward_only = false;
 
         // Reading to clear any pending button presses
         OI.isToggleHeadingholdPressed();

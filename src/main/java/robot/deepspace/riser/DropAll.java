@@ -10,6 +10,7 @@ public class DropAll extends Command
     private final DriveTrain drive;
     private boolean abort = false;
     private int blipping = 0;
+    private double tiltamount = 3;
     
     public DropAll(final Riser riser, final DriveTrain drive) 
     { 
@@ -21,7 +22,6 @@ public class DropAll extends Command
     @Override
     protected void initialize()
     {
-        OI.forward_only = true;
         abort = false;
         blipping = 0;
     }
@@ -36,7 +36,6 @@ public class DropAll extends Command
             riser.dropBack(false);
             riser.dropFront(false);
             abort = true;
-            OI.forward_only = false;
             return;
         }
         riser.dropBack(true);
@@ -63,7 +62,6 @@ public class DropAll extends Command
             riser.dropBack(false);
             riser.dropFront(false);
             abort = true;
-            OI.forward_only = false;
             return;
         }
 
@@ -80,12 +78,12 @@ public class DropAll extends Command
         }
         // Not blipping. Check if we should.
         // Positive tilt angle: Front is up.
-        if (tilt > 12)
+        if (tilt > tiltamount)
         {   // Stop front for one 
             riser.dropFront(false);
             blipping = 1;
         }
-        else if (tilt < -12)
+        else if (tilt < -tiltamount)
         {
             riser.dropBack(false);
             blipping = 1;
@@ -101,8 +99,8 @@ public class DropAll extends Command
     protected void execute() 
     {
         // Pick one of the next:
-        blip_if_tilted();
-        // rise_or_abort();
+        // blip_if_tilted();
+        rise_or_abort();
 
         double joystick_reading = OI.getSpeed();
         if (Math.abs(joystick_reading) > 0.1)
