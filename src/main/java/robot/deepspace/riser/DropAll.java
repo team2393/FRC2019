@@ -6,11 +6,12 @@ import robot.deepspace.drivetrain.DriveTrain;
 
 public class DropAll extends Command
 {
+    private final static double ABORT_ANGLE = 15;
+    private final static double CONTROL_ANGLE = 3;
     private final Riser riser;
     private final DriveTrain drive;
     private boolean abort = false;
     private int blipping = 0;
-    private double tiltamount = 3;
     
     public DropAll(final Riser riser, final DriveTrain drive) 
     { 
@@ -31,7 +32,7 @@ public class DropAll extends Command
     {
         final double tilt = drive.getTilt();
         // Abort if tilted too far front or back
-        if (Math.abs(tilt) > 10)
+        if (Math.abs(tilt) > ABORT_ANGLE)
         {
             riser.dropBack(false);
             riser.dropFront(false);
@@ -42,12 +43,32 @@ public class DropAll extends Command
         riser.dropFront(true);
     }
 
+    /** Pause front when it's too high */
+    private void control_front()
+    {
+        final double tilt = drive.getTilt();
+        // Abort if tilted too far front or back
+        if (Math.abs(tilt) > ABORT_ANGLE)
+        {
+            riser.dropBack(false);
+            riser.dropFront(false);
+            abort = true;
+            return;
+        }
+
+        // Positive tilt angle, front is up too high
+        if (tilt > CONTROL_ANGLE)
+            riser.pauseFront();
+        else
+            riser.dropFront(true);
+        riser.dropBack(true);
+    }
+
     /** Rise up.
      *  Abort when tilted too far.
      *  If tilted a little, pull the 'high' front or back riser
      *  up for N periods, then check again.
      * 
-     *  TODO Check if this helps.
      *  Determine N=1, 2, ... such that it just about pauses the rise.
      *  When blipping too long, it will pull the riser in too far
      *  and start a crazy oscillation.
@@ -57,7 +78,7 @@ public class DropAll extends Command
         final double tilt = drive.getTilt();
 
         // Abort if tilted too far
-        if (Math.abs(tilt) > 20)
+        if (Math.abs(tilt) > ABORT_ANGLE)
         {
             riser.dropBack(false);
             riser.dropFront(false);
@@ -78,12 +99,12 @@ public class DropAll extends Command
         }
         // Not blipping. Check if we should.
         // Positive tilt angle: Front is up.
-        if (tilt > tiltamount)
+        if (tilt > CONTROL_ANGLE)
         {   // Stop front for one 
             riser.dropFront(false);
             blipping = 1;
         }
-        else if (tilt < -tiltamount)
+        else if (tilt < -CONTROL_ANGLE)
         {
             riser.dropBack(false);
             blipping = 1;
@@ -100,7 +121,8 @@ public class DropAll extends Command
     {
         // Pick one of the next:
         // blip_if_tilted();
-        rise_or_abort();
+        // rise_or_abort();
+        control_front();
 
         double joystick_reading = OI.getSpeed();
         if (Math.abs(joystick_reading) > 0.1)
