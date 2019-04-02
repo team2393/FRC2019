@@ -34,7 +34,7 @@ then use File, Open Folder in VS Code to open.
 
 If you do not have a git clone, open VS Studio,
 invoke View, Command Palette, and type "Git: Clone".
-Enter this URL: `https://github.com/kasemir/2393First`
+Enter this URL: `https://github.com/Team2393/FRC`
 Create & browse to a folder `git` in your home directory.
 
 Git Update
@@ -47,12 +47,12 @@ from the "..." menu.
 
 Creating a Git Branch
 ---------------------
-To create a branch click on the branch name in the 
+To create a branch, click on the branch name in the 
 lower left corner. Select Create new branch from the
 dropdown, then enter a name.
 
 Github has a section that shows all branches:
-https://github.com/kasemir/2393First/network
+https://github.com/Team2393/FRC/network
 
 Committing Changes
 ------------------
