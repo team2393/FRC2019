@@ -32,6 +32,12 @@ public class Riser extends Subsystem
         front_riser2.set(down);
     }
 
+    public void pauseFront()
+    {
+        // TODO Assuming sol2 is the one that pauses air to the front
+        front_riser2.set(false);
+    }
+
     public void dropBack(boolean down)
     {
         back_riser.set(down);
