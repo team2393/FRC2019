@@ -58,7 +58,7 @@ public class Lift extends Subsystem
 		// motor.configPeakCurrentDuration(100);
         // motor.enableCurrentLimit(true);
 
-        // TODO Use max of 11.5V, so behaves same with full/weaker battery 
+        // Use max of 11.5V, so behaves same with full/weaker battery?
         // motor.configVoltageCompSaturation(11.5);
         // motor.enableVoltageCompensation(true);
 

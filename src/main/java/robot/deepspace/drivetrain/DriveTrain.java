@@ -63,13 +63,12 @@ public class DriveTrain extends Subsystem
         // Coast or break when speed is set to 0.0?
         left.setNeutralMode(NeutralMode.Brake);
         right.setNeutralMode(NeutralMode.Brake);
-        // TODO Neutral mode needs to be set for both master and follower
 
         // Use quad (relative) encoder
         left.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         right.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
        
-        // TODO Slow down acceleration
+        // Slow down acceleration
         // left.configOpenloopRamp(0.15);
         // right.configOpenloopRamp(0.15);
         // left_slave.configOpenloopRamp(0.15);
@@ -145,7 +144,7 @@ public class DriveTrain extends Subsystem
             }        
         };
         heading_pid = new PIDController(0.03, 0.000, 0.045, heading_source, this::setRotation);
-        // TODO Try continuous mode?
+        // Try continuous mode?
         // heading_pid.setInputRange(-180, 180);
         // heading_pid.setContinuous();
         // Limit output, otherwise robot is too agressive

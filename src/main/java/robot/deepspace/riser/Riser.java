@@ -34,7 +34,7 @@ public class Riser extends Subsystem
 
     public void pauseFront()
     {
-        // TODO Assuming sol2 is the one that pauses air to the front
+        // Assuming sol2 is the one that pauses air to the front
         front_riser2.set(false);
     }
 

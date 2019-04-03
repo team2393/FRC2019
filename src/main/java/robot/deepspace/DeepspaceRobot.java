@@ -3,11 +3,8 @@ package robot.deepspace;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.ConcurrentLinkedDeque;
 
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.command.Command;
@@ -49,11 +46,7 @@ import robot.deepspace.riser.ResetRiser;
 import robot.deepspace.riser.RiseFront;
 import robot.deepspace.riser.Riser;
 
-/** Main robot class for deep space 2019
- *  *
- *  TODO Prepare autonomous moves from N start positions to M initial disk placements.
- *  Maybe leave last leg of route to driver, using vision, but get them close.
- */
+/** Main robot class for deep space 2019 */
 public class DeepspaceRobot extends BasicRobot
 {
     // Components, subsystems
