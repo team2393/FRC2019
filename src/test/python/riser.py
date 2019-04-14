@@ -1,10 +1,10 @@
 # Python simulation of rise
-# python 3, numpy, scipy
-from pylab import *
+import numpy as np
+import matplotlib.pyplot as plt
 
 # Time from 0 to 10 seconds in steps of 20ms
 dt = 0.02
-t = arange(0.0, 10.0, dt)
+t = np.arange(0.0, 10.0, dt)
 
 # Height when robot is all 'up'
 top = 80
@@ -21,7 +21,7 @@ threshold = 8
 
 # Position of Back cylinder, simply accelerating all the time
 pos_b = 1/2 * acc_b * t*t
-pos_b[where(pos_b > top)] = top
+pos_b[np.where(pos_b > top)] = top
 
 # Position of Front cylinder
 pos_f = []
@@ -30,7 +30,7 @@ f = 0
 f_on = 0
 time_on = 0;
 for i in range(len(t)):
-    tlt = degrees(arctan2(f - pos_b[i], width))
+    tlt = np.degrees(np.arctan2(f - pos_b[i], width))
     if tlt > threshold:
         # Pause air to the front:
         # f stays where it is,
@@ -43,19 +43,17 @@ for i in range(len(t)):
         # accelerating from height f_on when air was turned on
         time_on += dt
         f = min(top, f_on + 1/2 * acc_f * time_on*time_on)
-        
     pos_f.append(f)
     tilt.append(tlt)
 
-pos_f = array(pos_f)
-tilt = array(tilt)
-pos_f[where(pos_f > top)] = top
+pos_f = np.array(pos_f)
+tilt = np.array(tilt)
 
 print("%d data points" % len(t))
-plot(t, pos_f, 'b-', t, pos_b, 'g-', t, tilt, 'r-')
-title("Tilt: %.1f .. %.1f degrees" % (tilt.max(), tilt.min()))
-xlabel('Time [s]')
-ylabel('Height [cm] resp. Angle [degree]')
-legend([ 'Front', 'Back', 'Tilt' ])
-grid(True)
-show()
+plt.plot(t, pos_f, 'b-', t, pos_b, 'g-', t, tilt, 'r-')
+plt.title("Tilt: %.1f .. %.1f degrees" % (tilt.max(), tilt.min()))
+plt.xlabel('Time [s]')
+plt.ylabel('Height [cm] resp. Angle [degree]')
+plt.legend([ 'Front', 'Back', 'Tilt' ])
+plt.grid(True)
+plt.show()
