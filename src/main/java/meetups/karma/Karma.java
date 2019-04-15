@@ -3,6 +3,11 @@ package meetups.karma;
 /** Karma Tracker */
 public class Karma
 {
+    // 'public'     Anybody can access
+    // 'private'    Only the class itself can access
+    // 'protected'  Only this class or another class
+    //              that 'extends' this one can access
+    
     // Outside code cannot directly touch the points
     protected int karma;
 
