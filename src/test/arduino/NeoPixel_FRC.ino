@@ -33,16 +33,17 @@ void setup()
 
 void loop()
 {
-  demo();
-//   flag();
-//   one_at_a_time(strip.Color(0, 255, 0));
-//   one_at_a_time(strip.Color(255, 0, 0));
-//   one_at_a_time(strip.Color(0, 0, 255));
-//   one_at_a_time(strip.Color(255, 0, 255));
-//   off();
-//   delay(500);
-//   red();
-//   delay(500);
+  // demo();
+  one_at_a_time(strip.Color(0, 255, 0));
+  one_at_a_time(strip.Color(255, 0, 0));
+  one_at_a_time(strip.Color(0, 0, 255));
+  one_at_a_time(strip.Color(255, 0, 255));
+
+  for(int i=0; i<3; ++i)
+    ranbow();
+        
+  for(int i=0; i<3; ++i)
+    flag(); 
 }
 
 void off()
@@ -51,6 +52,22 @@ void off()
   for(int i=0; i<strip.numPixels(); ++i)
     strip.setPixelColor(i, c);
   strip.show();
+}
+
+void ranbow()
+{
+  int length = strip.numPixels();
+  for (int shift=0; shift<length; ++shift)
+  {
+    for(int i=0; i<10; ++i)
+      strip.setPixelColor((i+shift) % length, strip.Color(-255*i/9+255, 255*i/9, 0));
+    for(int i=10; i<20; ++i)
+      strip.setPixelColor((i+shift) % length, strip.Color(0, -255*(i-10)/9+255, 255*(i-10)/9));
+    for(int i=20; i<30; ++i)
+      strip.setPixelColor((i+shift) % length, strip.Color(255*(i-20)/9, 0, -255*(i-20)/9+255));
+    strip.show();
+    delay(50);
+  }
 }
 
 void red()
@@ -63,6 +80,7 @@ void red()
 
 void one_at_a_time(Color color)
 {
+  off();
   Color black = strip.Color(0, 0, 0);
   int i=0;
   while (i<strip.numPixels())
@@ -77,37 +95,53 @@ void one_at_a_time(Color color)
   }
 }
 
+void simple_flag()
+{
+  Color red = strip.Color(255, 0, 0);
+  Color white = strip.Color(255, 255, 255);
+  Color blue = strip.Color(0, 0, 255);  
+
+  int length = strip.numPixels();
+  int i=0;
+  while (i<length/3)
+    strip.setPixelColor(i++, red);
+  while (i < 2*length/3)
+    strip.setPixelColor(i++, white);
+  while (i<length)
+    strip.setPixelColor(i++, blue);
+  strip.show();
+}
+
 void flag()
 {
   Color red = strip.Color(255, 0, 0);
   Color white = strip.Color(255, 255, 255);
   Color blue = strip.Color(0, 0, 255);
 
-  for (int shift=0; shift<30; ++shift)
+  int length = strip.numPixels();
+  for (int shift=0; shift<length; ++shift)
   {
-    for (int i=0; i<10; ++i)
-        strip.setPixelColor( (shift+i) % 30, red);  
-    for (int i=10; i<20; ++i)
-        strip.setPixelColor( (shift+i) % 30, white);  
-    for (int i=20; i<30; ++i)
-        strip.setPixelColor( (shift+i) % 30, blue);  
+    for (int i=0; i<length/3; ++i)
+        strip.setPixelColor( (shift+i) % length, red);  
+    for (int i=length/3; i<2*length/3; ++i)
+        strip.setPixelColor( (shift+i) % length, white);  
+    for (int i=2*length/3; i<length; ++i)
+        strip.setPixelColor( (shift+i) % length, blue);  
     strip.show();
     delay(50);
   }
-  for (int shift=30; shift>0; --shift)
+  for (int shift=length; shift>0; --shift)
   {
-    for (int i=0; i<10; ++i)
-        strip.setPixelColor( (shift+i) % 30, red);  
-    for (int i=10; i<20; ++i)
-        strip.setPixelColor( (shift+i) % 30, white);  
-    for (int i=20; i<30; ++i)
-        strip.setPixelColor( (shift+i) % 30, blue);  
+    for (int i=0; i<length/3; ++i)
+        strip.setPixelColor( (shift+i) % length, red);  
+    for (int i=length/3; i<2*length/3; ++i)
+        strip.setPixelColor( (shift+i) % length, white);  
+    for (int i=2*length/3; i<length; ++i)
+        strip.setPixelColor( (shift+i) % length, blue);  
     strip.show();
     delay(50);
   }
 }
-
-
 
 void demo()
 {
