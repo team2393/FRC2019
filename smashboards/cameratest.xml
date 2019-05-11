@@ -1,0 +1,12 @@
+<xml version="1.0">
+<dashboard>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
+		<location x="277" y="14"/>
+		<width>750</width>
+		<height>565</height>
+		<property name="Camera Choice" value="Processed"/>
+	</static-widget>
+</dashboard>
+<live-window>
+</live-window>
+</xml>
