@@ -57,16 +57,52 @@ public class FindCenter implements VisionProcessor
         original.get(0, 0, data);
 
         // Manipulate data
-
-        // Example: Draw horizontal line through middle of image
         final int mid_y = height / 2;
+
+        int max_val = 0;
+        int max_x = -1;
+        for (int x=0; x<width; ++x)
+        {
+            // Index of B, G, R for the pixel
+            int pixel = 3*(x + mid_y*width);
+            int blue = Byte.toUnsignedInt(data[pixel]);
+            int green = Byte.toUnsignedInt(data[pixel + 1]);
+            int red = Byte.toUnsignedInt(data[pixel + 2]);
+            int average = (blue  + red + green) / 3;
+
+            if(average > max_val)
+            {
+                max_val = average;
+                max_x = x;
+            }
+
+            int y = mid_y - average * 100 / 255;
+            pixel = 3*(x + y*width);
+
+            data[pixel] = 50;
+            data[pixel+1] = (byte)0;
+            data[pixel+2] = (byte)100;
+        }
+
+        if(max_x > 0)
+        {
+            for (int y=0; y<height; ++y)
+            {
+                // Index of B, G, R for the pixel
+                final int pixel = 3*(max_x + y*width);
+                data[pixel] = 50;
+                data[pixel+1] = (byte)0;
+                data[pixel+2] = (byte)100;
+            }    
+        }
+
         for (int x=0; x<width; ++x)
         {
             // Index of B, G, R for the pixel
             final int pixel = 3*(x + mid_y*width);
-            data[pixel] = 0;
-            data[pixel+1] = (byte)255;
-            data[pixel+2] = (byte)255;
+            data[pixel] = 50;
+            data[pixel+1] = (byte)0;
+            data[pixel+2] = (byte)100;
         }
 
         // TODO Find brightest area in some line(s)
