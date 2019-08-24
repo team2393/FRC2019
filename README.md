@@ -6,12 +6,34 @@
 Setup for the 2019 Season
 -------------------------
 
-See 
+For full details see 
 https://www.firstinspires.org/resource-library/frc/competition-manual-qa-system and 
 http://wpilib.screenstepslive.com/s/4485
 
-The software team has a USB stick with all the software,
-passwords and step-by-step instructions.
+In short, you need the following which you can get from the mentioned web links
+or from the USB available in the software meetups:
+
+ * Git from https://git-scm.com/downloads
+ * WPILibInstaller.zip from https://github.com/wpilibsuite/allwpilib/releases
+   Select to install for the current user.
+   In the first dialog, select to download VS Code unless you have the OfflineVsCodeFiles.zip.
+   Select all but "C++ Compiler".
+
+As a result, you should have FRC desktop icons for VS Code,
+SmartDashboard etc.
+
+Open VS Studio, invoke View, Command Palette, and type "Git: Clone".
+Enter this URL: `https://github.com/Team2393/FRC`
+Create & browse to a folder `git` in your home directory.
+
+The above setup gives you the Java Development tools, which are free and usually
+quick to install.
+To deploy code onto the RoboRIO, you also need the National Instruments' Drive Station,
+which takes longer to install and requires a password.
+Details are avaialble in the software meetups.
+
+WPILib
+------
 
 We're using Java and WPILib,
 the robotics library started at Worcester Polytechnic Institute (WPI)
