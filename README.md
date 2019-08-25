@@ -10,11 +10,12 @@ For full details see
 https://www.firstinspires.org/resource-library/frc/competition-manual-qa-system and 
 http://wpilib.screenstepslive.com/s/4485
 
-In short, you need the following which you can get from the mentioned web links
-or from the USB available in the software meetups:
+In short, you need the following which you can get from the web links
+or from the USB stick available in the software meetups:
 
- * Git from https://git-scm.com/downloads
+ * Git for Windows from https://git-scm.com/downloads (you can skip this on a Mac)
  * WPILibInstaller.zip from https://github.com/wpilibsuite/allwpilib/releases
+   for Windows or Mac.
    Select to install for the current user.
    In the first dialog, select to download VS Code unless you have the OfflineVsCodeFiles.zip.
    Select all but "C++ Compiler".
@@ -29,8 +30,8 @@ Create & browse to a folder `git` in your home directory.
 The above setup gives you the Java Development tools, which are free and usually
 quick to install.
 To deploy code onto the RoboRIO, you also need the National Instruments' Drive Station,
-which takes longer to install and requires a password.
-Details are avaialble in the software meetups.
+which is only available for Windows, takes longer to install and requires a password.
+Details are available at the software meetups.
 
 WPILib
 ------
