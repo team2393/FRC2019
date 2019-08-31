@@ -37,14 +37,8 @@ public class FindCenter implements VisionProcessor
         // System.out.println(original.size() + " by " + original.channels() +
         //                    " of " + CvType.typeToString(original.type()));
         // 8-bit integer (byte), unsigned (0..255) image with 3 channels.
-        // Would assume 3 channels = RGB, but OpenCV uses BGR.
-        
-        // Get data buffer for image
+        // Would assume 3 channels = RGB, but OpenCV uses BGR.        
         // https://answers.opencv.org/question/5/how-to-get-and-modify-the-pixel-of-mat-in-java/
-        // original.copyTo(output);
-        // byte[] data = new byte[width * height * 3];
-        // output.get(0, 0, data);
-
         if (output == null)
         {
             // When called for the first time,
@@ -56,20 +50,26 @@ public class FindCenter implements VisionProcessor
         // From then on, copy image data into our data buffer
         original.get(0, 0, data);
 
-        // Manipulate data
+        // We check pixels along a horizontal line at the middle
+        // of the image
         final int mid_y = height / 2;
-
         int max_val = 0;
         int max_x = -1;
         for (int x=0; x<width; ++x)
         {
-            // Index of B, G, R for the pixel
+            // Index of B, G, R for the pixel at coordinate (x, mid_y)
             int pixel = 3*(x + mid_y*width);
+            // Three bytes starting at data[pixel],
+            // note that we need the 'unsigned' value 0..255,
+            // not the 'signed' value -128..127
             int blue = Byte.toUnsignedInt(data[pixel]);
             int green = Byte.toUnsignedInt(data[pixel + 1]);
             int red = Byte.toUnsignedInt(data[pixel + 2]);
+
+            // Compute brightness of that RGB pixel by taking average
             int average = (blue  + red + green) / 3;
 
+            // Is this the brightest pixel?
             if(average > max_val)
             {
                 max_val = average;
@@ -78,7 +78,6 @@ public class FindCenter implements VisionProcessor
 
             int y = mid_y - average * 100 / 255;
             pixel = 3*(x + y*width);
-
             data[pixel] = 50;
             data[pixel+1] = (byte)0;
             data[pixel+2] = (byte)100;
@@ -104,9 +103,6 @@ public class FindCenter implements VisionProcessor
             data[pixel+1] = (byte)0;
             data[pixel+2] = (byte)100;
         }
-
-        // TODO Find brightest area in some line(s)
-        // TODO Draw vertical line where that area was found
 
         // Place data in output and publish
         output.put(0, 0, data);
