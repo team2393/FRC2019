@@ -5,6 +5,7 @@ import org.opencv.core.Mat;
 import edu.wpi.cscore.CameraServerJNI;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -69,7 +70,10 @@ public class CameraHandler
  
         // Start USB camera, publish original image
         // Image shows in dashboard (add CameraServer stream viewer).
-        // Or try opening a webbrowser to http://10.23.93.2:1181/
+        // To debug camera server and settings,
+        // open a webbrowser to http://10.23.93.2:1181
+        // or http://172.22.11.2:1181 for USB connection to RoboRIO.
+        // Note supported video settings.
 		server = CameraServer.getInstance();
 		camera = server.startAutomaticCapture();
     
@@ -79,13 +83,20 @@ public class CameraHandler
 		{
 			// Enable telemetry measurements
             CameraServerJNI.setTelemetryPeriod(1.0);
+
+            // The Microsoft LifeCam 'just works' when plugged in.
+            // For cheapo chinoise cameras
+            // needed to force the pixelformat to YUYV 
+            camera.setPixelFormat(PixelFormat.kYUYV);
             
             // Configure
-			camera.setResolution(width, height);
+            camera.setResolution(width, height);
             camera.setFPS(fps);
             // Set these from dashboard?
             camera.setBrightness(25);
-            camera.setExposureManual(50);
+
+            // This call crashes for some cameras
+            //camera.setExposureManual(50);
             // camera.setExposureManual(value);
             // camera.setWhiteBalanceManual(value);
             
