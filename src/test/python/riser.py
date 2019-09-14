@@ -19,6 +19,13 @@ acc_b = 2.0
 # Angle threshold for throttling (high number to disable)
 threshold = 8
 
+# Alterate examples: Faster front, same back, react for just 2 deg.
+#(acc_f, acc_b, threshold) = (5, 2, 2)
+
+# Front outrageously fast, back quite slow, correcting for as little as 1 deg
+# --> Looks great, but then again requires very fast front
+#(acc_f, acc_b, threshold) = (50, 1, 1)
+
 # Position of Back cylinder, simply accelerating all the time
 pos_b = 1/2 * acc_b * t*t
 pos_b[np.where(pos_b > top)] = top
