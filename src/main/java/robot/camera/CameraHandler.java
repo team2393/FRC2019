@@ -97,6 +97,7 @@ public class CameraHandler
 
             // This call crashes for some cameras
             //camera.setExposureManual(50);
+            
             // camera.setExposureManual(value);
             // camera.setWhiteBalanceManual(value);
             
