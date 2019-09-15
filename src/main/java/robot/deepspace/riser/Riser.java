@@ -28,14 +28,16 @@ public class Riser extends Subsystem
 
     public void dropFront(boolean down)
     {
+        // Select 'down' or 'up'
         front_riser1.set(down);
-        front_riser2.set(down);
+        // .. and allow air to flow
+        front_riser2.set(false);
     }
 
     public void pauseFront()
     {
-        // Assuming sol2 is the one that pauses air to the front
-        front_riser2.set(false);
+        // Pauses air to the front
+        front_riser2.set(true);
     }
 
     public void dropBack(boolean down)

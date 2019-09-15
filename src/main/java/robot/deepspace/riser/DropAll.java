@@ -7,7 +7,7 @@ import robot.deepspace.drivetrain.DriveTrain;
 public class DropAll extends Command
 {
     private final static double ABORT_ANGLE = 15;
-    private final static double CONTROL_ANGLE = 3;
+    private final static double CONTROL_ANGLE = 1;
     private final Riser riser;
     private final DriveTrain drive;
     private boolean abort = false;
@@ -56,9 +56,24 @@ public class DropAll extends Command
             return;
         }
 
+        // Last time around, did we blip the front or back for N periods?
+        // if (blipping > 0)
+        // {
+        //     --blipping;
+        //     if (blipping <= 0)
+        //     {   // Back to rising both for one period, don't check tilt, wait for next reading
+        //         riser.dropBack(true);
+        //         riser.dropFront(true);
+        //     }
+        //     return;
+        // }
+
         // Positive tilt angle, front is up too high
         if (tilt > CONTROL_ANGLE)
+        {
             riser.pauseFront();
+            blipping = 1;
+        }
         else
             riser.dropFront(true);
         riser.dropBack(true);
