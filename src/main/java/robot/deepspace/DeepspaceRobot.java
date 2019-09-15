@@ -263,7 +263,10 @@ public class DeepspaceRobot extends BasicRobot
                     }
                     else if (command == 'M'  ||  command == 'm')
                     {
-                        final double position = scanner.nextDouble();
+                        // When starting from level 2, add 40 inches
+                        double offset = 40;
+                        offset = 0;
+                        final double position = scanner.nextDouble() + offset;
                         final double angle = scanner.nextDouble();
                         demo.addSequential(new MoveToPosition(drivetrain, position, angle, command == 'M'));
                         backtrack.add(new MoveToPosition(drivetrain, position, angle));
