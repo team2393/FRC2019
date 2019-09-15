@@ -14,11 +14,11 @@
 # E Some Name  - End and publish under Some Name
 
 S
-M 60 0
+m 60 0
 E Move 5
 
 S
-M 120 0
+m 120 0
 E Move 10
 
 #S
