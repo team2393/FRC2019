@@ -1,7 +1,6 @@
 package robot.picamera;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.BasicRobot;
@@ -25,6 +24,14 @@ public class PiCameraRobot extends BasicRobot
   private Joystick joystick = new Joystick(0);
 
   @Override
+  public void robotInit() 
+  {
+    super.robotInit();
+    // Publish 'P' gain to allow adjustments at runtime
+    SmartDashboard.setDefaultNumber("P", 0.025);
+  }
+
+  @Override
   public void teleopPeriodic()
   {
     // In teleop, control servo with joystick
@@ -45,7 +52,10 @@ public class PiCameraRobot extends BasicRobot
     // we could compute the exact angle.
     // But we don't, so we just turn a few degrees in that direction,
     // then try again the next time.
-    double new_angle = current_angle - direction * 3.0/160.0;
+    // ==> PID control, error = -direction, using only P gain
+    double new_angle = current_angle - direction * SmartDashboard.getNumber("P", 0.025);
+    // Restrict angle to valid range
+    // (servo.setAngle is also doing this, so not necessary in this case)
     if (new_angle < 0)
       new_angle = 0.0;
     else if (new_angle > 180)
