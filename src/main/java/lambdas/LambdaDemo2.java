@@ -36,6 +36,10 @@ public class LambdaDemo2
         // doing something..
         logging.log("Got distracted 'like'-ing cat pictures..");
         // doing something..
+        logging.log("Exchanging boomer jokes.");
+        // doing something..
+        logging.log("Back on task.");
+        // doing something..
         System.out.println("Blastoff!!");
         logging.log("Done.");
         logging.log("-----------------------------");
@@ -92,7 +96,16 @@ public class LambdaDemo2
         // where the "code" is just an empty block, doing nothing:
         Logging taciturn_logging = message -> {};
 
+        Logging loquacious_logging = message ->
+        {
+            System.out.println(" ============ -----------------------------------------------------------");
+            System.out.println(" ============ " + LocalDateTime.now());
+            System.out.println(" ============ " + message.toUpperCase());
+            System.out.println(" ============ -----------------------------------------------------------");
+        };
+
         LambdaDemo2.complicated_method(timed_logging);
         LambdaDemo2.complicated_method(taciturn_logging);
+        LambdaDemo2.complicated_method(loquacious_logging);
     }
 }
