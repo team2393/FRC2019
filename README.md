@@ -6,9 +6,11 @@
 Setup for the 2019 Season
 -------------------------
 
-For full details see 
+For full details see https://wpilib.org/, 
 https://www.firstinspires.org/resource-library/frc/competition-manual-qa-system and 
-http://wpilib.screenstepslive.com/s/4485
+http://wpilib.screenstepslive.com/s/4485 for the 2019 setup.
+
+2020: https://docs.wpilib.org/en/latest/
 
 Specific instructions for Mac are on http://wpilib.screenstepslive.com/s/currentCS/m/java/l/1027503-installing-c-and-java-development-tools-for-frc
 
