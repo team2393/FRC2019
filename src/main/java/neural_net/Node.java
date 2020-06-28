@@ -51,4 +51,26 @@ class Node extends InputNode
     else
       value = 0.0;
   }
+
+  public void learnRandomly(final double error)
+  {
+    // If the error is small, keep all weights close to where they are,
+    // but if the error is large, change all weights a lot,
+    // i.e. change weights by some fraction of the error.
+    // If error is positive, our output is too large,
+    // need to reduce weight, i.e. use negative error.
+    // This is similar to 'PID' proportional control,
+    // where we would use some fixed proportional gain.
+    // Since we don't know what 'P' to use, we use a random number 0..1.  
+    for (int i=0;  i<weights.length;  ++i)
+    {
+      double new_weight = weights[i] - Math.random() * error;
+      weights[i] = new_weight;
+    }
+
+    // Keep doing this for all parent nodes
+    for (InputNode parent : inputs)
+      if (parent instanceof Node)
+        ((Node) parent).learnRandomly(error);
+  }
 }

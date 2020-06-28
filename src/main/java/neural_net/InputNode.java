@@ -17,6 +17,11 @@ class InputNode
     value = new_value;
   }
 
+  public double getValue()
+  {
+      return value;
+  }
+
   @Override
   public String toString()
   {
