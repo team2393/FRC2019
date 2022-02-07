@@ -1,4 +1,4 @@
-# Python simulation of rise
+# Python3 simulation of rise
 import numpy as np
 import matplotlib.pyplot as plt
 
